@@ -3,76 +3,125 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
   <title>Sheikh Hasina: Leaked Call Recordings</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
   <style>
-    /* --- RESET & BASIC SETUP --- */
+    /* --- 1. APP THEME VARIABLES --- */
+    :root {
+      --app-bg: #f2f2f7; 
+      --card-bg: #ffffff;
+      --text-primary: #1c1c1e;
+      --text-secondary: #8e8e93;
+      --accent-color: #e63946; 
+      --font-ui: 'Inter', sans-serif;
+      --font-body: 'Merriweather', serif;
+      --font-mono: 'Courier Prime', monospace;
+      --shadow-soft: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9f9f9;
-      color: #111;
+      font-family: var(--font-ui);
+      background-color: var(--app-bg);
+      color: var(--text-primary);
       margin: 0;
       padding: 0;
       line-height: 1.6;
+      padding-top: 60px; 
     }
 
-    /* --- LAYOUT CONTAINER --- */
+    /* --- STICKY APP HEADER --- */
+    .app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+    }
+
+    .brand-logo {
+      font-family: var(--font-ui);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #000;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    
+    .brand-logo span { color: var(--accent-color); }
+
+    /* --- CONTAINER --- */
     .article-container {
-      max-width: 680px;
+      max-width: 600px; 
       margin: 0 auto;
-      padding: 60px 20px 100px 20px;
+      padding: 40px 20px 100px 20px;
     }
 
-    /* --- HEADER --- */
     h1 {
-        font-family: 'Merriweather', serif;
+        font-family: var(--font-body);
         text-align: center;
         font-weight: 900;
-        margin-bottom: 50px;
-        font-size: 2.5rem;
-        letter-spacing: -0.02em;
-        line-height: 1.2;
+        margin-bottom: 40px;
+        font-size: 2.2rem;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        color: #000;
     }
 
-    /* --- STORY TEXT PARAGRAPHS --- */
     .story-text {
-      font-family: 'Merriweather', serif;
-      font-size: 1.1rem;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
       line-height: 1.7;
-      color: #2c2c2c;
+      color: #333;
       margin-bottom: 30px; 
-      margin-top: 30px;    
+      margin-top: 10px;    
     }
 
     .story-text:first-of-type::first-letter {
       float: left;
       font-size: 3.2rem;
       line-height: 0.8;
-      margin-right: 10px;
+      margin-right: 8px;
+      margin-top: 4px;
       font-weight: 700;
+      color: var(--accent-color);
     }
 
-    /* --- SLIM AUDIO CARD STYLES --- */
+    /* --- AUDIO CARD --- */
     .audio-card {
       width: 100%;
-      /* Reduced padding for slim look */
-      padding: 25px 30px; 
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.03);
-      text-align: center;
+      background: var(--card-bg);
+      border-radius: 16px; 
+      box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
-      margin-bottom: 50px; 
+      margin-bottom: 40px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none; 
     }
 
-    /* --- BACKGROUND IMAGE LAYER (20% Opacity) --- */
+    /* Highlight Active Card slightly */
+    .audio-card.active-card {
+      transform: scale(1.02);
+      box-shadow: 0 12px 30px rgba(230, 57, 70, 0.15);
+      border: 1px solid rgba(230, 57, 70, 0.1);
+    }
+
     .bg-image {
       position: absolute;
       top: 0;
@@ -82,7 +131,7 @@
       background-image: url('./assets/photos/hasina-bg.jpg'); 
       background-size: cover;
       background-position: center;
-      opacity: 0.2; 
+      opacity: 0.15; 
       z-index: 0;
       pointer-events: none;
     }
@@ -90,157 +139,130 @@
     .card-content {
       position: relative;
       z-index: 1;
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* --- 1. TYPEWRITER TEXT --- */
+    /* --- TYPEWRITER --- */
     .audio-quote-container {
-      /* Reduced bottom margin */
-      margin-bottom: 20px; 
+      margin-bottom: 25px;
       text-align: center;
-      /* Reduced min-height */
-      min-height: 60px; 
-      position: relative;
-      display: inline-block;
+      min-height: 50px;
       width: 100%;
     }
 
     .typewriter-text {
-      font-family: 'Courier Prime', monospace;
-      font-size: 1.2rem; /* Slightly smaller for compactness */
-      line-height: 1.4;
-      color: #1a1a1a;
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #111;
       white-space: pre-wrap;
       display: inline;
     }
 
-    .char {
-      opacity: 0.15;
-      transition: opacity 0.05s step-end;
-    }
+    .char { opacity: 0.2; transition: opacity 0.05s step-end; }
+    .char.visible { opacity: 1; color: #000; font-weight: 700; }
 
-    .char.visible {
-      opacity: 1;
-      color: #000;
-      font-weight: 700;
-    }
-
-    /* --- 2. SMART CURSOR --- */
     .cursor {
       display: inline-block;
       width: 8px;
-      height: 1.2em;
-      background-color: #000;
+      height: 1.1em;
+      background-color: var(--accent-color);
       vertical-align: text-bottom;
-      margin-left: 4px;
+      margin-left: 2px;
       opacity: 0;
+      border-radius: 1px;
     }
-
     .cursor.typing { opacity: 1; animation: none; }
     .cursor.paused { opacity: 1; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* --- 3. SLIMMER WAVEFORM VISUALIZER --- */
+    /* --- VISUALIZER --- */
     .player-container {
       position: relative;
       width: 100%;
-      /* Reduced height */
-      height: 40px; 
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       gap: 3px; 
     }
 
     .wave-bar {
       width: 3px;
-      background-color: #333;
+      background-color: #ccc;
       border-radius: 4px;
       height: 4px;
-      transition: height 0.1s ease;
-      opacity: 0.2;
+      transition: height 0.1s ease, background-color 0.2s;
     }
 
-    @keyframes wave-dance-formal {
-      0% { height: 4px; opacity: 0.5; }
-      50% { height: 28px; opacity: 1; } /* Reduced max animation height */
-      100% { height: 4px; opacity: 0.5; }
+    @keyframes wave-dance-app {
+      0% { height: 4px; }
+      50% { height: 24px; }
+      100% { height: 4px; }
     }
 
     .player-container.active .wave-bar {
-      animation: wave-dance-formal 1.2s infinite ease-in-out;
-      background-color: #000;
+      animation: wave-dance-app 1s infinite ease-in-out;
+      background-color: var(--accent-color);
     }
 
-    /* --- 4. PLAY BUTTON --- */
+    /* --- PLAY BUTTON --- */
     .play-button {
       position: absolute;
-      width: 48px; /* Slightly smaller button */
-      height: 48px;
-      background-color: #1a1a1a;
+      width: 56px;
+      height: 56px;
+      background-color: #fff;
       border-radius: 50%;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 20;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .play-button:hover {
-      transform: scale(1.05);
-      background-color: #000;
+    .play-button.is-playing {
+      background-color: var(--accent-color);
+      box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
     }
+    .play-button svg { width: 20px; height: 20px; fill: var(--text-primary); margin-left: 2px; transition: fill 0.2s; }
+    .play-button.is-playing svg { fill: #fff; margin-left: 0; }
 
-    .play-button svg {
-      width: 18px;
-      height: 18px;
-      fill: #fff;
-      margin-left: 2px;
-    }
-
-    .play-button .icon-pause { margin-left: 0; display: none; }
+    .play-button .icon-pause { display: none; }
     .play-button.is-playing .icon-play { display: none; }
     .play-button.is-playing .icon-pause { display: block; }
-    
-    .play-button.is-playing {
-      background-color: #fff;
-      border: 2px solid #1a1a1a;
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
-    }
-    .play-button.is-playing svg { fill: #1a1a1a; }
 
     /* --- META INFO --- */
     .meta-info {
       font-size: 0.75rem;
-      color: #666;
+      font-weight: 600;
+      color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      /* Tighter spacing */
-      margin-top: 15px;
-      border-top: 1px solid #e5e5e5;
-      padding-top: 10px;
+      letter-spacing: 0.5px;
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
     }
-    .meta-name {
-      font-weight: 700;
-      color: #000;
-      margin-right: 6px;
-    }
+    .meta-name { color: var(--text-primary); font-weight: 700; }
 
   </style>
 </head>
 
 <body>
 
+  <header class="app-header">
+    <div class="brand-logo">NETRA <span>NEWS</span></div>
+  </header>
+
   <div class="article-container">
 
-    <h1>Leaked Audio Recordings</h1>
+    <h1>In Her Own Words</h1>
 
     <p class="story-text">
       Since the fall of her government, numerous phone conversations involving former Prime Minister Sheikh Hasina have been leaked on social media. These recordings offer a rare glimpse into her mindset during and after the July uprising. In one recording, Hasina claims that the army is being unfairly tried for merely following orders during the crackdown in July and August 2025.
@@ -265,7 +287,7 @@
     </div>
 
     <p class="story-text">
-      The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh by beating or killing activists from opposing parties. She mentions creating a specific database to track incidents and exact revenge.
+      The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh by beating or killing activists from opposing parties.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina calls for revenge.mp3">
@@ -309,7 +331,7 @@
     </div>
 
     <p class="story-text">
-      In perhaps one of the most chilling recordings, she speaks with an Awami League leader about having a "license" to kill 227 people who filed cases against her. She rationalizes that the punishment for one murder is the same as for hundreds.
+      In perhaps one of the most chilling recordings, she speaks with an Awami League leader about having a "license" to kill 227 people who filed cases against her.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina got license to kill 227.mp3">
@@ -353,7 +375,7 @@
     </div>
 
     <p class="story-text">
-      Hasina also attempts to incite the military. Referring to warrants issued against army officers, she questions their courage and reminds them that it was her government (and her father's) that purchased their tanks.
+      Hasina also attempts to incite the military. Referring to warrants issued against army officers, she questions their courage.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
@@ -375,7 +397,7 @@
     </div>
 
     <p class="story-text">
-      She continues to rally her base by promising compensation. She instructs her followers to remember the faces of BNP-Jamaat members who attacked them, assuring them that properties of Yunus's "cronies" will be used for reparations.
+      She continues to rally her base by promising compensation. She instructs her followers to remember the faces of BNP-Jamaat members who attacked them.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/AL men will be compensated with Yunus' supporters properties.mp3">
@@ -397,7 +419,7 @@
     </div>
 
     <p class="story-text">
-      The theme of guerrilla warfare recurs in her instructions. She tells victims of attacks to stop waiting for a return to power and instead take immediate action against their tormentors wherever they find them.
+      The theme of guerrilla warfare recurs in her instructions. She tells victims of attacks to stop waiting for a return to power.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
@@ -441,7 +463,7 @@
     </div>
 
     <p class="story-text">
-      Following the ban on her party, Hasina expressed desperation. She stated that since the Awami League and Chhatra League are effectively banned, the "only option" left is to attack and kill members of the BNP and Jamaat.
+      Following the ban on her party, Hasina expressed desperation. She stated that since the Awami League is banned, the "only option" left is violence.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Attacking them is the only option-Hasina.mp3">
@@ -485,7 +507,7 @@
     </div>
 
     <p class="story-text">
-      The former Prime Minister has also issued direct death threats against those she believes attempted to assassinate her, urging her followers to be strong rather than self-sacrificing.
+      The former Prime Minister has also issued direct death threats against those she believes attempted to assassinate her.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Those who wanted to kill me will die-Hasina.mp3">
@@ -507,7 +529,7 @@
     </div>
 
     <p class="story-text">
-      Responding to the interim government's decision to ban the Awami League, Hasina labeled Muhammad Yunus a usurper. She vowed that he would one day be held accountable for his "unconstitutional" seizure of power.
+      Responding to the ban on the Awami League, Hasina labeled Muhammad Yunus a usurper and vowed accountability.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina_s warning on AL ban.mp3">
@@ -529,7 +551,7 @@
     </div>
 
     <p class="story-text">
-      Her call for retribution is sometimes framed in religious terms. She invokes the principle of "an eye for an eye," inciting followers to burn down the houses of political rivals just as theirs were burned.
+      Her call for retribution is sometimes framed in religious terms, invoking the principle of "an eye for an eye".
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
@@ -551,7 +573,7 @@
     </div>
 
     <p class="story-text">
-      Even internal disruptions are met with harsh language. When some participants disrupted one of her calls, she labeled them "bastards of Pakistani ghosts" and threatened to deport them to Karachi.
+      Even internal disruptions are met with harsh language. When some participants disrupted one of her calls, she labeled them "bastards".
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina calling dissenters Pakistani bastards.mp3">
@@ -573,7 +595,7 @@
     </div>
 
     <p class="story-text">
-      In a lengthy commentary on the armed forces, Hasina expressed frustration that the army has "lost its strength." She lamented the trials of officers involved in past crackdowns, linking their fate to the destruction of the army's global image.
+      In a lengthy commentary on the armed forces, Hasina expressed frustration that the army has "lost its strength."
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina on liability of deaths.mp3">
@@ -595,7 +617,7 @@
     </div>
 
     <p class="story-text">
-      Despite the overwhelming evidence of state violence during her tenure, Hasina continues to deny responsibility for the deaths during the July-August crackdown. She claims the orders to kill came from Dr. Yunus and Tarique Rahman as part of a "meticulous design."
+      Despite the overwhelming evidence of state violence during her tenure, Hasina continues to deny responsibility for the deaths during the July-August crackdown.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Hasina_s version of August 5.mp3">
@@ -617,7 +639,7 @@
     </div>
 
     <p class="story-text">
-      Finally, emphasizing unity among her scattered followers, she urged them to compile lists of those who harmed them. Reaffirming her stance, she demanded action "wherever you have it," invoking the Quran to justify retribution.
+      Finally, emphasizing unity among her scattered followers, she urged them to compile lists of those who harmed them.
     </p>
 
     <div class="audio-card" data-src="./assets/audio/Unite and resist.mp3">
@@ -641,7 +663,7 @@
   </div> <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      // 1. WAVEFORM GENERATOR
+      // 1. GENERATE VISUALIZER BARS
       document.querySelectorAll('.player-container').forEach(container => {
         for (let i = 0; i < 40; i++) {
           const bar = document.createElement('div');
@@ -652,7 +674,50 @@
         }
       });
 
-      // 2. MAIN LOGIC
+      // 2. MAIN LOGIC (SCROLL OBSERVER + PLAYER)
+      
+      // --- INTERSECTION OBSERVER FOR AUTOPLAY ---
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px', // Active only when relatively centered
+        threshold: 0.6 // 60% of card must be visible
+      };
+
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const card = entry.target;
+          const audio = card.querySelector('audio');
+          
+          if (entry.isIntersecting) {
+            // Highlight Card
+            document.querySelectorAll('.audio-card').forEach(c => c.classList.remove('active-card'));
+            card.classList.add('active-card');
+
+            // Pause others
+            document.querySelectorAll('audio').forEach(a => {
+              if (a !== audio) { a.pause(); a.currentTime = 0; }
+            });
+
+            // Attempt Autoplay
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(error => {
+                // Auto-play was prevented. This is expected on first load until user interaction.
+                console.log('Autoplay prevented by browser policy (awaiting user interaction)');
+              });
+            }
+          } else {
+            // Pause if it leaves the view
+            if (!audio.paused) {
+              audio.pause();
+            }
+            card.classList.remove('active-card');
+          }
+        });
+      }, observerOptions);
+
+
+      // --- INIT CARDS ---
       document.querySelectorAll('.audio-card').forEach(card => {
         const audio = card.querySelector('audio');
         const btn = card.querySelector('.play-button');
@@ -660,10 +725,12 @@
         const cursor = card.querySelector('.cursor');
         const textContainer = card.querySelector('.typewriter-text');
         
+        // Add to observer
+        scrollObserver.observe(card);
+
         const rawText = textContainer.innerText;
-        textContainer.innerHTML = ''; // Clear text
+        textContainer.innerHTML = ''; 
         
-        // Wrap characters
         const chars = rawText.split('').map(char => {
           const span = document.createElement('span');
           span.innerText = char;
@@ -696,19 +763,16 @@
         const resetUI = () => {
           btn.classList.remove('is-playing');
           container.classList.remove('active');
-          cursor.classList.remove('typing', 'paused'); // Reset cursor state
-          cursor.style.opacity = '0'; // Hide cursor
+          cursor.classList.remove('typing', 'paused'); 
+          cursor.style.opacity = '0'; 
           chars.forEach(char => char.classList.remove('visible'));
         };
 
-        // --- CLICK HANDLER ---
+        // --- CLICK HANDLER (Manual Override) ---
         btn.addEventListener('click', () => {
           if (audio.paused) {
             document.querySelectorAll('audio').forEach(o => {
-              if (o !== audio) { 
-                o.pause(); 
-                o.currentTime = 0; 
-              }
+              if (o !== audio) { o.pause(); o.currentTime = 0; }
             });
             audio.play();
           } else {
@@ -720,8 +784,6 @@
         audio.addEventListener('play', () => {
           btn.classList.add('is-playing');
           container.classList.add('active');
-          
-          // Smart Cursor: Typing State
           cursor.classList.add('typing');
           cursor.classList.remove('paused');
         });
@@ -731,8 +793,6 @@
         audio.addEventListener('pause', () => {
           btn.classList.remove('is-playing');
           container.classList.remove('active');
-          
-          // Smart Cursor: Paused State (Blinking)
           cursor.classList.remove('typing');
           cursor.classList.add('paused');
         });
