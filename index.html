@@ -8,20 +8,19 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@300;400;500;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
   <style>
-    /* --- 1. APP THEME VARIABLES --- */
+    /* --- THEME VARIABLES --- */
     :root {
-      --app-bg: #f2f2f7; 
-      --card-bg: #ffffff;
-      --text-primary: #1c1c1e;
-      --text-secondary: #8e8e93;
+      --app-bg: #fcfcfc;       
+      --text-primary: #111111; 
+      --text-secondary: #888888;
       --accent-color: #e63946; 
+      
       --font-ui: 'Inter', sans-serif;
       --font-body: 'Merriweather', serif;
       --font-mono: 'Courier Prime', monospace;
-      --shadow-soft: 0 8px 24px rgba(0,0,0,0.06);
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -32,224 +31,318 @@
       color: var(--text-primary);
       margin: 0;
       padding: 0;
-      line-height: 1.6;
-      padding-top: 60px; 
+      line-height: 1.8;
+      font-weight: 300;
     }
 
-    /* --- STICKY APP HEADER --- */
+    /* --- NAV --- */
     .app-header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      height: 70px;
+      background: rgba(255, 255, 255, 0.01); 
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
     }
 
     .brand-logo {
       font-family: var(--font-ui);
       font-weight: 800;
-      font-size: 1.1rem;
-      color: #000;
-      letter-spacing: -0.02em;
+      font-size: 0.85rem;
+      color: #000; 
+      text-shadow: 0 1px 10px rgba(255,255,255,0.9);
+      letter-spacing: 0.15em;
       text-transform: uppercase;
     }
-    
     .brand-logo span { color: var(--accent-color); }
 
-    /* --- CONTAINER --- */
-    .article-container {
-      max-width: 600px; 
-      margin: 0 auto;
-      padding: 40px 20px 100px 20px;
-    }
-
-    h1 {
-        font-family: var(--font-body);
-        text-align: center;
-        font-weight: 900;
-        margin-bottom: 40px;
-        font-size: 2.2rem;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-        color: #000;
-    }
-
-    .story-text {
-      font-family: var(--font-body);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: #333;
-      margin-bottom: 30px; 
-      margin-top: 10px;    
-    }
-
-    .story-text:first-of-type::first-letter {
-      float: left;
-      font-size: 3.2rem;
-      line-height: 0.8;
-      margin-right: 8px;
-      margin-top: 4px;
-      font-weight: 700;
-      color: var(--accent-color);
-    }
-
-    /* --- AUDIO CARD --- */
-    .audio-card {
-      width: 100%;
-      background: var(--card-bg);
-      border-radius: 16px; 
-      box-shadow: var(--shadow-soft);
+    /* --- HERO SECTION --- */
+    .hero-header {
       position: relative;
+      width: 100%;
+      height: 90vh; 
+      background-image: url('./assets/photos/hasina-bg.jpg'); 
+      background-size: cover;
+      background-position: center top;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
       overflow: hidden;
-      margin-bottom: 40px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: none; 
     }
 
-    /* Highlight Active Card slightly */
-    .audio-card.active-card {
-      transform: scale(1.02);
-      box-shadow: 0 12px 30px rgba(230, 57, 70, 0.15);
-      border: 1px solid rgba(230, 57, 70, 0.1);
-    }
-
-    .bg-image {
+    .hero-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('./assets/photos/hasina-bg.jpg'); 
-      background-size: cover;
-      background-position: center;
-      opacity: 0.15; 
-      z-index: 0;
-      pointer-events: none;
+      background: linear-gradient(
+        to bottom, 
+        rgba(0,0,0,0) 0%, 
+        rgba(252,252,252,0.1) 60%, 
+        var(--app-bg) 100%
+      );
+      z-index: 1;
     }
 
-    .card-content {
+    .hero-content {
       position: relative;
-      z-index: 1;
-      padding: 30px 24px;
+      z-index: 2;
+      text-align: center;
+      padding: 0 20px 60px 20px;
+      max-width: 800px;
+    }
+
+    /* Headlines */
+    h1 {
+        font-family: var(--font-body);
+        font-weight: 900;
+        font-size: 4rem;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #111;
+        margin: 0 0 15px 0;
+        opacity: 0;
+        animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.6s;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero-subtitle::before, .hero-subtitle::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 30px;
+        height: 1px;
+        background-color: var(--accent-color);
+        opacity: 0.5;
+    }
+    .hero-subtitle::before { left: -45px; }
+    .hero-subtitle::after { right: -45px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- CONTAINER --- */
+    .article-container {
+      max-width: 680px; 
+      margin: 0 auto;
+      padding: 0 20px 150px 20px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .story-text {
+      font-family: var(--font-body);
+      font-size: 1.2rem;
+      line-height: 1.9;
+      color: #222; 
+      margin-bottom: 100px; 
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .story-text:last-of-type { border-bottom: none; }
+    
+    .story-text:first-of-type::first-letter {
+      float: left;
+      font-size: 4rem;
+      line-height: 0.75;
+      margin-right: 15px;
+      margin-top: 8px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* --- AUDIO SECTION --- */
+    .audio-section {
+      width: 100%;
+      position: relative;
+      margin-bottom: 140px; 
+      padding: 10px 0;
+      
+      opacity: 0.25; 
+      filter: grayscale(100%);
+      transform: scale(0.98);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .audio-section.active-section {
+      opacity: 1;
+      filter: grayscale(0%);
+      transform: scale(1);
+    }
+
+    .section-content {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* --- TYPEWRITER --- */
+    /* QUOTE */
     .audio-quote-container {
-      margin-bottom: 25px;
+      margin-bottom: 35px;
       text-align: center;
-      min-height: 50px;
+      min-height: 80px;
       width: 100%;
     }
 
     .typewriter-text {
       font-family: var(--font-mono);
-      font-size: 1.15rem;
+      font-size: 1.45rem; 
       line-height: 1.5;
-      color: #111;
+      color: #000;
       white-space: pre-wrap;
       display: inline;
     }
 
-    .char { opacity: 0.2; transition: opacity 0.05s step-end; }
+    .char { opacity: 0.15; transition: opacity 0.1s; }
     .char.visible { opacity: 1; color: #000; font-weight: 700; }
 
     .cursor {
       display: inline-block;
       width: 8px;
-      height: 1.1em;
+      height: 1.2em;
       background-color: var(--accent-color);
-      vertical-align: text-bottom;
-      margin-left: 2px;
+      vertical-align: sub;
+      margin-left: 4px;
       opacity: 0;
-      border-radius: 1px;
     }
     .cursor.typing { opacity: 1; animation: none; }
-    .cursor.paused { opacity: 1; animation: blink 1s step-end infinite; }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-    /* --- VISUALIZER --- */
+    /* PLAYER PILL */
+    .player-pill {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: rgba(255,255,255,0.8);
+        border: 1px solid rgba(0,0,0,0.08);
+        padding: 8px 25px;
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .audio-section.active-section .player-pill {
+        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+
+    /* VISUALIZER */
     .player-container {
       position: relative;
-      width: 100%;
-      height: 40px;
+      height: 30px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-      gap: 3px; 
+      gap: 4px; /* Slightly wider gap for Soundcloud look */
     }
 
     .wave-bar {
-      width: 3px;
-      background-color: #ccc;
-      border-radius: 4px;
-      height: 4px;
-      transition: height 0.1s ease, background-color 0.2s;
+      width: 3px; 
+      background-color: #ddd; 
+      border-radius: 3px;
+      height: 6px;
+      transition: height 0.1s ease, background-color 0.3s;
     }
 
-    @keyframes wave-dance-app {
-      0% { height: 4px; }
-      50% { height: 24px; }
-      100% { height: 4px; }
+    @keyframes wave-jump {
+      0% { height: 6px; }
+      50% { height: 28px; }
+      100% { height: 6px; }
     }
 
     .player-container.active .wave-bar {
-      animation: wave-dance-app 1s infinite ease-in-out;
+      animation: wave-jump 0.6s infinite ease-in-out;
       background-color: var(--accent-color);
     }
 
-    /* --- PLAY BUTTON --- */
+    /* --- JUMPING PLAY BUTTON ANIMATION --- */
     .play-button {
-      position: absolute;
-      width: 56px;
-      height: 56px;
-      background-color: #fff;
+      width: 44px; 
+      height: 44px;
+      background-color: #fff; 
+      border: 1px solid #ddd;
       border-radius: 50%;
-      border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 20;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .play-button:hover {
+      border-color: var(--accent-color);
+      transform: scale(1.05);
+    }
+
+    /* THE JUMP ANIMATION KEYFRAMES */
+    @keyframes jump-beat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); } /* Jump Up */
+      100% { transform: translateY(0); }
     }
 
     .play-button.is-playing {
       background-color: var(--accent-color);
-      box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+      /* Apply the Jump */
+      animation: jump-beat 0.5s infinite ease-in-out alternate;
     }
-    .play-button svg { width: 20px; height: 20px; fill: var(--text-primary); margin-left: 2px; transition: fill 0.2s; }
-    .play-button.is-playing svg { fill: #fff; margin-left: 0; }
 
+    .play-button svg {
+      width: 14px; 
+      height: 14px;
+      fill: #222; 
+      transition: fill 0.3s;
+    }
+
+    .play-button.is-playing svg { fill: #fff; }
+
+    /* Icons */
     .play-button .icon-pause { display: none; }
     .play-button.is-playing .icon-play { display: none; }
     .play-button.is-playing .icon-pause { display: block; }
 
-    /* --- META INFO --- */
+
+    /* META INFO */
     .meta-info {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #999;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 20px;
-      width: 100%;
-      text-align: center;
+      letter-spacing: 1.5px;
+      margin-top: 25px;
     }
-    .meta-name { color: var(--text-primary); font-weight: 700; }
+    .meta-name { color: #111; font-weight: 700; margin-right: 6px; }
+
+    /* Mobile Tweaks */
+    @media (max-width: 600px) {
+      h1 { font-size: 3rem; }
+      .hero-header { height: 80vh; }
+      .player-pill { padding: 8px 15px; gap: 15px; }
+    }
 
   </style>
 </head>
@@ -260,28 +353,37 @@
     <div class="brand-logo">NETRA <span>NEWS</span></div>
   </header>
 
-  <div class="article-container">
+  <div class="hero-header">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>In Her Own<br>Words</h1>
+      <div class="hero-subtitle">The Leaked Tapes</div>
+    </div>
+  </div>
 
-    <h1>In Her Own Words</h1>
+  <div class="article-container">
 
     <p class="story-text">
       Since the fall of her government, numerous phone conversations involving former Prime Minister Sheikh Hasina have been leaked on social media. These recordings offer a rare glimpse into her mindset during and after the July uprising. In one recording, Hasina claims that the army is being unfairly tried for merely following orders during the crackdown in July and August 2025.
     </p>
 
-    <div class="audio-card" data-src="./assets/audio/Hasina threatens army-prosecutor.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
+    <div class="audio-section" data-src="./assets/audio/Hasina threatens army-prosecutor.mp3">
+      <div class="section-content">
         <div class="audio-quote-container">
           <div class="typewriter-text">“How do they show the victory sign after stealing?”</div>
           <span class="cursor"></span>
         </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        
+        <div class="player-pill">
+            <button class="play-button" aria-label="Play Audio">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="player-container">
+                </div>
         </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 29, 2025</div>
+
+        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 29, 2025</div>
       </div>
       <audio preload="none"></audio>
     </div>
@@ -290,20 +392,20 @@
       The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh by beating or killing activists from opposing parties.
     </p>
 
-    <div class="audio-card" data-src="./assets/audio/Hasina calls for revenge.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
+    <div class="audio-section" data-src="./assets/audio/Hasina calls for revenge.mp3">
+      <div class="section-content">
         <div class="audio-quote-container">
           <div class="typewriter-text">“I'm creating a list of everyone who was beaten... I will exact vengeance. I will cleanse them this time. My goal is to clean the dirt of Bangladesh.”</div>
           <span class="cursor"></span>
         </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        <div class="player-pill">
+            <button class="play-button" aria-label="Play Audio">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="player-container"></div>
         </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 29, 2025</div>
+        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 29, 2025</div>
       </div>
       <audio preload="none"></audio>
     </div>
@@ -312,20 +414,20 @@
       Her anger is frequently directed at Chief Adviser Muhammad Yunus. Accusing him of arresting her supporters, she threatens to pay him back in his own coin by putting him behind bars.
     </p>
 
-    <div class="audio-card" data-src="./assets/audio/Hasina threatens action against CA Yunus.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
+    <div class="audio-section" data-src="./assets/audio/Hasina threatens action against CA Yunus.mp3">
+      <div class="section-content">
         <div class="audio-quote-container">
           <div class="typewriter-text">“He arrested my supporters. I will put him behind the bars too.”</div>
           <span class="cursor"></span>
         </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        <div class="player-pill">
+            <button class="play-button" aria-label="Play Audio">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="player-container"></div>
         </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 28, 2025</div>
+        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 28, 2025</div>
       </div>
       <audio preload="none"></audio>
     </div>
@@ -334,20 +436,20 @@
       In perhaps one of the most chilling recordings, she speaks with an Awami League leader about having a "license" to kill 227 people who filed cases against her.
     </p>
 
-    <div class="audio-card" data-src="./assets/audio/Hasina got license to kill 227.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
+    <div class="audio-section" data-src="./assets/audio/Hasina got license to kill 227.mp3">
+      <div class="section-content">
         <div class="audio-quote-container">
           <div class="typewriter-text">“The punishment for one case and the punishment for 225 cases are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”</div>
           <span class="cursor"></span>
         </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        <div class="player-pill">
+            <button class="play-button" aria-label="Play Audio">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="player-container"></div>
         </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 28, 2024</div>
+        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 28, 2024</div>
       </div>
       <audio preload="none"></audio>
     </div>
@@ -356,377 +458,87 @@
       Defending her actions, she urges her supporters to fight back using the tactics of guerrilla warfare. She warns that anyone who touches her party "will burn their hands."
     </p>
 
-    <div class="audio-card" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
+    <div class="audio-section" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
+      <div class="section-content">
         <div class="audio-quote-container">
           <div class="typewriter-text">“If you touch fire, your hand will burn. We will make them understand that. Bangladesh was liberated by guerrilla warfare. So teach them a lesson.”</div>
           <span class="cursor"></span>
         </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
+        <div class="player-pill">
+            <button class="play-button" aria-label="Play Audio">
+                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="player-container"></div>
         </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Jun 3, 2025</div>
+        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Jun 3, 2025</div>
       </div>
       <audio preload="none"></audio>
     </div>
+    
+  </div> 
 
-    <p class="story-text">
-      Hasina also attempts to incite the military. Referring to warrants issued against army officers, she questions their courage.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“How dare they issue a warrant against these officers? First Bangabandhu, and then I, bought them the tanks.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 18, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      She continues to rally her base by promising compensation. She instructs her followers to remember the faces of BNP-Jamaat members who attacked them.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/AL men will be compensated with Yunus' supporters properties.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“I'm warning BNP-Jamaat. Enough is enough. Remember all the faces. Spare none.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 10, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      The theme of guerrilla warfare recurs in her instructions. She tells victims of attacks to stop waiting for a return to power.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Why do you forget that Bangladesh was liberated through guerrilla warfare? Adopt those tactics. Take action against them.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Sept 23, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      In another call from late September, she orders her followers to "live like living beings" by identifying and resisting those who have harmed them.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Identify them, resist - Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Take action against those who have harmed you. This is my order. To survive, you have to live like a living being.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Sept 23, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Following the ban on her party, Hasina expressed desperation. She stated that since the Awami League is banned, the "only option" left is violence.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Attacking them is the only option-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Since our party is banned, our only option is to attack and kill the BNP and Jamaat men. I don’t see any other option.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Sept 28, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Mobilization remains a key theme. In October, she urged all leaders and activists to "rise up" and protest with whatever resources they have available.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Resist with whatever you have.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“All leaders and activists of the Awami League must rise up today. Protest with everything they have. Stand up.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 23, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      The former Prime Minister has also issued direct death threats against those she believes attempted to assassinate her.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Those who wanted to kill me will die-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Those who tried take my life will have to die.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Aug 10, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Responding to the ban on the Awami League, Hasina labeled Muhammad Yunus a usurper and vowed accountability.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Hasina_s warning on AL ban.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“For this unlawful seizure of power, they will face consequences one day. The responsibility for the violence and murder will be held accountable.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Nov 2, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Her call for retribution is sometimes framed in religious terms, invoking the principle of "an eye for an eye".
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“The one who burns your house, why will he have his house intact? A hand for a hand, an eye for an eye.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Nov 25, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Even internal disruptions are met with harsh language. When some participants disrupted one of her calls, she labeled them "bastards".
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Hasina calling dissenters Pakistani bastards.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Some bad guys are entering the call... These are the bastards of Pakistani ghosts. I will put them on a ship and send them to Karachi.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Aug 1, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      In a lengthy commentary on the armed forces, Hasina expressed frustration that the army has "lost its strength."
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Hasina on liability of deaths.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“Has the army lost its strength? Can't they arrest them and take them away? Then they would’ve gotten an answer.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 23, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Despite the overwhelming evidence of state violence during her tenure, Hasina continues to deny responsibility for the deaths during the July-August crackdown.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Hasina_s version of August 5.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“I did not order anyone to be killed; it was Dr Mohammad Yunus who gave the order. Tarek Zia is also involved in it.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Nov 24, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Finally, emphasizing unity among her scattered followers, she urged them to compile lists of those who harmed them.
-    </p>
-
-    <div class="audio-card" data-src="./assets/audio/Unite and resist.mp3">
-      <div class="bg-image"></div>
-      <div class="card-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“An eye for an eye, a hand for a hand, keeping in mind the Quran. You will take action wherever you have it. This is what I want.”</div>
-          <span class="cursor"></span>
-        </div>
-        <div class="player-container">
-          <button class="play-button" aria-label="Play Audio">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> • Oct 29, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
-
-  </div> <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       
       // 1. GENERATE VISUALIZER BARS
       document.querySelectorAll('.player-container').forEach(container => {
-        for (let i = 0; i < 40; i++) {
+        // Create 20 bars for a balanced equalizer look
+        for (let i = 0; i < 20; i++) { 
           const bar = document.createElement('div');
           bar.classList.add('wave-bar');
-          bar.style.animationDelay = `${Math.random() * 0.5}s`;
+          // Randomized heights for natural waveform look
           bar.style.height = `${4 + Math.random() * 8}px`; 
-          container.insertBefore(bar, container.firstChild);
+          // Staggered animation for wave effect
+          bar.style.animationDelay = `${Math.random() * 0.5}s`;
+          container.appendChild(bar);
         }
       });
 
-      // 2. MAIN LOGIC (SCROLL OBSERVER + PLAYER)
-      
-      // --- INTERSECTION OBSERVER FOR AUTOPLAY ---
+      // 2. SCROLL & PLAY LOGIC
       const observerOptions = {
         root: null,
-        rootMargin: '-20% 0px -20% 0px', // Active only when relatively centered
-        threshold: 0.6 // 60% of card must be visible
+        rootMargin: '-35% 0px -35% 0px', 
+        threshold: 0.5 
       };
 
       const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          const card = entry.target;
-          const audio = card.querySelector('audio');
+          const section = entry.target;
+          const audio = section.querySelector('audio');
           
           if (entry.isIntersecting) {
-            // Highlight Card
-            document.querySelectorAll('.audio-card').forEach(c => c.classList.remove('active-card'));
-            card.classList.add('active-card');
+            // FOCUS
+            document.querySelectorAll('.audio-section').forEach(s => s.classList.remove('active-section'));
+            section.classList.add('active-section');
 
-            // Pause others
+            // PAUSE OTHERS
             document.querySelectorAll('audio').forEach(a => {
               if (a !== audio) { a.pause(); a.currentTime = 0; }
             });
 
-            // Attempt Autoplay
+            // ATTEMPT AUTOPLAY
             const playPromise = audio.play();
             if (playPromise !== undefined) {
-              playPromise.catch(error => {
-                // Auto-play was prevented. This is expected on first load until user interaction.
-                console.log('Autoplay prevented by browser policy (awaiting user interaction)');
-              });
+              playPromise.catch(() => console.log('Autoplay waiting for interaction'));
             }
           } else {
-            // Pause if it leaves the view
-            if (!audio.paused) {
-              audio.pause();
-            }
-            card.classList.remove('active-card');
+            // UNFOCUS
+            if (!audio.paused) audio.pause();
+            section.classList.remove('active-section');
           }
         });
       }, observerOptions);
 
-
-      // --- INIT CARDS ---
-      document.querySelectorAll('.audio-card').forEach(card => {
-        const audio = card.querySelector('audio');
-        const btn = card.querySelector('.play-button');
-        const container = card.querySelector('.player-container');
-        const cursor = card.querySelector('.cursor');
-        const textContainer = card.querySelector('.typewriter-text');
+      // --- INIT SECTIONS ---
+      document.querySelectorAll('.audio-section').forEach(section => {
+        const audio = section.querySelector('audio');
+        const btn = section.querySelector('.play-button');
+        const container = section.querySelector('.player-container');
+        const cursor = section.querySelector('.cursor');
+        const textContainer = section.querySelector('.typewriter-text');
         
-        // Add to observer
-        scrollObserver.observe(card);
+        scrollObserver.observe(section);
 
         const rawText = textContainer.innerText;
         textContainer.innerHTML = ''; 
@@ -739,24 +551,18 @@
           return span;
         });
 
-        const src = card.dataset.src;
+        const src = section.dataset.src;
         if (src) audio.src = src;
 
-        // --- TYPEWRITER UPDATER ---
+        // --- TYPEWRITER ---
         const updateTypewriter = () => {
           const dur = audio.duration;
           const ct = audio.currentTime;
           if (!dur) return;
-
           const percentage = ct / dur;
           const visibleCount = Math.floor(percentage * chars.length);
-
           chars.forEach((char, index) => {
-            if (index < visibleCount) {
-              char.classList.add('visible');
-            } else {
-              char.classList.remove('visible');
-            }
+            char.classList.toggle('visible', index < visibleCount);
           });
         };
 
@@ -768,24 +574,20 @@
           chars.forEach(char => char.classList.remove('visible'));
         };
 
-        // --- CLICK HANDLER (Manual Override) ---
         btn.addEventListener('click', () => {
           if (audio.paused) {
-            document.querySelectorAll('audio').forEach(o => {
-              if (o !== audio) { o.pause(); o.currentTime = 0; }
-            });
+            document.querySelectorAll('audio').forEach(o => { if (o !== audio) { o.pause(); o.currentTime = 0; } });
             audio.play();
           } else {
             audio.pause();
           }
         });
 
-        // --- EVENTS ---
         audio.addEventListener('play', () => {
           btn.classList.add('is-playing');
           container.classList.add('active');
           cursor.classList.add('typing');
-          cursor.classList.remove('paused');
+          cursor.style.opacity = '1';
         });
 
         audio.addEventListener('timeupdate', updateTypewriter);
@@ -794,14 +596,9 @@
           btn.classList.remove('is-playing');
           container.classList.remove('active');
           cursor.classList.remove('typing');
-          cursor.classList.add('paused');
         });
 
         audio.addEventListener('ended', resetUI);
-        
-        document.addEventListener('play', (e) => {
-          if(e.target !== audio && e.target.tagName === 'AUDIO') resetUI();
-        }, true);
       });
     });
   </script>
