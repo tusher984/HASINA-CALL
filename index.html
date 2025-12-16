@@ -16,7 +16,7 @@
       --app-bg: #fcfcfc;        
       --text-primary: #111111; 
       --text-secondary: #555555;
-      --accent-color: #ef4444; /* Brighter Red from image */
+      --accent-color: #ef4444; 
       
       --font-ui: 'Inter', sans-serif;
       --font-body: 'Merriweather', serif;
@@ -58,27 +58,41 @@
     }
     .brand-logo span { color: var(--accent-color); }
 
-    /* --- HERO --- */
+    /* --- HERO (UPDATED TO FIT IMAGE) --- */
     .hero-header {
       width: 100%;
-      height: 70vh; 
-      background-color: #eee; /* Placeholder if image missing */
-      background-image: url('./assets/photos/hasina-bg.jpg'); 
-      background-size: cover;
+      height: 65vh; /* Adjusted height for better fit */
+      background-color: #000; /* Black background for cinematic look */
+      
+      /* UPDATED: Fits the whole image without cropping */
+      background-image: url('./assets/photos/hasina-bg.gif'); 
+      background-size: contain; 
+      background-repeat: no-repeat;
       background-position: center;
+      
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
       position: relative;
     }
+
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(252,252,252,1) 100%);
+      /* Adjusted gradient to be more subtle since bg is black */
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(252,252,252,1) 100%);
     }
+    
     .hero-content {
-      position: relative; z-index: 2; text-align: center; padding-bottom: 40px;
+      position: relative; 
+      z-index: 2; 
+      text-align: center; 
+      padding-bottom: 40px;
+      width: 100%;
+      /* Add shadow to text to ensure readability over any image color */
+      text-shadow: 0 2px 20px rgba(255, 255, 255, 0.8);
     }
+    
     h1 {
         font-family: var(--font-body);
         font-weight: 900;
@@ -86,6 +100,7 @@
         line-height: 1.1;
         margin: 0 0 10px 0;
     }
+    
     .hero-subtitle {
       font-size: 0.85rem;
       font-weight: 600;
@@ -109,7 +124,7 @@
       margin-bottom: 60px; 
     }
 
-    /* --- NEW CARD DESIGN --- */
+    /* --- CARD DESIGN --- */
     .audio-section {
       position: relative;
       margin: 60px 0 100px 0;
@@ -121,7 +136,6 @@
       opacity: 1;
     }
 
-    /* The Dotted Background Decoration */
     .card-decoration {
       position: absolute;
       top: 15px;
@@ -129,36 +143,32 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      /* CSS Dotted Pattern */
       background-image: radial-gradient(#d1d1d1 1.5px, transparent 1.5px);
       background-size: 6px 6px; 
-      border-right: 2px dotted #ffcccb; /* Subtle hint of red on edges */
+      border-right: 2px dotted #ffcccb;
       border-bottom: 2px dotted #ffcccb;
     }
 
-    /* The Main Card Box */
     .quote-card {
       background: #fff;
-      border: 1px solid var(--accent-color); /* The Red Border */
+      border: 1px solid var(--accent-color);
       padding: 30px 30px 20px 30px;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
 
-    /* Quote Text Styling */
     .quote-text-container {
       margin-bottom: 25px;
     }
     
     .display-text {
-      font-family: var(--font-ui); /* Matches image sans/inter look more than serif actually */
+      font-family: var(--font-ui);
       font-size: 1.35rem; 
       line-height: 1.4;
       color: #111;
       font-weight: 500;
     }
 
-    /* The Horizontal Line */
     .card-separator {
       width: 100%;
       height: 1px;
@@ -166,7 +176,6 @@
       margin-bottom: 20px;
     }
 
-    /* Player Row: Button + Waveform */
     .player-row {
       display: flex;
       align-items: center;
@@ -174,11 +183,10 @@
       height: 50px;
     }
 
-    /* --- PLAY BUTTON (RED CIRCLE) --- */
     .play-button {
       width: 52px; 
       height: 52px;
-      background-color: var(--accent-color); /* Solid Red */
+      background-color: var(--accent-color);
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -202,32 +210,29 @@
     .play-button svg {
       width: 20px; 
       height: 20px;
-      fill: #fff; /* White Icon */
+      fill: #fff;
     }
 
-    /* Hide/Show Icons */
     .play-button .icon-pause { display: none; }
     .play-button.is-playing .icon-play { display: none; }
     .play-button.is-playing .icon-pause { display: block; }
 
-    /* --- WAVEFORM VISUALIZER --- */
     .visualizer-container {
       flex-grow: 1;
       height: 40px;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Spread bars evenly */
+      justify-content: space-between;
     }
 
     .wave-bar {
       width: 3px; 
-      background-color: #111; /* Black bars like image */
+      background-color: #111;
       border-radius: 2px;
       height: 8px;
       transition: height 0.1s ease;
     }
 
-    /* Animation when playing */
     .visualizer-container.active .wave-bar {
       animation: wave-jump 0.5s infinite ease-in-out;
     }
@@ -238,7 +243,6 @@
       100% { height: 10%; }
     }
 
-    /* --- META INFO (Telegram, 2023 style) --- */
     .meta-caption {
       margin-top: 15px;
       font-size: 0.8rem;
@@ -289,7 +293,7 @@
           </button>
           
           <div class="visualizer-container">
-             </div>
+          </div>
         </div>
 
       </div>
@@ -360,17 +364,13 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      // 1. GENERATE VISUALIZER BARS (High density for the image look)
+      // 1. GENERATE VISUALIZER BARS
       document.querySelectorAll('.visualizer-container').forEach(container => {
-        // Create 45 bars for that dense waveform look in the image
         for (let i = 0; i < 45; i++) { 
           const bar = document.createElement('div');
           bar.classList.add('wave-bar');
           
-          // Random static heights to look like a real waveform even when paused
-          // The image shows a pattern where middle is higher
           let height = Math.random() * 100;
-          // Apply a "bell curve" logic roughly to make it look like audio
           if (i < 5 || i > 40) height = height * 0.2;
           else if (i < 15 || i > 30) height = height * 0.6;
           
@@ -394,11 +394,9 @@
           
           if (entry.isIntersecting) {
             section.classList.add('active-section');
-            // Pause others
             document.querySelectorAll('audio').forEach(a => {
               if (a !== audio) { a.pause(); a.currentTime = 0; }
             });
-            // Optional: Auto-play on scroll
              audio.play().catch(() => {});
           } else {
             section.classList.remove('active-section');
@@ -415,14 +413,11 @@
         
         scrollObserver.observe(section);
         
-        // Load Source
         const src = section.dataset.src;
         if (src) audio.src = src;
 
-        // Toggle Play
         btn.addEventListener('click', () => {
           if (audio.paused) {
-            // Stop others
             document.querySelectorAll('audio').forEach(o => { 
                 if (o !== audio) { o.pause(); o.currentTime = 0; } 
             });
@@ -432,7 +427,6 @@
           }
         });
 
-        // UI Updates
         audio.addEventListener('play', () => {
           btn.classList.add('is-playing');
           visualizer.classList.add('active');
