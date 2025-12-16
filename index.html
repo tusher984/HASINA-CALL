@@ -8,19 +8,18 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@300;400;500;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
 
   <style>
     /* --- THEME VARIABLES --- */
     :root {
-      --app-bg: #fcfcfc;       
+      --app-bg: #fcfcfc;        
       --text-primary: #111111; 
-      --text-secondary: #888888;
-      --accent-color: #e63946; 
+      --text-secondary: #555555;
+      --accent-color: #ef4444; /* Brighter Red from image */
       
       --font-ui: 'Inter', sans-serif;
       --font-body: 'Merriweather', serif;
-      --font-mono: 'Courier Prime', monospace;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -31,8 +30,7 @@
       color: var(--text-primary);
       margin: 0;
       padding: 0;
-      line-height: 1.8;
-      font-weight: 300;
+      line-height: 1.6;
     }
 
     /* --- NAV --- */
@@ -41,308 +39,213 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 70px;
-      background: rgba(255, 255, 255, 0.01); 
+      height: 60px;
+      background: rgba(255, 255, 255, 0.9); 
       backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .brand-logo {
-      font-family: var(--font-ui);
       font-weight: 800;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #000; 
-      text-shadow: 0 1px 10px rgba(255,255,255,0.9);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
     .brand-logo span { color: var(--accent-color); }
 
-    /* --- HERO SECTION --- */
+    /* --- HERO --- */
     .hero-header {
-      position: relative;
       width: 100%;
-      height: 90vh; 
+      height: 70vh; 
+      background-color: #eee; /* Placeholder if image missing */
       background-image: url('./assets/photos/hasina-bg.jpg'); 
       background-size: cover;
-      background-position: center top;
+      background-position: center;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      overflow: hidden;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to bottom, 
-        rgba(0,0,0,0) 0%, 
-        rgba(252,252,252,0.1) 60%, 
-        var(--app-bg) 100%
-      );
-      z-index: 1;
-    }
-
-    .hero-content {
       position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 0 20px 60px 20px;
-      max-width: 800px;
     }
-
-    /* Headlines */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(252,252,252,1) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; padding-bottom: 40px;
+    }
     h1 {
         font-family: var(--font-body);
         font-weight: 900;
-        font-size: 4rem;
-        letter-spacing: -0.04em;
-        line-height: 1;
-        color: #111;
-        margin: 0 0 15px 0;
-        opacity: 0;
-        animation: fadeUp 1s ease forwards 0.3s;
+        font-size: 3.5rem;
+        line-height: 1.1;
+        margin: 0 0 10px 0;
     }
-
     .hero-subtitle {
-      font-family: var(--font-ui);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--accent-color);
       text-transform: uppercase;
-      letter-spacing: 3px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.6s;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .hero-subtitle::before, .hero-subtitle::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        width: 30px;
-        height: 1px;
-        background-color: var(--accent-color);
-        opacity: 0.5;
-    }
-    .hero-subtitle::before { left: -45px; }
-    .hero-subtitle::after { right: -45px; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      letter-spacing: 2px;
     }
 
     /* --- CONTAINER --- */
     .article-container {
-      max-width: 680px; 
+      max-width: 650px; 
       margin: 0 auto;
-      padding: 0 20px 150px 20px;
-      position: relative;
-      z-index: 3;
+      padding: 40px 20px 150px 20px;
     }
 
     .story-text {
       font-family: var(--font-body);
-      font-size: 1.2rem;
-      line-height: 1.9;
-      color: #222; 
-      margin-bottom: 100px; 
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .story-text:last-of-type { border-bottom: none; }
-    
-    .story-text:first-of-type::first-letter {
-      float: left;
-      font-size: 4rem;
-      line-height: 0.75;
-      margin-right: 15px;
-      margin-top: 8px;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #333; 
+      margin-bottom: 60px; 
     }
 
-    /* --- AUDIO SECTION --- */
+    /* --- NEW CARD DESIGN --- */
     .audio-section {
-      width: 100%;
       position: relative;
-      margin-bottom: 140px; 
-      padding: 10px 0;
-      
-      opacity: 0.25; 
-      filter: grayscale(100%);
-      transform: scale(0.98);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+      margin: 60px 0 100px 0;
+      opacity: 0.4;
+      transition: opacity 0.6s ease;
     }
-
+    
     .audio-section.active-section {
       opacity: 1;
-      filter: grayscale(0%);
-      transform: scale(1);
     }
 
-    .section-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* QUOTE */
-    .audio-quote-container {
-      margin-bottom: 35px;
-      text-align: center;
-      min-height: 80px;
+    /* The Dotted Background Decoration */
+    .card-decoration {
+      position: absolute;
+      top: 15px;
+      left: 15px;
       width: 100%;
+      height: 100%;
+      z-index: -1;
+      /* CSS Dotted Pattern */
+      background-image: radial-gradient(#d1d1d1 1.5px, transparent 1.5px);
+      background-size: 6px 6px; 
+      border-right: 2px dotted #ffcccb; /* Subtle hint of red on edges */
+      border-bottom: 2px dotted #ffcccb;
     }
 
-    .typewriter-text {
-      font-family: var(--font-mono);
-      font-size: 1.45rem; 
-      line-height: 1.5;
-      color: #000;
-      white-space: pre-wrap;
-      display: inline;
+    /* The Main Card Box */
+    .quote-card {
+      background: #fff;
+      border: 1px solid var(--accent-color); /* The Red Border */
+      padding: 30px 30px 20px 30px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
 
-    .char { opacity: 0.15; transition: opacity 0.1s; }
-    .char.visible { opacity: 1; color: #000; font-weight: 700; }
-
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 1.2em;
-      background-color: var(--accent-color);
-      vertical-align: sub;
-      margin-left: 4px;
-      opacity: 0;
-    }
-    .cursor.typing { opacity: 1; animation: none; }
-
-    /* PLAYER PILL */
-    .player-pill {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background: rgba(255,255,255,0.8);
-        border: 1px solid rgba(0,0,0,0.08);
-        padding: 8px 25px;
-        border-radius: 50px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-        transition: box-shadow 0.3s ease;
+    /* Quote Text Styling */
+    .quote-text-container {
+      margin-bottom: 25px;
     }
     
-    .audio-section.active-section .player-pill {
-        box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    .display-text {
+      font-family: var(--font-ui); /* Matches image sans/inter look more than serif actually */
+      font-size: 1.35rem; 
+      line-height: 1.4;
+      color: #111;
+      font-weight: 500;
     }
 
-    /* VISUALIZER */
-    .player-container {
-      position: relative;
-      height: 30px;
+    /* The Horizontal Line */
+    .card-separator {
+      width: 100%;
+      height: 1px;
+      background-color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    /* Player Row: Button + Waveform */
+    .player-row {
       display: flex;
       align-items: center;
-      gap: 4px; /* Slightly wider gap for Soundcloud look */
+      gap: 20px;
+      height: 50px;
     }
 
-    .wave-bar {
-      width: 3px; 
-      background-color: #ddd; 
-      border-radius: 3px;
-      height: 6px;
-      transition: height 0.1s ease, background-color 0.3s;
-    }
-
-    @keyframes wave-jump {
-      0% { height: 6px; }
-      50% { height: 28px; }
-      100% { height: 6px; }
-    }
-
-    .player-container.active .wave-bar {
-      animation: wave-jump 0.6s infinite ease-in-out;
-      background-color: var(--accent-color);
-    }
-
-    /* --- JUMPING PLAY BUTTON ANIMATION --- */
+    /* --- PLAY BUTTON (RED CIRCLE) --- */
     .play-button {
-      width: 44px; 
-      height: 44px;
-      background-color: #fff; 
-      border: 1px solid #ddd;
+      width: 52px; 
+      height: 52px;
+      background-color: var(--accent-color); /* Solid Red */
+      border: none;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       flex-shrink: 0;
-      position: relative;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
     }
 
     .play-button:hover {
-      border-color: var(--accent-color);
       transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
     }
-
-    /* THE JUMP ANIMATION KEYFRAMES */
-    @keyframes jump-beat {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); } /* Jump Up */
-      100% { transform: translateY(0); }
-    }
-
+    
     .play-button.is-playing {
-      background-color: var(--accent-color);
-      border-color: var(--accent-color);
-      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
-      /* Apply the Jump */
-      animation: jump-beat 0.5s infinite ease-in-out alternate;
+      transform: scale(0.95);
     }
 
     .play-button svg {
-      width: 14px; 
-      height: 14px;
-      fill: #222; 
-      transition: fill 0.3s;
+      width: 20px; 
+      height: 20px;
+      fill: #fff; /* White Icon */
     }
 
-    .play-button.is-playing svg { fill: #fff; }
-
-    /* Icons */
+    /* Hide/Show Icons */
     .play-button .icon-pause { display: none; }
     .play-button.is-playing .icon-play { display: none; }
     .play-button.is-playing .icon-pause { display: block; }
 
-
-    /* META INFO */
-    .meta-info {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 25px;
+    /* --- WAVEFORM VISUALIZER --- */
+    .visualizer-container {
+      flex-grow: 1;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Spread bars evenly */
     }
-    .meta-name { color: #111; font-weight: 700; margin-right: 6px; }
 
-    /* Mobile Tweaks */
-    @media (max-width: 600px) {
-      h1 { font-size: 3rem; }
-      .hero-header { height: 80vh; }
-      .player-pill { padding: 8px 15px; gap: 15px; }
+    .wave-bar {
+      width: 3px; 
+      background-color: #111; /* Black bars like image */
+      border-radius: 2px;
+      height: 8px;
+      transition: height 0.1s ease;
     }
+
+    /* Animation when playing */
+    .visualizer-container.active .wave-bar {
+      animation: wave-jump 0.5s infinite ease-in-out;
+    }
+
+    @keyframes wave-jump {
+      0% { height: 10%; }
+      50% { height: 100%; }
+      100% { height: 10%; }
+    }
+
+    /* --- META INFO (Telegram, 2023 style) --- */
+    .meta-caption {
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: #666;
+      font-family: var(--font-body);
+    }
+    .meta-caption strong { color: #000; font-weight: 700; margin-right: 5px; }
 
   </style>
 </head>
@@ -364,71 +267,62 @@
   <div class="article-container">
 
     <p class="story-text">
-      Since the fall of her government, numerous phone conversations involving former Prime Minister Sheikh Hasina have been leaked on social media. These recordings offer a rare glimpse into her mindset during and after the July uprising. In one recording, Hasina claims that the army is being unfairly tried for merely following orders during the crackdown in July and August 2025.
+      Since the fall of her government, numerous phone conversations involving former Prime Minister Sheikh Hasina have been leaked on social media. These recordings offer a rare glimpse into her mindset during and after the July uprising.
     </p>
 
     <div class="audio-section" data-src="./assets/audio/Hasina threatens army-prosecutor.mp3">
-      <div class="section-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“How do they show the victory sign after stealing?”</div>
-          <span class="cursor"></span>
-        </div>
+      <div class="card-decoration"></div>
+      <div class="quote-card">
         
-        <div class="player-pill">
-            <button class="play-button" aria-label="Play Audio">
-                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="player-container">
-                </div>
+        <div class="quote-text-container">
+          <div class="display-text">
+            “How do they show the victory sign after stealing? I will take care of each incident.”
+          </div>
         </div>
 
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 29, 2025</div>
+        <div class="card-separator"></div>
+
+        <div class="player-row">
+          <button class="play-button" aria-label="Play Audio">
+             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          
+          <div class="visualizer-container">
+             </div>
+        </div>
+
       </div>
+      <div class="meta-caption"><strong>Phone Call</strong> Oct 29, 2025</div>
       <audio preload="none"></audio>
     </div>
 
     <p class="story-text">
-      The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh by beating or killing activists from opposing parties.
+      The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh.
     </p>
 
     <div class="audio-section" data-src="./assets/audio/Hasina calls for revenge.mp3">
-      <div class="section-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“I'm creating a list of everyone who was beaten... I will exact vengeance. I will cleanse them this time. My goal is to clean the dirt of Bangladesh.”</div>
-          <span class="cursor"></span>
+      <div class="card-decoration"></div>
+      <div class="quote-card">
+        
+        <div class="quote-text-container">
+          <div class="display-text">
+            “I'm creating a list of everyone who was beaten... I will exact vengeance. My goal is to clean the dirt of Bangladesh.”
+          </div>
         </div>
-        <div class="player-pill">
-            <button class="play-button" aria-label="Play Audio">
-                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="player-container"></div>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 29, 2025</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
 
-    <p class="story-text">
-      Her anger is frequently directed at Chief Adviser Muhammad Yunus. Accusing him of arresting her supporters, she threatens to pay him back in his own coin by putting him behind bars.
-    </p>
+        <div class="card-separator"></div>
 
-    <div class="audio-section" data-src="./assets/audio/Hasina threatens action against CA Yunus.mp3">
-      <div class="section-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“He arrested my supporters. I will put him behind the bars too.”</div>
-          <span class="cursor"></span>
+        <div class="player-row">
+          <button class="play-button" aria-label="Play Audio">
+             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="visualizer-container"></div>
         </div>
-        <div class="player-pill">
-            <button class="play-button" aria-label="Play Audio">
-                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="player-container"></div>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 28, 2025</div>
+
       </div>
+      <div class="meta-caption"><strong>Leaked Audio</strong> Oct 29, 2025</div>
       <audio preload="none"></audio>
     </div>
 
@@ -437,42 +331,27 @@
     </p>
 
     <div class="audio-section" data-src="./assets/audio/Hasina got license to kill 227.mp3">
-      <div class="section-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“The punishment for one case and the punishment for 225 cases are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”</div>
-          <span class="cursor"></span>
+      <div class="card-decoration"></div>
+      <div class="quote-card">
+        
+        <div class="quote-text-container">
+          <div class="display-text">
+            “The punishment for one case and the punishment for two hundred and a quarter are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”
+          </div>
         </div>
-        <div class="player-pill">
-            <button class="play-button" aria-label="Play Audio">
-                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="player-container"></div>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Oct 28, 2024</div>
-      </div>
-      <audio preload="none"></audio>
-    </div>
 
-    <p class="story-text">
-      Defending her actions, she urges her supporters to fight back using the tactics of guerrilla warfare. She warns that anyone who touches her party "will burn their hands."
-    </p>
+        <div class="card-separator"></div>
 
-    <div class="audio-section" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
-      <div class="section-content">
-        <div class="audio-quote-container">
-          <div class="typewriter-text">“If you touch fire, your hand will burn. We will make them understand that. Bangladesh was liberated by guerrilla warfare. So teach them a lesson.”</div>
-          <span class="cursor"></span>
+        <div class="player-row">
+          <button class="play-button" aria-label="Play Audio">
+             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="visualizer-container"></div>
         </div>
-        <div class="player-pill">
-            <button class="play-button" aria-label="Play Audio">
-                <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="player-container"></div>
-        </div>
-        <div class="meta-info"><span class="meta-name">Sheikh Hasina</span> Jun 3, 2025</div>
+
       </div>
+      <div class="meta-caption"><strong>Telegram</strong> 2023</div>
       <audio preload="none"></audio>
     </div>
     
@@ -481,25 +360,31 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      // 1. GENERATE VISUALIZER BARS
-      document.querySelectorAll('.player-container').forEach(container => {
-        // Create 20 bars for a balanced equalizer look
-        for (let i = 0; i < 20; i++) { 
+      // 1. GENERATE VISUALIZER BARS (High density for the image look)
+      document.querySelectorAll('.visualizer-container').forEach(container => {
+        // Create 45 bars for that dense waveform look in the image
+        for (let i = 0; i < 45; i++) { 
           const bar = document.createElement('div');
           bar.classList.add('wave-bar');
-          // Randomized heights for natural waveform look
-          bar.style.height = `${4 + Math.random() * 8}px`; 
-          // Staggered animation for wave effect
+          
+          // Random static heights to look like a real waveform even when paused
+          // The image shows a pattern where middle is higher
+          let height = Math.random() * 100;
+          // Apply a "bell curve" logic roughly to make it look like audio
+          if (i < 5 || i > 40) height = height * 0.2;
+          else if (i < 15 || i > 30) height = height * 0.6;
+          
+          bar.style.height = `${Math.max(10, height)}%`; 
           bar.style.animationDelay = `${Math.random() * 0.5}s`;
           container.appendChild(bar);
         }
       });
 
-      // 2. SCROLL & PLAY LOGIC
+      // 2. SCROLL OBSERVER
       const observerOptions = {
         root: null,
-        rootMargin: '-35% 0px -35% 0px', 
-        threshold: 0.5 
+        rootMargin: '-20% 0px -20% 0px', 
+        threshold: 0.6 
       };
 
       const scrollObserver = new IntersectionObserver((entries) => {
@@ -508,97 +393,60 @@
           const audio = section.querySelector('audio');
           
           if (entry.isIntersecting) {
-            // FOCUS
-            document.querySelectorAll('.audio-section').forEach(s => s.classList.remove('active-section'));
             section.classList.add('active-section');
-
-            // PAUSE OTHERS
+            // Pause others
             document.querySelectorAll('audio').forEach(a => {
               if (a !== audio) { a.pause(); a.currentTime = 0; }
             });
-
-            // ATTEMPT AUTOPLAY
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(() => console.log('Autoplay waiting for interaction'));
-            }
+            // Optional: Auto-play on scroll
+             audio.play().catch(() => {});
           } else {
-            // UNFOCUS
-            if (!audio.paused) audio.pause();
             section.classList.remove('active-section');
+            if(!audio.paused) audio.pause();
           }
         });
       }, observerOptions);
 
-      // --- INIT SECTIONS ---
+      // 3. AUDIO LOGIC
       document.querySelectorAll('.audio-section').forEach(section => {
         const audio = section.querySelector('audio');
         const btn = section.querySelector('.play-button');
-        const container = section.querySelector('.player-container');
-        const cursor = section.querySelector('.cursor');
-        const textContainer = section.querySelector('.typewriter-text');
+        const visualizer = section.querySelector('.visualizer-container');
         
         scrollObserver.observe(section);
-
-        const rawText = textContainer.innerText;
-        textContainer.innerHTML = ''; 
         
-        const chars = rawText.split('').map(char => {
-          const span = document.createElement('span');
-          span.innerText = char;
-          span.classList.add('char');
-          textContainer.appendChild(span);
-          return span;
-        });
-
+        // Load Source
         const src = section.dataset.src;
         if (src) audio.src = src;
 
-        // --- TYPEWRITER ---
-        const updateTypewriter = () => {
-          const dur = audio.duration;
-          const ct = audio.currentTime;
-          if (!dur) return;
-          const percentage = ct / dur;
-          const visibleCount = Math.floor(percentage * chars.length);
-          chars.forEach((char, index) => {
-            char.classList.toggle('visible', index < visibleCount);
-          });
-        };
-
-        const resetUI = () => {
-          btn.classList.remove('is-playing');
-          container.classList.remove('active');
-          cursor.classList.remove('typing', 'paused'); 
-          cursor.style.opacity = '0'; 
-          chars.forEach(char => char.classList.remove('visible'));
-        };
-
+        // Toggle Play
         btn.addEventListener('click', () => {
           if (audio.paused) {
-            document.querySelectorAll('audio').forEach(o => { if (o !== audio) { o.pause(); o.currentTime = 0; } });
+            // Stop others
+            document.querySelectorAll('audio').forEach(o => { 
+                if (o !== audio) { o.pause(); o.currentTime = 0; } 
+            });
             audio.play();
           } else {
             audio.pause();
           }
         });
 
+        // UI Updates
         audio.addEventListener('play', () => {
           btn.classList.add('is-playing');
-          container.classList.add('active');
-          cursor.classList.add('typing');
-          cursor.style.opacity = '1';
+          visualizer.classList.add('active');
         });
-
-        audio.addEventListener('timeupdate', updateTypewriter);
 
         audio.addEventListener('pause', () => {
           btn.classList.remove('is-playing');
-          container.classList.remove('active');
-          cursor.classList.remove('typing');
+          visualizer.classList.remove('active');
         });
 
-        audio.addEventListener('ended', resetUI);
+        audio.addEventListener('ended', () => {
+          btn.classList.remove('is-playing');
+          visualizer.classList.remove('active');
+        });
       });
     });
   </script>
