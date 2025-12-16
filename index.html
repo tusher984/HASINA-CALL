@@ -58,18 +58,15 @@
     }
     .brand-logo span { color: var(--accent-color); }
 
-    /* --- HERO (UPDATED TO FIT IMAGE) --- */
+    /* --- HERO --- */
     .hero-header {
       width: 100%;
-      height: 65vh; /* Adjusted height for better fit */
-      background-color: #000; /* Black background for cinematic look */
-      
-      /* UPDATED: Fits the whole image without cropping */
+      height: 65vh; 
+      background-color: #000; 
       background-image: url('./assets/photos/hasina-bg.gif'); 
       background-size: contain; 
       background-repeat: no-repeat;
       background-position: center;
-      
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -79,20 +76,13 @@
 
     .hero-overlay {
       position: absolute; inset: 0;
-      /* Adjusted gradient to be more subtle since bg is black */
       background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(252,252,252,1) 100%);
     }
-    
     .hero-content {
-      position: relative; 
-      z-index: 2; 
-      text-align: center; 
-      padding-bottom: 40px;
+      position: relative; z-index: 2; text-align: center; padding-bottom: 40px;
       width: 100%;
-      /* Add shadow to text to ensure readability over any image color */
       text-shadow: 0 2px 20px rgba(255, 255, 255, 0.8);
     }
-    
     h1 {
         font-family: var(--font-body);
         font-weight: 900;
@@ -100,7 +90,6 @@
         line-height: 1.1;
         margin: 0 0 10px 0;
     }
-    
     .hero-subtitle {
       font-size: 0.85rem;
       font-weight: 600;
@@ -157,16 +146,30 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
 
+    /* --- ANIMATED TEXT STYLES --- */
     .quote-text-container {
       margin-bottom: 25px;
+      min-height: 60px; /* Prevent jumpiness */
     }
     
     .display-text {
       font-family: var(--font-ui);
       font-size: 1.35rem; 
-      line-height: 1.4;
+      line-height: 1.5;
       color: #111;
       font-weight: 500;
+    }
+
+    /* The Word Animation Classes */
+    .word-span {
+        opacity: 0.2; /* Faint initially */
+        transition: opacity 0.1s; /* Fast snap */
+    }
+    
+    .word-span.visible {
+        opacity: 1; /* Dark when spoken */
+        color: #000;
+        font-weight: 600; /* Optional: Make current words slightly bolder */
     }
 
     .card-separator {
@@ -207,11 +210,7 @@
       transform: scale(0.95);
     }
 
-    .play-button svg {
-      width: 20px; 
-      height: 20px;
-      fill: #fff;
-    }
+    .play-button svg { width: 20px; height: 20px; fill: #fff; }
 
     .play-button .icon-pause { display: none; }
     .play-button.is-playing .icon-play { display: none; }
@@ -279,9 +278,7 @@
       <div class="quote-card">
         
         <div class="quote-text-container">
-          <div class="display-text">
-            “How do they show the victory sign after stealing? I will take care of each incident.”
-          </div>
+          <div class="display-text">“How do they show the victory sign after stealing? I will take care of each incident.”</div>
         </div>
 
         <div class="card-separator"></div>
@@ -292,8 +289,7 @@
              <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
           
-          <div class="visualizer-container">
-          </div>
+          <div class="visualizer-container"></div>
         </div>
 
       </div>
@@ -310,9 +306,7 @@
       <div class="quote-card">
         
         <div class="quote-text-container">
-          <div class="display-text">
-            “I'm creating a list of everyone who was beaten... I will exact vengeance. My goal is to clean the dirt of Bangladesh.”
-          </div>
+          <div class="display-text">“I'm creating a list of everyone who was beaten... I will exact vengeance. My goal is to clean the dirt of Bangladesh.”</div>
         </div>
 
         <div class="card-separator"></div>
@@ -339,9 +333,7 @@
       <div class="quote-card">
         
         <div class="quote-text-container">
-          <div class="display-text">
-            “The punishment for one case and the punishment for two hundred and a quarter are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”
-          </div>
+          <div class="display-text">“The punishment for one case and the punishment for two hundred and a quarter are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”</div>
         </div>
 
         <div class="card-separator"></div>
@@ -405,17 +397,37 @@
         });
       }, observerOptions);
 
-      // 3. AUDIO LOGIC
+      // 3. AUDIO & WORD SYNC LOGIC
       document.querySelectorAll('.audio-section').forEach(section => {
         const audio = section.querySelector('audio');
         const btn = section.querySelector('.play-button');
         const visualizer = section.querySelector('.visualizer-container');
+        const textContainer = section.querySelector('.display-text');
         
         scrollObserver.observe(section);
         
+        // --- PREPARE WORDS ---
+        // 1. Get text, clear container
+        const rawText = textContainer.innerText;
+        textContainer.innerHTML = ''; 
+        
+        // 2. Split by spaces to get words
+        const words = rawText.split(' ');
+        const wordSpans = [];
+
+        // 3. Wrap each word in a span
+        words.forEach(word => {
+            const span = document.createElement('span');
+            span.innerText = word + ' '; // Add space back for layout
+            span.classList.add('word-span');
+            textContainer.appendChild(span);
+            wordSpans.push(span);
+        });
+
         const src = section.dataset.src;
         if (src) audio.src = src;
 
+        // --- PLAYBACK HANDLERS ---
         btn.addEventListener('click', () => {
           if (audio.paused) {
             document.querySelectorAll('audio').forEach(o => { 
@@ -425,6 +437,27 @@
           } else {
             audio.pause();
           }
+        });
+
+        // --- ANIMATION UPDATE LOOP ---
+        audio.addEventListener('timeupdate', () => {
+            if (!audio.duration) return;
+            
+            // Calculate percentage played
+            const percent = audio.currentTime / audio.duration;
+            
+            // Determine how many words should be visible
+            // Math.floor(percent * totalWords)
+            const wordsToShow = Math.floor(percent * wordSpans.length);
+            
+            // Toggle classes
+            wordSpans.forEach((span, index) => {
+                if (index <= wordsToShow) {
+                    span.classList.add('visible');
+                } else {
+                    span.classList.remove('visible');
+                }
+            });
         });
 
         audio.addEventListener('play', () => {
@@ -440,6 +473,9 @@
         audio.addEventListener('ended', () => {
           btn.classList.remove('is-playing');
           visualizer.classList.remove('active');
+          // Optional: Leave words visible or reset?
+          // Let's leave them visible (do nothing) or reset:
+          // wordSpans.forEach(s => s.classList.remove('visible'));
         });
       });
     });
