@@ -8,47 +8,55 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:wght@300;400;700;900&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- THEME VARIABLES --- */
+    /* --- MODERN RESET & VARIABLES --- */
     :root {
-      --app-bg: #fcfcfc;        
-      --text-primary: #111111; 
-      --text-secondary: #555555;
-      --accent-color: #ef4444; /* Netra Red */
+      --bg-color: #f9f9f9;        
+      --text-main: #1a1a1a; 
+      --text-muted: #555555;
+      --accent: #ef4444; /* Netra Red */
+      --border-color: #e5e5e5;
       
-      --font-ui: 'Inter', sans-serif;
-      --font-body: 'Merriweather', serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'Merriweather', serif;
+      
+      --card-shadow-offset: 8px;
+      --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     
     body {
-      font-family: var(--font-ui);
-      background-color: var(--app-bg);
-      color: var(--text-primary);
+      font-family: var(--font-sans);
+      background-color: var(--bg-color);
+      color: var(--text-main);
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    /* --- NAV --- */
+    /* --- GLASS HEADER --- */
     .app-header {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 60px;
-      background: rgba(255, 255, 255, 0.98); 
-      backdrop-filter: blur(10px); z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 64px;
+      background: rgba(255, 255, 255, 0.85); 
+      backdrop-filter: blur(12px); 
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
       display: flex; align-items: center; justify-content: center;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(0,0,0,0.03);
     }
 
-    .brand-logo { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .brand-logo span { color: var(--accent-color); }
+    .brand-logo { 
+      font-weight: 800; font-size: 0.85rem; letter-spacing: 0.15em; 
+      text-transform: uppercase; color: var(--text-main);
+    }
+    .brand-logo span { color: var(--accent); }
 
-    /* --- HERO HEADER --- */
+    /* --- CINEMATIC HERO --- */
     .hero-header {
-      width: 100%; height: 80vh; position: relative;
+      width: 100%; height: 85vh; position: relative;
       background-color: #fcfcfc; 
       display: flex; flex-direction: column;
       justify-content: flex-end; align-items: center;
@@ -56,206 +64,238 @@
     }
 
     .hero-image-container {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0;
+        position: absolute; inset: 0; z-index: 0;
         background-image: url('./assets/photos/hasina-bg.gif'); 
         background-size: contain; 
         background-repeat: no-repeat;
         background-position: center bottom;
-        /* White fade out on sides */
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-        mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
     }
 
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(252,252,252,1) 100%);
+      background: linear-gradient(to bottom, transparent 50%, var(--bg-color) 100%);
       z-index: 1;
     }
     
     .hero-content {
-      position: relative; z-index: 2; text-align: center; padding: 0 20px 40px 20px;
-      width: 100%; max-width: 800px;
+      position: relative; z-index: 2; text-align: center; padding: 0 20px 60px 20px;
+      width: 100%; max-width: 780px;
     }
     
     .hero-label {
-      background: var(--accent-color); color: #fff; padding: 4px 12px;
-      text-transform: uppercase; font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 1px; display: inline-block; margin-bottom: 15px;
+      background: var(--accent); color: #fff; padding: 6px 14px;
+      text-transform: uppercase; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 1.2px; display: inline-block; margin-bottom: 20px;
+      border-radius: 2px;
     }
 
     h1 {
-        font-family: var(--font-body); font-weight: 900; font-size: 2.8rem;
-        line-height: 1.1; color: #111; margin: 0 0 15px 0;
+        font-family: var(--font-serif); font-weight: 900; font-size: clamp(2rem, 5vw, 3.2rem);
+        line-height: 1.15; color: #111; margin: 0 0 16px 0;
+        letter-spacing: -0.02em;
     }
 
     .hero-subtitle {
-      font-size: 1.1rem; font-weight: 400; color: #555;
-      font-family: var(--font-body); font-style: italic;
+      font-size: 1.15rem; font-weight: 400; color: #666;
+      font-family: var(--font-serif); font-style: italic;
     }
 
-    /* --- ARTICLE CONTAINER --- */
+    /* --- ARTICLE LAYOUT --- */
     .article-container {
-      max-width: 680px; margin: 0 auto; padding: 40px 20px 150px 20px;
+      max-width: 680px; margin: 0 auto; padding: 0 24px 160px 24px;
     }
 
     .story-text {
-      font-family: var(--font-body); font-size: 1.15rem; line-height: 1.9;
-      color: #222; margin-bottom: 30px; 
+      font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.8;
+      color: #2c2c2c; margin-bottom: 2rem; 
     }
+
+    .story-text strong { font-weight: 700; color: #000; }
 
     /* =========================================
-       KARAOKE WORD HIGHLIGHT LOGIC
-       ========================================= */
-    .karaoke-word {
-        color: #999; /* Inactive: Grey */
-        transition: color 0.1s ease;
-    }
-    .karaoke-word.active {
-        color: #111; /* Active: Black */
-    }
-    /* Specific for Card to ensure contrast */
-    .card-quote-text .karaoke-word { color: #888; }
-    .card-quote-text .karaoke-word.active { color: #000; font-weight: 500; }
-
-    /* =========================================
-       STYLE 1: RED CARD LAYOUT (Graphic Style)
-       ========================================= */
-    .audio-card-red {
-        position: relative; 
-        margin: 4rem 0 5rem 0; /* Extra margin for external source */
-        background: transparent; cursor: pointer;
-    }
-
-    /* SHADOW LAYER (Dotted) */
-    .card-decoration {
-        position: absolute; 
-        width: 100%; height: 100%; 
-        top: 8px; left: 8px; 
-        z-index: 0;
-        background-image: radial-gradient(#aaa 1.5px, transparent 1.5px);
-        background-size: 4px 4px;
-    }
-
-    /* CARD LAYER (White Box) */
-    .card-inner {
-        position: relative; z-index: 1; background: #fff;
-        border: 0.5px solid var(--accent-color); /* Thin Border */
-        padding: 30px 30px 25px 30px;
-        transition: transform 0.2s ease;
-    }
-    
-    .audio-card-red:hover .card-inner { transform: translateY(-2px); }
-
-    /* SOURCE LABEL (Outside, Bottom Right) */
-    .card-source {
-        position: absolute;
-        bottom: -25px; 
-        right: 0;
-        z-index: 2;
-        font-family: var(--font-ui);
-        font-size: 0.7rem; font-weight: 600; color: #888;
-        text-transform: uppercase; letter-spacing: 1px;
-        text-align: right;
-        background-color: var(--app-bg); 
-        padding-left: 10px;
-    }
-
-    .card-quote-text {
-        font-family: var(--font-body); font-size: 1.35rem; font-weight: 400;
-        line-height: 1.5; color: #444; margin-bottom: 25px;
-    }
-
-    .card-player-row {
-        display: flex; align-items: center; gap: 20px;
-        border-top: 1px solid #eee; padding-top: 20px;
-    }
-
-    .red-play-btn {
-        width: 48px; height: 48px; background: var(--accent-color);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        color: white; flex-shrink: 0; transition: transform 0.2s;
-        box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
-    }
-    .audio-card-red.playing .red-play-btn { transform: scale(0.95); }
-    .red-play-btn svg { fill: white; width: 18px; height: 18px; }
-    
-    .audio-card-red.playing .icon-play { display: none; }
-    .audio-card-red.playing .icon-pause { display: block; }
-    .audio-card-red .icon-pause { display: none; }
-
-    .waveform-container {
-        flex-grow: 1; height: 24px; display: flex; align-items: center; justify-content: space-between; opacity: 0.3;
-    }
-    .bar {
-        width: 3px; background-color: #000; border-radius: 2px;
-        height: 15%; transition: height 0.1s;
-    }
-    .audio-card-red.playing .waveform-container { opacity: 1; }
-    .audio-card-red.playing .bar { animation: wave 0.4s infinite ease-in-out alternate; }
-
-    @keyframes wave { 0% { height: 20%; } 100% { height: 100%; } }
-
-    /* =========================================
-       STYLE 2: INLINE AUDIO (Embedded in Text)
+       COMPONENT: INLINE AUDIO (Integrated)
        ========================================= */
     .inline-trigger {
         cursor: pointer;
         display: inline;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
     }
+    .inline-trigger:hover { border-bottom-color: rgba(239, 68, 68, 0.3); }
 
     .inline-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px; height: 24px;
-        background-color: var(--accent-color);
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 22px; height: 22px; 
+        background-color: var(--accent);
         border-radius: 50%;
         vertical-align: middle;
-        margin-right: 6px; margin-left: 4px;
-        position: relative; top: -2px;
-        transition: transform 0.2s;
+        margin: 0 6px 2px 2px;
+        transition: transform 0.2s ease;
+        box-shadow: 0 2px 5px rgba(239, 68, 68, 0.25);
     }
     
     .inline-trigger:hover .inline-icon { transform: scale(1.1); }
-    .inline-icon svg { width: 10px; height: 10px; fill: #fff; display: block; }
+    .inline-icon svg { width: 9px; height: 9px; fill: #fff; display: block; }
     
+    /* Toggle State */
     .inline-icon .icon-pause { display: none; }
     .inline-trigger.playing .inline-icon .icon-play { display: none; }
     .inline-trigger.playing .inline-icon .icon-pause { display: block; }
 
-    /* --- MUTE BUTTON --- */
-    .global-mute-btn {
-        position: fixed; bottom: 25px; right: 25px; z-index: 2000;
-        background: #fff; border: 1px solid #eee; border-radius: 50px;
-        padding: 10px 20px; display: flex; align-items: center; gap: 8px;
-        cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
-        transition: all 0.2s;
+    /* =========================================
+       COMPONENT: RED CARD LAYOUT (Graphic)
+       ========================================= */
+    .audio-card-red {
+        position: relative; 
+        margin: 5rem 0 6rem 0; 
+        background: transparent; cursor: pointer;
+        user-select: none; -webkit-user-select: none;
     }
-    .global-mute-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-    .global-mute-btn svg { width: 16px; height: 16px; }
+
+    /* Dotted Background Shadow */
+    .card-decoration {
+        position: absolute; 
+        width: 100%; height: 100%; 
+        top: var(--card-shadow-offset); left: var(--card-shadow-offset); 
+        z-index: 0;
+        background-image: radial-gradient(#bfbfbf 1.5px, transparent 1.5px);
+        background-size: 5px 5px; 
+    }
+
+    /* Source Label (Outside) */
+    .card-source {
+        position: absolute;
+        bottom: -28px; right: 0;
+        z-index: 2;
+        font-family: var(--font-sans);
+        font-size: 0.65rem; font-weight: 600; color: #999;
+        text-transform: uppercase; letter-spacing: 1px;
+        text-align: right;
+        background-color: var(--bg-color); 
+        padding-left: 12px;
+    }
+
+    /* Main Content Box */
+    .card-inner {
+        position: relative; z-index: 2; background: #fff;
+        border: 0.5px solid var(--accent); 
+        padding: 36px 32px 28px 32px;
+        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        will-change: transform;
+    }
     
+    .audio-card-red:hover .card-inner { transform: translate(-2px, -2px); }
+
+    /* Quote Typography */
+    .card-quote-text {
+        font-family: var(--font-serif); 
+        font-size: 1.4rem; 
+        font-weight: 400;
+        line-height: 1.45; 
+        color: #333; 
+        margin-bottom: 28px;
+    }
+
+    /* Player Controls Area */
+    .card-player-row {
+        display: flex; align-items: center; gap: 24px;
+        border-top: 1px solid #f0f0f0; padding-top: 24px;
+    }
+
+    .red-play-btn {
+        width: 52px; height: 52px; background: var(--accent);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        color: white; flex-shrink: 0; 
+        transition: var(--transition-smooth);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+    }
+    
+    .audio-card-red:hover .red-play-btn { transform: scale(1.05); }
+    .audio-card-red.playing .red-play-btn { transform: scale(0.95); box-shadow: inset 0 2px 6px rgba(0,0,0,0.1); }
+    
+    .red-play-btn svg { fill: white; width: 20px; height: 20px; }
+    .audio-card-red.playing .icon-play { display: none; }
+    .audio-card-red.playing .icon-pause { display: block; }
+    .audio-card-red .icon-pause { display: none; }
+
+    /* Visualizer */
+    .waveform-container {
+        flex-grow: 1; height: 24px; display: flex; align-items: center; justify-content: space-between; opacity: 0.25;
+        transition: opacity 0.3s;
+    }
+    .audio-card-red.playing .waveform-container { opacity: 1; }
+    
+    .bar {
+        width: 3px; background-color: #111; border-radius: 2px;
+        height: 12%; transition: height 0.1s ease;
+    }
+    .audio-card-red.playing .bar { animation: wave 0.5s infinite ease-in-out alternate; }
+
+    @keyframes wave { 0% { height: 15%; } 100% { height: 80%; } }
+
+    /* =========================================
+       KARAOKE ANIMATION (JS-Driven)
+       ========================================= */
+    .karaoke-word {
+        color: #a0a0a0; /* Passive state */
+        transition: color 0.15s ease-out;
+        /* Default inline to allow spacing to work naturally */
+    }
+    
+    /* Inline context specific colors */
+    .story-text .karaoke-word { color: #888; font-weight: 400; }
+    .story-text .karaoke-word.active { color: #000; font-weight: 600; }
+
+    /* Card context specific colors */
+    .card-quote-text .karaoke-word { color: #9ca3af; }
+    .card-quote-text .karaoke-word.active { color: #111; font-weight: 500; }
+
+    /* =========================================
+       FLOATING MUTE BUTTON
+       ========================================= */
+    .global-mute-btn {
+        position: fixed; bottom: 30px; right: 30px; z-index: 2000;
+        background: #fff; border: 1px solid #e5e5e5; border-radius: 100px;
+        padding: 12px 24px; display: flex; align-items: center; gap: 10px;
+        cursor: pointer; 
+        font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
+        color: #333;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: var(--transition-smooth);
+    }
+    .global-mute-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+    .global-mute-btn:active { transform: translateY(0); }
+    
+    .global-mute-btn svg { width: 14px; height: 14px; fill: #333; }
+    
+    /* State Visibility Logic */
     .state-unmuted { display: none; }
     .is-muted .state-muted { display: block; }
     .is-muted .state-unmuted { display: none; }
     
+    /* Active State (Sound ON is default, so .is-muted is ABSENT) */
     body:not(.is-muted) .global-mute-btn { background: #111; color: #fff; border-color: #111; }
     body:not(.is-muted) .global-mute-btn svg { fill: #fff; }
     body:not(.is-muted) .state-muted { display: none; }
     body:not(.is-muted) .state-unmuted { display: block; }
 
+    /* Mobile Adjustments */
     @media (max-width: 600px) {
-      .card-decoration { display: none; }
-      .audio-card-red { margin: 3rem -10px; }
-      .card-inner { padding: 25px; border-left: none; border-right: none; }
-      .card-source { position: static; margin-top: 10px; text-align: right; }
+      .hero-header { height: 70vh; }
+      h1 { font-size: 2.2rem; }
+      .audio-card-red { margin: 4rem -12px; } /* Full bleed feel */
+      .card-inner { padding: 24px; border-left: none; border-right: none; }
+      .card-decoration { display: none; } /* Simpler look on small screens */
+      .card-source { position: static; margin-top: 12px; text-align: right; padding-right: 24px; }
+      .global-mute-btn { bottom: 20px; right: 20px; padding: 10px 18px; }
     }
 
   </style>
 </head>
 
-<body class="is-muted">
-
+<body>
   <header class="app-header">
     <div class="brand-logo">NETRA <span>NEWS</span></div>
   </header>
@@ -264,7 +304,7 @@
     <div class="hero-image-container"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-label">Netra Report</div>
+      <div class="hero-label">Special Report</div>
       <h1>From exile, Sheikh Hasina vows revenge</h1>
       <div class="hero-subtitle">Leaked calls reveal plans for violence and military intervention.</div>
     </div>
@@ -441,7 +481,7 @@
     </p>
 
     <p class="story-text">
-      In a call leaked on social media in the last week of October, she claimed that the sacred book of Islam has permitted revenge. “An eye for an eye, a hand for a hand, keeping in mind the Quran, you will take action with whatever you have,” she concluded. In another call, which was made available to the public by a social media account that promotes Awami League’s narratives, she was found reiterating the justification. “A hand for a hand, an eye for an eye. It’s written in the Quran,” she claimed.
+      In a call leaked on social media in the last week of October, she claimed that the sacred book of Islam has permitted revenge. “An eye for an eye, a hand for a hand, keeping in mind the Quran, you will take action with whatever you have,” she concluded. In another call, which was made available to the public by a social media account that promotes Awami League’s narratives, she was found reiterating the justification.
     </p>
 
     <div class="audio-card-red audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
@@ -479,8 +519,7 @@
     </p>
 
     <p class="story-text">
-      Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration on why they were not being used to dethrone the interim government of Bangladesh, 
-      <span class="inline-trigger audio-trigger" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
+      Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration: <span class="inline-trigger audio-trigger" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
         <span class="inline-icon">
             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -580,15 +619,20 @@
           if(targetEl.dataset.setup) return targetEl.querySelectorAll('.karaoke-word');
           
           const rawText = targetEl.innerText;
-          targetEl.innerHTML = ''; // Clear
+          targetEl.innerHTML = ''; 
+          // Split by spaces
           const words = rawText.split(' ');
           const spans = [];
           
           words.forEach(word => {
               const span = document.createElement('span');
-              span.innerText = word + ' ';
+              span.innerText = word; // Just the word
               span.classList.add('karaoke-word');
               targetEl.appendChild(span);
+              
+              // ADD SPACE MANUALLY AS TEXT NODE (Prevents bunching)
+              targetEl.appendChild(document.createTextNode(' '));
+              
               spans.push(span);
           });
           
@@ -603,7 +647,7 @@
           
           if(!targetText || !audio) return;
 
-          // Prepare spans
+          // Prepare spans immediately
           const wordSpans = setupKaraoke(targetText);
 
           // Click Handler
@@ -621,11 +665,10 @@
              }
           });
 
-          // Karaoke Logic: Word by Word
+          // Karaoke Logic: Word by Word Highlight
           audio.addEventListener('timeupdate', () => {
               if(!audio.duration) return;
               const percent = audio.currentTime / audio.duration;
-              // Simple linear mapping: text progress = audio progress
               const wordIndex = Math.floor(percent * wordSpans.length);
               
               wordSpans.forEach((span, idx) => {
@@ -640,11 +683,11 @@
           // Reset on end
           audio.addEventListener('ended', () => {
              section.classList.remove('playing');
-             wordSpans.forEach(span => span.classList.add('active')); // Ensure all text is visible at end
+             wordSpans.forEach(span => span.classList.add('active')); 
           });
       });
 
-      // 5. SCROLL OBSERVER (Auto-play logic)
+      // 5. SCROLL OBSERVER (Auto-play logic - DISABLED AUTOPLAY, ONLY PAUSE)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const section = entry.target.closest('.audio-trigger');
@@ -657,15 +700,8 @@
           
           audio.muted = body.classList.contains('is-muted');
 
-          if (entry.isIntersecting) {
-            document.querySelectorAll('audio').forEach(a => {
-              if (a !== audio) { a.pause(); a.currentTime = 0; }
-            });
-            document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
-            
-            section.classList.add('playing');
-            audio.play().catch(() => {});
-          } else {
+          // Pause when scrolling out of view
+          if (!entry.isIntersecting) {
             section.classList.remove('playing');
             if(!audio.paused) audio.pause();
           }
