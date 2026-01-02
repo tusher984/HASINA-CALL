@@ -61,6 +61,7 @@
         background-size: contain; 
         background-repeat: no-repeat;
         background-position: center bottom;
+        /* White fade out on sides */
         -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
         mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
@@ -103,43 +104,56 @@
     }
 
     /* =========================================
-       STYLE 1: RED CARD LAYOUT (Final Spec)
+       KARAOKE WORD HIGHLIGHT LOGIC
+       ========================================= */
+    .karaoke-word {
+        color: #999; /* Inactive: Grey */
+        transition: color 0.1s ease;
+    }
+    .karaoke-word.active {
+        color: #111; /* Active: Black */
+    }
+    /* Specific for Card to ensure contrast */
+    .card-quote-text .karaoke-word { color: #888; }
+    .card-quote-text .karaoke-word.active { color: #000; font-weight: 500; }
+
+    /* =========================================
+       STYLE 1: RED CARD LAYOUT (Graphic Style)
        ========================================= */
     .audio-card-red {
         position: relative; 
-        margin: 4rem 0 5rem 0; /* Extra margin for external source text */
+        margin: 4rem 0 5rem 0; /* Extra margin for external source */
         background: transparent; cursor: pointer;
     }
 
-    /* THE SHADOW (Dotted Box) */
+    /* SHADOW LAYER (Dotted) */
     .card-decoration {
         position: absolute; 
         width: 100%; height: 100%; 
-        /* 12px Offset = Approx 2-3 dots visible on Right/Bottom */
-        top: 12px; left: 12px; 
-        z-index: 1; 
+        top: 8px; left: 8px; 
+        z-index: 0;
         background-image: radial-gradient(#aaa 1.5px, transparent 1.5px);
-        background-size: 5px 5px; 
+        background-size: 4px 4px;
     }
 
-    /* THE CARD (White Box) */
+    /* CARD LAYER (White Box) */
     .card-inner {
-        position: relative; z-index: 2; background: #fff;
-        border: 1px solid var(--accent-color); /* Thin Red Border */
+        position: relative; z-index: 1; background: #fff;
+        border: 0.5px solid var(--accent-color); /* Thin Border */
         padding: 30px 30px 25px 30px;
         transition: transform 0.2s ease;
     }
     
     .audio-card-red:hover .card-inner { transform: translateY(-2px); }
 
-    /* THE SOURCE (Outside Card, Bottom Right) */
+    /* SOURCE LABEL (Outside, Bottom Right) */
     .card-source {
         position: absolute;
         bottom: -25px; 
         right: 0;
         z-index: 2;
         font-family: var(--font-ui);
-        font-size: 0.7rem; font-weight: 500; color: #888;
+        font-size: 0.7rem; font-weight: 600; color: #888;
         text-transform: uppercase; letter-spacing: 1px;
         text-align: right;
         background-color: var(--app-bg); 
@@ -148,7 +162,7 @@
 
     .card-quote-text {
         font-family: var(--font-body); font-size: 1.35rem; font-weight: 400;
-        line-height: 1.5; color: #111; margin-bottom: 25px;
+        line-height: 1.5; color: #444; margin-bottom: 25px;
     }
 
     .card-player-row {
@@ -182,28 +196,32 @@
     @keyframes wave { 0% { height: 20%; } 100% { height: 100%; } }
 
     /* =========================================
-       STYLE 2: INLINE AUDIO
+       STYLE 2: INLINE AUDIO (Embedded in Text)
        ========================================= */
-    .soundclip-inline {
-        margin: 2rem 0; padding-left: 1.2rem; border-left: 3px solid #eee;
-        cursor: pointer; font-family: var(--font-body); font-size: 1.15rem;
-        font-style: italic; color: #555; transition: border-color 0.3s;
+    .inline-trigger {
+        cursor: pointer;
+        display: inline;
     }
-    .soundclip-inline.playing { border-color: var(--accent-color); color: #111; }
-    .soundclip-inline:hover { border-color: #ccc; }
 
-    /* KARAOKE EFFECT */
-    .target-text {
-        background-image: linear-gradient(to right, #000 50%, #999 50%);
-        background-size: 200% 100%; background-position: 100% 0;
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent; color: #999; 
-        transition: color 0.2s;
-        --pct: 0%; background-position: calc(100% - var(--pct)) 0;
+    .inline-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px; height: 24px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 6px; margin-left: 4px;
+        position: relative; top: -2px;
+        transition: transform 0.2s;
     }
-    .card-quote-text.target-text {
-        background-image: linear-gradient(to right, #000 50%, #444 50%); color: #444;
-    }
+    
+    .inline-trigger:hover .inline-icon { transform: scale(1.1); }
+    .inline-icon svg { width: 10px; height: 10px; fill: #fff; display: block; }
+    
+    .inline-icon .icon-pause { display: none; }
+    .inline-trigger.playing .inline-icon .icon-play { display: none; }
+    .inline-trigger.playing .inline-icon .icon-pause { display: block; }
 
     /* --- MUTE BUTTON --- */
     .global-mute-btn {
@@ -283,7 +301,10 @@
     </p>
 
     <p class="story-text">
-      Sheikh Hasina vowed revenge against the plaintiffs. In a conversation with Jahangir Alam, a leader from her party in the Gobindganj area of northern Bangladesh, which was leaked just two months after her downfall in October 2024, she told Alam that she had ordered to prepare a list of the 227 individuals who filed the cases against her to murder them.
+      Sheikh Hasina vowed revenge against the plaintiffs. In a conversation with Jahangir Alam, a leader from her party in the Gobindganj area of northern Bangladesh, which was leaked just two months after her downfall in October 2024, she told Alam that she had ordered to prepare a list of the 227 individuals who filed the cases against her to murder them. She stated, “I got the license to kill at least 227.” She emphasised that since the punishment for one murder is the same as for between two hundred and two-hundred-and-a-quarter murders, she would prefer to eliminate those who had filed murder charges against her and face the trial. “The punishment for one case and the punishment for two hundred and a quarter cases are the same. Alright, I will take that. But before that, I will count the two hundred and a quarter. Keep that in mind,” she told Alam.
+    </p>
+    <p class="story-text">
+      She claimed to have ordered his party to prepare a list of everyone who filed cases against her.
     </p>
 
     <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina got license to kill 227.mp3">
@@ -305,11 +326,14 @@
     </div>
 
     <p class="story-text">
-      She claimed to have ordered his party to prepare a list of everyone who filed cases against her. Following the fall of the regime, hundreds of Awami League supporters were subjected to revenge attacks by their rivals.
+      Following the fall of the regime, hundreds of Awami League supporters, many of whom were allegedly involved in suppressing dissenters for years, were subjected to revenge attacks by their rivals, most notably the BNP and Jamaat-e-Islami members, as Sheikh Hasina found her abode in India. The leader of the Awami League instructed her followers to retaliate proportionately. In a show of her commitment to seek revenge, she frequently mentioned creating a database and a list of individuals who allegedly assaulted the Awami League activists.
     </p>
 
     <p class="story-text">
-      In at least three recordings, posted on Facebook and YouTube, Sheikh Hasina was found instructing her party men to make a list and create a database of the ones who attacked her followers and filed cases against her so that she can exact vengeance accordingly.
+      In at least three recordings, posted on Facebook and YouTube, Sheikh Hasina was found instructing her party men to make a list and create a database of the ones who attacked her followers and filed cases against her so that she can exact vengeance accordingly. “I'm creating a list of everyone who was beaten (or killed),” she said in a call obtained on October 29th 2025, from Facebook. “I’m building a separate database. I will take care of each incident.”
+    </p>
+    <p class="story-text">
+      “Make a list and take action. From now on, you will have to take action wherever you have them,” she ordered in a call leaked in November 2025.
     </p>
 
     <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina calls for revenge.mp3">
@@ -331,46 +355,40 @@
     </div>
 
     <p class="story-text">
-      The suggestion to use fire for committing violence appeared frequently in her private conversations with the party stalwarts. In response to the stories of local Awami League leaders’ houses being attacked that emerged, she ordered to ‘take action against those who have harmed’ them.
-    </p>
-
-    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
-        <p class="soundclip-text-inline">
-          She threatened: <br>
-          <span class="target-text">
-            “If you touch fire, your hand will burn [...] What else should I say?”
-          </span>
-        </p>
+      The suggestion to use fire for committing violence appeared frequently in her private conversations with the party stalwarts. In response to the stories of local Awami League leaders’ houses being attacked that emerged, she ordered to ‘take action against those who have harmed’ them, in a call which was made available on Facebook in September 2025. 
+      <span class="inline-trigger audio-trigger" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
+        <span class="inline-icon">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="target-text">“If you touch fire, your hand will burn [...] What else should I say?”</span>
         <audio preload="none"></audio>
-    </div>
+      </span> she threatened.
+    </p>
 
     <p class="story-text">
-      Calling the interim government led by Muhammad Yunus, which took over the country after she fled, illegal, in another leaked call from September 2025, she urged her supporters to avenge without waiting for the right time.
-    </p>
-    
-    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
-        <p class="soundclip-text-inline">
-          She said: <br>
-          <span class="target-text">
-            “Those who torched your houses, insulted your parents and children... you know them. Why do you have to consider these against those who took over the power illegally?”
-          </span>
-        </p>
+      Calling the interim government led by Muhammad Yunus, which took over the country after she fled, illegal, in another leaked call from September 2025, she urged her supporters to avenge without waiting for the right time. 
+      <span class="inline-trigger audio-trigger" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
+        <span class="inline-icon">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="target-text">“Those who torched your houses, insulted your parents and children, destroyed your business, hacked you, you know them. [Don’t think about] when you will have the power and avenge them. Why do you have to consider these against those who took over the power illegally?”</span>
         <audio preload="none"></audio>
-    </div>
+      </span> she said.
+    </p>
 
     <p class="story-text">
-      The September 2025 leak echoed her instructions to Alam in the October 2024 call, where she instructed the leader to retaliate by burning down the houses of those who had set fire to his home secretly. “If my house were torched, theirs would be too,” she said. In another call, leaked after her November 2025 verdict, she expressed frustration with her supporters for their perceived inability to avenge their losses.
-    </p>
-
-    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
-        <p class="soundclip-text-inline">
-          She asked: <br>
-          <span class="target-text">
-            “The one who burns your house, [why] will he have his house [intact]? Why? Why is this weakness?”
-          </span>
-        </p>
+      The September 2025 leak echoed her instructions to Alam in the October 2024 call, where she instructed the leader to retaliate by burning down the houses of those who had set fire to his home secretly. “If my house were torched, theirs would be too,” she said. In another call, leaked after her November 2025 verdict, she expressed frustration with her supporters for their perceived inability to avenge their losses. 
+      <span class="inline-trigger audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
+        <span class="inline-icon">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="target-text">“The one who burns your house, [why] will he have his house [intact]? Why? Why is this weakness?”</span>
         <audio preload="none"></audio>
-    </div>
+      </span> she asked.
+    </p>
 
     <p class="story-text">
       Torching of vehicles and properties became prevalent ahead of Sheikh Hasina’s verdict, especially in Dhaka and other districts, which were traditionally seen as Awami League strongholds. In a conversation with a leader from Natore, a western district of the country, Hasina was heard instructing to observe a strike. In two incidents of arson on buses in Mymensingh and Maniganj ahead of the strike, two drivers were burnt alive inside the buses. A student, who allegedly set a bus alight in the Mirpur neighbourhood of Dhaka for money, died after jumping into a river, while being chased by the locals, before the strike.
@@ -423,7 +441,7 @@
     </p>
 
     <p class="story-text">
-      In a call leaked on social media in the last week of October, she claimed that the sacred book of Islam has permitted revenge. “An eye for an eye, a hand for a hand, keeping in mind the Quran, you will take action with whatever you have,” she concluded. In another call, which was made available to the public by a social media account that promotes Awami League’s narratives, she was found reiterating the justification.
+      In a call leaked on social media in the last week of October, she claimed that the sacred book of Islam has permitted revenge. “An eye for an eye, a hand for a hand, keeping in mind the Quran, you will take action with whatever you have,” she concluded. In another call, which was made available to the public by a social media account that promotes Awami League’s narratives, she was found reiterating the justification. “A hand for a hand, an eye for an eye. It’s written in the Quran,” she claimed.
     </p>
 
     <div class="audio-card-red audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
@@ -460,40 +478,32 @@
       After the International Crimes Tribunal charged dozens of military officials for their involvement in enforced disappearances during the Sheikh Hasina regime and for killing over twenty people in Dhaka’s Rampura neighbourhood, Sheikh Hasina was also found instigating the Bangladesh armed forces to rebel and use their tanks. “How dare they issue a warrant against these officers?” she asked in an address to her followers, which was posted on a Facebook page on October 18th 2025. “Isn’t there a courageous officer?” she asked.
     </p>
 
-    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
-        <p class="soundclip-text-inline">
-          Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration: <br>
-          <span class="target-text">
-            “They (the tanks) were used to kill us. But they can’t use them now.”
-          </span>
-        </p>
+    <p class="story-text">
+      Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration on why they were not being used to dethrone the interim government of Bangladesh, 
+      <span class="inline-trigger audio-trigger" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
+        <span class="inline-icon">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="target-text">“They (the tanks) were used to kill us. But they can’t use them now.”</span>
         <audio preload="none"></audio>
-    </div>
+      </span>
+    </p>
 
     <p class="story-text">
       In another audio recording, she claimed the conviction of over two dozen former and serving military officials for their alleged role in crimes against humanity was unfair, as they were following orders, and the efforts to try them in a court would destroy the armed forces. “Today, 28 or 29 people from the armed forces have been filed against them,” Hasina was found saying. “They will be punished. Why? They have obeyed the orders from above. Police acted on orders from their superiors.”
     </p>
     
     <p class="story-text">
-      She questioned whether the armed forces have any capability to take action against those who protect the sovereignty of Bangladesh, as they sat idle when two leaders from the newly formed student-led National Citizen Party (NCP) threatened them. “Those NCP leaders [...] They keep threatening the army,” she expressed her frustration.
-    </p>
-
-    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Hasina on liability of deaths.mp3">
-        <p class="soundclip-text-inline">
-          She asked: <br>
-          <span class="target-text">
-            “Has the army lost its strength? Can’t they arrest them and take them away? Then they would’ve gotten an answer.”
-          </span>
-        </p>
+      She questioned whether the armed forces have any capability to take action against those who protect the sovereignty of Bangladesh, as they sat idle when two leaders from the newly formed student-led National Citizen Party (NCP) threatened them. “Those NCP leaders [...] They keep threatening the army,” she expressed her frustration. 
+      <span class="inline-trigger audio-trigger" data-src="./assets/audio/Hasina on liability of deaths.mp3">
+        <span class="inline-icon">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </span>
+        <span class="target-text">“Has the army lost its strength? Can’t they arrest them and take them away? Then they would’ve gotten an answer,”</span>
         <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      In March 2025, a suggestion emerged from an informal conversation between the military chief, General Waqar-uz-Zaman, and two leaders of the NCP sparked speculations that a potential new political front of Awami League, referred to as a ‘refined Awami League’, expected to be led by individuals with a ‘clean image’ who, after apologising for the party’s role in the 2024 crackdown, may join the next election.
-    </p>
-
-    <p class="story-text">
-      The possibility appeared to be frail as Sheikh Hasina continued to show no remorse whatsoever for the death of over seven hundred individuals during the crackdown she and her home minister presided over. Without showing a semblance of remorse for the atrocities committed under her watch, she claimed that she had found a new mission, in a leaked call made available on October 29th 2025, where, labelling her political opposition as ‘dirt’, she pledged that she would ‘cleanse the dirt’.
+      </span> she asked the audience.
     </p>
 
     <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina calls for revenge.mp3">
@@ -513,6 +523,18 @@
         </div>
         <audio preload="none"></audio>
     </div>
+
+    <p class="story-text">
+      In March 2025, a suggestion emerged from an informal conversation between the military chief, General Waqar-uz-Zaman, and two leaders of the NCP sparked speculations that a potential new political front of Awami League, referred to as a ‘refined Awami League’, expected to be led by individuals with a ‘clean image’ who, after apologising for the party’s role in the 2024 crackdown, may join the next election.
+    </p>
+
+    <p class="story-text">
+      The possibility appeared to be frail as Sheikh Hasina continued to show no remorse whatsoever for the death of over seven hundred individuals during the crackdown she and her home minister presided over. Without showing a semblance of remorse for the atrocities committed under her watch, she claimed that she had found a new mission, in a leaked call made available on October 29th 2025, where, labelling her political opposition as ‘dirt’, she pledged that she would ‘cleanse the dirt’.
+    </p>
+
+    <p class="story-text">
+      “I will cleanse (them) this time. My goal is to clean Bangladesh of its dirt,” she promised.
+    </p>
 
   </article>
 
@@ -553,17 +575,86 @@
         }
       });
 
-      // 3. SCROLL OBSERVER
+      // 3. WORD-BY-WORD HIGHLIGHTING HELPER
+      function setupKaraoke(targetEl) {
+          if(targetEl.dataset.setup) return targetEl.querySelectorAll('.karaoke-word');
+          
+          const rawText = targetEl.innerText;
+          targetEl.innerHTML = ''; // Clear
+          const words = rawText.split(' ');
+          const spans = [];
+          
+          words.forEach(word => {
+              const span = document.createElement('span');
+              span.innerText = word + ' ';
+              span.classList.add('karaoke-word');
+              targetEl.appendChild(span);
+              spans.push(span);
+          });
+          
+          targetEl.dataset.setup = 'true';
+          return spans;
+      }
+
+      // 4. LOGIC BINDING
+      document.querySelectorAll('.audio-trigger').forEach(section => {
+          const targetText = section.querySelector('.target-text');
+          const audio = section.querySelector('audio');
+          
+          if(!targetText || !audio) return;
+
+          // Prepare spans
+          const wordSpans = setupKaraoke(targetText);
+
+          // Click Handler
+          section.addEventListener('click', (e) => {
+             if(audio.paused) {
+                 // Stop others
+                 document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
+                 document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
+                 
+                 audio.play();
+                 section.classList.add('playing');
+             } else {
+                 audio.pause();
+                 section.classList.remove('playing');
+             }
+          });
+
+          // Karaoke Logic: Word by Word
+          audio.addEventListener('timeupdate', () => {
+              if(!audio.duration) return;
+              const percent = audio.currentTime / audio.duration;
+              // Simple linear mapping: text progress = audio progress
+              const wordIndex = Math.floor(percent * wordSpans.length);
+              
+              wordSpans.forEach((span, idx) => {
+                  if(idx <= wordIndex) {
+                      span.classList.add('active');
+                  } else {
+                      span.classList.remove('active');
+                  }
+              });
+          });
+          
+          // Reset on end
+          audio.addEventListener('ended', () => {
+             section.classList.remove('playing');
+             wordSpans.forEach(span => span.classList.add('active')); // Ensure all text is visible at end
+          });
+      });
+
+      // 5. SCROLL OBSERVER (Auto-play logic)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          const section = entry.target;
+          const section = entry.target.closest('.audio-trigger');
+          if(!section) return;
           const audio = section.querySelector('audio');
           
           if (!audio.src && section.dataset.src) {
               audio.src = section.dataset.src;
           }
           
-          // Apply initial mute state
           audio.muted = body.classList.contains('is-muted');
 
           if (entry.isIntersecting) {
@@ -580,39 +671,9 @@
           }
         });
       }, { threshold: 0.6 });
+      
+      document.querySelectorAll('.audio-trigger').forEach(s => observer.observe(s));
 
-      // 4. LOGIC BINDING
-      document.querySelectorAll('.audio-trigger').forEach(section => {
-        observer.observe(section);
-        const audio = section.querySelector('audio');
-        const targetText = section.querySelector('.target-text');
-
-        // Click Handler
-        section.addEventListener('click', (e) => {
-             if(audio.paused) {
-                 document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
-                 document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
-                 audio.play();
-                 section.classList.add('playing');
-             } else {
-                 audio.pause();
-                 section.classList.remove('playing');
-             }
-        });
-
-        // Karaoke Logic
-        audio.addEventListener('timeupdate', () => {
-            if(audio.duration && targetText) {
-                const pct = (audio.currentTime / audio.duration) * 100;
-                targetText.style.setProperty('--pct', `${pct}%`);
-            }
-        });
-        
-        audio.addEventListener('ended', () => {
-             section.classList.remove('playing');
-             if(targetText) targetText.style.setProperty('--pct', `100%`);
-        });
-      });
     });
   </script>
 
