@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-  <title>Sheikh Hasina: Leaked Call Recordings</title>
+  <title>Netra Report: From Exile, Hasina Vows Revenge</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:wght@300;400;700;900&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     /* --- THEME VARIABLES --- */
@@ -16,7 +16,7 @@
       --app-bg: #fcfcfc;        
       --text-primary: #111111; 
       --text-secondary: #555555;
-      --accent-color: #ef4444; 
+      --accent-color: #ef4444; /* Netra Red */
       
       --font-ui: 'Inter', sans-serif;
       --font-body: 'Merriweather', serif;
@@ -36,446 +36,581 @@
     /* --- NAV --- */
     .app-header {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.9); 
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      top: 0; left: 0; width: 100%; height: 60px;
+      background: rgba(255, 255, 255, 0.98); 
+      backdrop-filter: blur(10px); z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    .brand-logo {
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: #000; 
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    .brand-logo { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; }
     .brand-logo span { color: var(--accent-color); }
 
-    /* --- HERO --- */
+    /* --- HERO HEADER --- */
     .hero-header {
-      width: 100%;
-      height: 65vh; 
-      background-color: #000; 
-      background-image: url('./assets/photos/hasina-bg.gif'); 
-      background-size: contain; 
-      background-repeat: no-repeat;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      position: relative;
+      width: 100%; height: 80vh; position: relative;
+      background-color: #fcfcfc; 
+      display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-image-container {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0;
+        background-image: url('./assets/photos/hasina-bg.gif'); 
+        background-size: contain; 
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
 
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(252,252,252,1) 100%);
+      background: linear-gradient(to bottom, transparent 60%, rgba(252,252,252,1) 100%);
+      z-index: 1;
     }
+    
     .hero-content {
-      position: relative; z-index: 2; text-align: center; padding-bottom: 40px;
-      width: 100%;
-      text-shadow: 0 2px 20px rgba(255, 255, 255, 0.8);
+      position: relative; z-index: 2; text-align: center; padding: 0 20px 40px 20px;
+      width: 100%; max-width: 800px;
     }
-    h1 {
-        font-family: var(--font-body);
-        font-weight: 900;
-        font-size: 3.5rem;
-        line-height: 1.1;
-        margin: 0 0 10px 0;
-    }
-    .hero-subtitle {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--accent-color);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    
+    .hero-label {
+      background: var(--accent-color); color: #fff; padding: 4px 12px;
+      text-transform: uppercase; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1px; display: inline-block; margin-bottom: 15px;
     }
 
-    /* --- CONTAINER --- */
+    h1 {
+        font-family: var(--font-body); font-weight: 900; font-size: 2.8rem;
+        line-height: 1.1; color: #111; margin: 0 0 15px 0;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem; font-weight: 400; color: #555;
+      font-family: var(--font-body); font-style: italic;
+    }
+
+    /* --- ARTICLE CONTAINER --- */
     .article-container {
-      max-width: 650px; 
-      margin: 0 auto;
-      padding: 40px 20px 150px 20px;
+      max-width: 680px; margin: 0 auto; padding: 40px 20px 150px 20px;
     }
 
     .story-text {
-      font-family: var(--font-body);
-      font-size: 1.15rem;
-      line-height: 1.8;
-      color: #333; 
-      margin-bottom: 60px; 
+      font-family: var(--font-body); font-size: 1.15rem; line-height: 1.9;
+      color: #222; margin-bottom: 30px; 
     }
 
-    /* --- CARD DESIGN --- */
-    .audio-section {
-      position: relative;
-      margin: 60px 0 100px 0;
-      opacity: 0.4;
-      transition: opacity 0.6s ease;
-    }
-    
-    .audio-section.active-section {
-      opacity: 1;
+    /* =========================================
+       STYLE 1: RED CARD LAYOUT (Final Spec)
+       ========================================= */
+    .audio-card-red {
+        position: relative; 
+        margin: 4rem 0 5rem 0; /* Extra margin for external source text */
+        background: transparent; cursor: pointer;
     }
 
+    /* THE SHADOW (Dotted Box) */
     .card-decoration {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-image: radial-gradient(#d1d1d1 1.5px, transparent 1.5px);
-      background-size: 6px 6px; 
-      border-right: 2px dotted #ffcccb;
-      border-bottom: 2px dotted #ffcccb;
+        position: absolute; 
+        width: 100%; height: 100%; 
+        /* 12px Offset = Approx 2-3 dots visible on Right/Bottom */
+        top: 12px; left: 12px; 
+        z-index: 1; 
+        background-image: radial-gradient(#aaa 1.5px, transparent 1.5px);
+        background-size: 5px 5px; 
     }
 
-    .quote-card {
-      background: #fff;
-      border: 1px solid var(--accent-color);
-      padding: 30px 30px 20px 30px;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    }
-
-    /* --- ANIMATED TEXT STYLES --- */
-    .quote-text-container {
-      margin-bottom: 25px;
-      min-height: 60px; /* Prevent jumpiness */
+    /* THE CARD (White Box) */
+    .card-inner {
+        position: relative; z-index: 2; background: #fff;
+        border: 1px solid var(--accent-color); /* Thin Red Border */
+        padding: 30px 30px 25px 30px;
+        transition: transform 0.2s ease;
     }
     
-    .display-text {
-      font-family: var(--font-ui);
-      font-size: 1.35rem; 
-      line-height: 1.5;
-      color: #111;
-      font-weight: 500;
+    .audio-card-red:hover .card-inner { transform: translateY(-2px); }
+
+    /* THE SOURCE (Outside Card, Bottom Right) */
+    .card-source {
+        position: absolute;
+        bottom: -25px; 
+        right: 0;
+        z-index: 2;
+        font-family: var(--font-ui);
+        font-size: 0.7rem; font-weight: 500; color: #888;
+        text-transform: uppercase; letter-spacing: 1px;
+        text-align: right;
+        background-color: var(--app-bg); 
+        padding-left: 10px;
     }
 
-    /* The Word Animation Classes */
-    .word-span {
-        opacity: 0.2; /* Faint initially */
-        transition: opacity 0.1s; /* Fast snap */
+    .card-quote-text {
+        font-family: var(--font-body); font-size: 1.35rem; font-weight: 400;
+        line-height: 1.5; color: #111; margin-bottom: 25px;
     }
+
+    .card-player-row {
+        display: flex; align-items: center; gap: 20px;
+        border-top: 1px solid #eee; padding-top: 20px;
+    }
+
+    .red-play-btn {
+        width: 48px; height: 48px; background: var(--accent-color);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        color: white; flex-shrink: 0; transition: transform 0.2s;
+        box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    }
+    .audio-card-red.playing .red-play-btn { transform: scale(0.95); }
+    .red-play-btn svg { fill: white; width: 18px; height: 18px; }
     
-    .word-span.visible {
-        opacity: 1; /* Dark when spoken */
-        color: #000;
-        font-weight: 600; /* Optional: Make current words slightly bolder */
+    .audio-card-red.playing .icon-play { display: none; }
+    .audio-card-red.playing .icon-pause { display: block; }
+    .audio-card-red .icon-pause { display: none; }
+
+    .waveform-container {
+        flex-grow: 1; height: 24px; display: flex; align-items: center; justify-content: space-between; opacity: 0.3;
+    }
+    .bar {
+        width: 3px; background-color: #000; border-radius: 2px;
+        height: 15%; transition: height 0.1s;
+    }
+    .audio-card-red.playing .waveform-container { opacity: 1; }
+    .audio-card-red.playing .bar { animation: wave 0.4s infinite ease-in-out alternate; }
+
+    @keyframes wave { 0% { height: 20%; } 100% { height: 100%; } }
+
+    /* =========================================
+       STYLE 2: INLINE AUDIO
+       ========================================= */
+    .soundclip-inline {
+        margin: 2rem 0; padding-left: 1.2rem; border-left: 3px solid #eee;
+        cursor: pointer; font-family: var(--font-body); font-size: 1.15rem;
+        font-style: italic; color: #555; transition: border-color 0.3s;
+    }
+    .soundclip-inline.playing { border-color: var(--accent-color); color: #111; }
+    .soundclip-inline:hover { border-color: #ccc; }
+
+    /* KARAOKE EFFECT */
+    .target-text {
+        background-image: linear-gradient(to right, #000 50%, #999 50%);
+        background-size: 200% 100%; background-position: 100% 0;
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: #999; 
+        transition: color 0.2s;
+        --pct: 0%; background-position: calc(100% - var(--pct)) 0;
+    }
+    .card-quote-text.target-text {
+        background-image: linear-gradient(to right, #000 50%, #444 50%); color: #444;
     }
 
-    .card-separator {
-      width: 100%;
-      height: 1px;
-      background-color: #ddd;
-      margin-bottom: 20px;
+    /* --- MUTE BUTTON --- */
+    .global-mute-btn {
+        position: fixed; bottom: 25px; right: 25px; z-index: 2000;
+        background: #fff; border: 1px solid #eee; border-radius: 50px;
+        padding: 10px 20px; display: flex; align-items: center; gap: 8px;
+        cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+        transition: all 0.2s;
     }
-
-    .player-row {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      height: 50px;
-    }
-
-    .play-button {
-      width: 52px; 
-      height: 52px;
-      background-color: var(--accent-color);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
-    }
-
-    .play-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
-    }
+    .global-mute-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .global-mute-btn svg { width: 16px; height: 16px; }
     
-    .play-button.is-playing {
-      transform: scale(0.95);
+    .state-unmuted { display: none; }
+    .is-muted .state-muted { display: block; }
+    .is-muted .state-unmuted { display: none; }
+    
+    body:not(.is-muted) .global-mute-btn { background: #111; color: #fff; border-color: #111; }
+    body:not(.is-muted) .global-mute-btn svg { fill: #fff; }
+    body:not(.is-muted) .state-muted { display: none; }
+    body:not(.is-muted) .state-unmuted { display: block; }
+
+    @media (max-width: 600px) {
+      .card-decoration { display: none; }
+      .audio-card-red { margin: 3rem -10px; }
+      .card-inner { padding: 25px; border-left: none; border-right: none; }
+      .card-source { position: static; margin-top: 10px; text-align: right; }
     }
-
-    .play-button svg { width: 20px; height: 20px; fill: #fff; }
-
-    .play-button .icon-pause { display: none; }
-    .play-button.is-playing .icon-play { display: none; }
-    .play-button.is-playing .icon-pause { display: block; }
-
-    .visualizer-container {
-      flex-grow: 1;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .wave-bar {
-      width: 3px; 
-      background-color: #111;
-      border-radius: 2px;
-      height: 8px;
-      transition: height 0.1s ease;
-    }
-
-    .visualizer-container.active .wave-bar {
-      animation: wave-jump 0.5s infinite ease-in-out;
-    }
-
-    @keyframes wave-jump {
-      0% { height: 10%; }
-      50% { height: 100%; }
-      100% { height: 10%; }
-    }
-
-    .meta-caption {
-      margin-top: 15px;
-      font-size: 0.8rem;
-      color: #666;
-      font-family: var(--font-body);
-    }
-    .meta-caption strong { color: #000; font-weight: 700; margin-right: 5px; }
 
   </style>
 </head>
 
-<body>
+<body class="is-muted">
 
   <header class="app-header">
     <div class="brand-logo">NETRA <span>NEWS</span></div>
   </header>
 
   <div class="hero-header">
+    <div class="hero-image-container"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>In Her Own<br>Words</h1>
-      <div class="hero-subtitle">The Leaked Tapes</div>
+      <div class="hero-label">Netra Report</div>
+      <h1>From exile, Sheikh Hasina vows revenge</h1>
+      <div class="hero-subtitle">Leaked calls reveal plans for violence and military intervention.</div>
     </div>
   </div>
 
-  <div class="article-container">
+  <article class="article-container">
 
     <p class="story-text">
-      Since the fall of her government, numerous phone conversations involving former Prime Minister Sheikh Hasina have been leaked on social media. These recordings offer a rare glimpse into her mindset during and after the July uprising.
+      <strong>Following her fall in a mass uprising in 2024, Sheikh Hasina continues to call for revenge as her supporters claim they have fallen victim to violence in Bangladesh.</strong>
     </p>
 
-    <div class="audio-section" data-src="./assets/audio/Hasina threatens army-prosecutor.mp3">
-      <div class="card-decoration"></div>
-      <div class="quote-card">
-        
-        <div class="quote-text-container">
-          <div class="display-text">“How do they show the victory sign after stealing? I will take care of each incident.”</div>
+    <p class="story-text">
+      Sheikh Hasina, who has recently been sentenced to death for her command responsibilities over the crimes against humanity committed during the 2024 Bangladesh uprising, has been urging her supporters to seek revenge, burn down the houses of her political opponents and instigating the military to use the tanks like they used in 1975, according to the phone conversations with her followers that are making rounds on social media after being leaked.
+    </p>
+
+    <p class="story-text">
+      These candid messages from the deposed prime minister, delivered in Bengali—the native language of most Bangladeshis—stood in stark contrast to the carefully crafted interviews that public relations experts had polished before they were published in global news outlets like The Independent and Reuters in the run-up to her judgment day. In those interviews, she presented herself as an empathetic exiled liberal democrat advocating for justice; in contrast, when speaking to her supporters, she urged them to give a befitting reply to the alleged assaults by her political rivals targeting Awami League supporters.
+    </p>
+
+    <p class="story-text">
+      Her targets include the alleged victims of her decade-long crackdown who filed cases against her in the courts after her fall, the members of the political parties who have been harassing her party’s supporters since August 2024 and the cabinet of the interim government led by Muhammad Yunus, who took over the charge after she left for India. The deposed prime minister has been living in India since then.
+    </p>
+
+    <p class="story-text">
+      Sheikh Hasina and her party, the Awami League, ruled Bangladesh from January 2009 until August 5, 2024. Critics of her administration allege that Bangladesh devolved into a “personalised autocracy,” during which over two and a half thousand people were killed in staged crossfires, and several hundred, predominantly opposition party members, went missing, of whom over a hundred never returned. Additionally, her regime has been accused of undermining the independence of the judiciary to put millions of opposition members on trial. Her regime oversaw three flawed elections in 2014, 2018 and 2024, and any dissent on the streets was brutally crushed by the youth wings of her party, along with the security forces.
+    </p>
+
+    <p class="story-text">
+      In July 2024, when students protested against a discriminatory quota-based recruitment system, the security forces, along with Awami League men, shot or beat over seven hundred protesters to death as they tried to quell the movement, triggering a mass uprising in the first week of August, which saw the collapse of a decade-and-a-half-long regime with Sheikh Hasina as the prime minister. 
+    </p>
+
+    <p class="story-text">
+      After the regime fell, individuals who lost family members or friends during the 2024 crackdown on protesters, or who themselves survived murder attempts, began filing lawsuits against Sheikh Hasina, her cabinet members, and high-ranking security officials for the murders or attempted murders, irking the deposed premier. By the end of September 2024, the number of cases against Sheikh Hasina crossed the two-hundred mark. 
+    </p>
+
+    <p class="story-text">
+      Sheikh Hasina vowed revenge against the plaintiffs. In a conversation with Jahangir Alam, a leader from her party in the Gobindganj area of northern Bangladesh, which was leaked just two months after her downfall in October 2024, she told Alam that she had ordered to prepare a list of the 227 individuals who filed the cases against her to murder them.
+    </p>
+
+    <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina got license to kill 227.mp3">
+        <div class="card-decoration"></div>
+        <div class="card-source">Telegram, Oct 2024</div>
+        <div class="card-inner">
+            <div class="card-quote-text target-text">
+                “The punishment for one and the punishment for two hundred and a quarter are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”
+            </div>
+            <div class="card-player-row">
+                <div class="red-play-btn">
+                    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+                <div class="waveform-container"></div>
+            </div>
         </div>
-
-        <div class="card-separator"></div>
-
-        <div class="player-row">
-          <button class="play-button" aria-label="Play Audio">
-             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-          
-          <div class="visualizer-container"></div>
-        </div>
-
-      </div>
-      <div class="meta-caption"><strong>Phone Call</strong> Oct 29, 2025</div>
-      <audio preload="none"></audio>
+        <audio preload="none"></audio>
     </div>
 
     <p class="story-text">
-      The rhetoric in these calls often shifts towards vengeance. In another conversation, Hasina calls upon her supporters to "cleanse" the dirt of Bangladesh.
+      She claimed to have ordered his party to prepare a list of everyone who filed cases against her. Following the fall of the regime, hundreds of Awami League supporters were subjected to revenge attacks by their rivals.
     </p>
 
-    <div class="audio-section" data-src="./assets/audio/Hasina calls for revenge.mp3">
-      <div class="card-decoration"></div>
-      <div class="quote-card">
-        
-        <div class="quote-text-container">
-          <div class="display-text">“I'm creating a list of everyone who was beaten... I will exact vengeance. My goal is to clean the dirt of Bangladesh.”</div>
+    <p class="story-text">
+      In at least three recordings, posted on Facebook and YouTube, Sheikh Hasina was found instructing her party men to make a list and create a database of the ones who attacked her followers and filed cases against her so that she can exact vengeance accordingly.
+    </p>
+
+    <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina calls for revenge.mp3">
+        <div class="card-decoration"></div>
+        <div class="card-source">Facebook Leak, Oct 2025</div>
+        <div class="card-inner">
+            <div class="card-quote-text target-text">
+                “I’m building a separate database. I will take care of each incident. Will I tolerate the attacks on my activists? Never.”
+            </div>
+            <div class="card-player-row">
+                <div class="red-play-btn">
+                    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+                <div class="waveform-container"></div>
+            </div>
         </div>
-
-        <div class="card-separator"></div>
-
-        <div class="player-row">
-          <button class="play-button" aria-label="Play Audio">
-             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-          <div class="visualizer-container"></div>
-        </div>
-
-      </div>
-      <div class="meta-caption"><strong>Leaked Audio</strong> Oct 29, 2025</div>
-      <audio preload="none"></audio>
+        <audio preload="none"></audio>
     </div>
 
     <p class="story-text">
-      In perhaps one of the most chilling recordings, she speaks with an Awami League leader about having a "license" to kill 227 people who filed cases against her.
+      The suggestion to use fire for committing violence appeared frequently in her private conversations with the party stalwarts. In response to the stories of local Awami League leaders’ houses being attacked that emerged, she ordered to ‘take action against those who have harmed’ them.
     </p>
 
-    <div class="audio-section" data-src="./assets/audio/Hasina got license to kill 227.mp3">
-      <div class="card-decoration"></div>
-      <div class="quote-card">
-        
-        <div class="quote-text-container">
-          <div class="display-text">“The punishment for one case and the punishment for two hundred and a quarter are the same. All right, I will take that. But before that, I will count two hundred and a quarter. Keep that in mind.”</div>
-        </div>
-
-        <div class="card-separator"></div>
-
-        <div class="player-row">
-          <button class="play-button" aria-label="Play Audio">
-             <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-             <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-          </button>
-          <div class="visualizer-container"></div>
-        </div>
-
-      </div>
-      <div class="meta-caption"><strong>Telegram</strong> 2023</div>
-      <audio preload="none"></audio>
+    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Hands will burn if they touch us-Hasina.mp3">
+        <p class="soundclip-text-inline">
+          She threatened: <br>
+          <span class="target-text">
+            “If you touch fire, your hand will burn [...] What else should I say?”
+          </span>
+        </p>
+        <audio preload="none"></audio>
     </div>
+
+    <p class="story-text">
+      Calling the interim government led by Muhammad Yunus, which took over the country after she fled, illegal, in another leaked call from September 2025, she urged her supporters to avenge without waiting for the right time.
+    </p>
     
-  </div> 
+    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
+        <p class="soundclip-text-inline">
+          She said: <br>
+          <span class="target-text">
+            “Those who torched your houses, insulted your parents and children... you know them. Why do you have to consider these against those who took over the power illegally?”
+          </span>
+        </p>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      The September 2025 leak echoed her instructions to Alam in the October 2024 call, where she instructed the leader to retaliate by burning down the houses of those who had set fire to his home secretly. “If my house were torched, theirs would be too,” she said. In another call, leaked after her November 2025 verdict, she expressed frustration with her supporters for their perceived inability to avenge their losses.
+    </p>
+
+    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
+        <p class="soundclip-text-inline">
+          She asked: <br>
+          <span class="target-text">
+            “The one who burns your house, [why] will he have his house [intact]? Why? Why is this weakness?”
+          </span>
+        </p>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      Torching of vehicles and properties became prevalent ahead of Sheikh Hasina’s verdict, especially in Dhaka and other districts, which were traditionally seen as Awami League strongholds. In a conversation with a leader from Natore, a western district of the country, Hasina was heard instructing to observe a strike. In two incidents of arson on buses in Mymensingh and Maniganj ahead of the strike, two drivers were burnt alive inside the buses. A student, who allegedly set a bus alight in the Mirpur neighbourhood of Dhaka for money, died after jumping into a river, while being chased by the locals, before the strike.
+    </p>
+
+    <p class="story-text">
+      While the Awami League neither admitted nor denied responsibility in any public statement, the interim government in Dhaka attributed the attacks to the party. A senior police officer even ordered the force to shoot at anyone trying to torch vehicles or hurl crude bombs, triggering criticism.
+    </p>
+
+    <div class="audio-card-red audio-trigger" data-src="./assets/audio/Take revenge against them-Hasina.mp3">
+        <div class="card-decoration"></div>
+        <div class="card-source">Leaked Call, Sept 2025</div>
+        <div class="card-inner">
+            <div class="card-quote-text target-text">
+                “Why do you forget that Bangladesh was liberated through guerrilla warfare? Adopt those tactics. Those who have done these against you, take action against them, wherever you find them, whenever you find them.”
+            </div>
+            <div class="card-player-row">
+                <div class="red-play-btn">
+                    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+                <div class="waveform-container"></div>
+            </div>
+        </div>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      Being aware that her supporters, while committing violence, may get rounded up by the locals or the police, the deposed prime minister urged her followers to use guerrilla warfare tactics reminiscent of Bangladesh’s liberation war. “Why do you forget that Bangladesh was liberated through guerrilla warfare?” she asked, calling for action against their rivals. In a recorded call from late September 2025, she reiterated this message, emphasising the importance of these tactics and instructing her party members to teach the members of the rival party, who, according to them, were inflicting violence, a lesson, ‘in whatever way possible.’
+    </p>
+
+    <p class="story-text">
+      In another call accessed on November 25th, Hasina was found reminding her followers of guerrilla tactics after insisting that her supporters should burn the house of their political rivals, who, according to them, torched their home after the fall of the Awami League. “We must remember this when we fought a guerrilla war for independence,” she said.
+    </p>
+
+    <p class="story-text">
+      A former minister in her cabinet was also seen promoting armed struggle similar to the 1971 Liberation War. Mohibul Hasan Chowdhury, whose loyal cadres are allegedly responsible for at least three deaths in Chattogram on July 16th, in an interview, said that their party men would launch a war using the tactics used in 1971 and liberate Bangladesh, as suggested by Hasina.
+    </p>
+
+    <p class="story-text">
+      “If required,” Chowdhury said, “Awami League will launch a war like the Liberation War through which we liberated Bangladesh.” He claimed that the party has the capability to do so as ‘they liberated Bangladesh in nine months’ and survived the rule of their political rivals and the military for 21 years as the opposition party. “Today, we’ve reached this stage by resisting the BNP, Jamaat-e-Islami and military rule. We’ve got the capacity.”
+    </p>
+
+    <p class="story-text">
+      “Awami League won’t give up,” he declared. “If we’re left with no other option, we will have to prepare for a second liberation war.”
+    </p>
+
+    <p class="story-text">
+      On at least two occasions, Sheikh Hasina justified the violence of her party’s supporters by referring to the Islamic concept of Qisas, a form of retributive justice, from the holy Quran.
+    </p>
+
+    <p class="story-text">
+      In a call leaked on social media in the last week of October, she claimed that the sacred book of Islam has permitted revenge. “An eye for an eye, a hand for a hand, keeping in mind the Quran, you will take action with whatever you have,” she concluded. In another call, which was made available to the public by a social media account that promotes Awami League’s narratives, she was found reiterating the justification.
+    </p>
+
+    <div class="audio-card-red audio-trigger" data-src="./assets/audio/Eye for an eye-Hasina.mp3">
+        <div class="card-decoration"></div>
+        <div class="card-source">Social Media Leak, Oct 2025</div>
+        <div class="card-inner">
+            <div class="card-quote-text target-text">
+                “A hand for a hand, an eye for an eye. It’s written in the Quran.”
+            </div>
+            <div class="card-player-row">
+                <div class="red-play-btn">
+                    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+                <div class="waveform-container"></div>
+            </div>
+        </div>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      In a call from September 2025, she explained how the ban on her party’s activities, which the interim government imposed after a crowd dominated by Islamists blocked a key intersection of the city, may work as a cover for the organisation’s criminal attacks on political opposition. “Awami League won’t be at fault because Awami League isn’t there. Chhatra League is not there anymore. So we can do whatever we want to. Start [attacking] now,” she explained to her supporters.
+    </p>
+
+    <p class="story-text">
+      In an exasperated tone during a leaked call shared on social media in early November, she questioned the interim government’s decision to ban her party and, calling it a usurper, pledged that the ones who are part of the government would face consequences. “For this unlawful seizure of power, they will face consequences someday, Inshallah,” she told her followers.
+    </p>
+
+    <p class="story-text">
+      Although on one hand, Sheikh Hasina criticised the interim government for ‘seizing’ power illegally, she herself instigated the armed forces in at least two addresses to her followers.
+    </p>
+
+    <p class="story-text">
+      After the International Crimes Tribunal charged dozens of military officials for their involvement in enforced disappearances during the Sheikh Hasina regime and for killing over twenty people in Dhaka’s Rampura neighbourhood, Sheikh Hasina was also found instigating the Bangladesh armed forces to rebel and use their tanks. “How dare they issue a warrant against these officers?” she asked in an address to her followers, which was posted on a Facebook page on October 18th 2025. “Isn’t there a courageous officer?” she asked.
+    </p>
+
+    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/How dare they issue warrant-Hasina.mp3">
+        <p class="soundclip-text-inline">
+          Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration: <br>
+          <span class="target-text">
+            “They (the tanks) were used to kill us. But they can’t use them now.”
+          </span>
+        </p>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      In another audio recording, she claimed the conviction of over two dozen former and serving military officials for their alleged role in crimes against humanity was unfair, as they were following orders, and the efforts to try them in a court would destroy the armed forces. “Today, 28 or 29 people from the armed forces have been filed against them,” Hasina was found saying. “They will be punished. Why? They have obeyed the orders from above. Police acted on orders from their superiors.”
+    </p>
+    
+    <p class="story-text">
+      She questioned whether the armed forces have any capability to take action against those who protect the sovereignty of Bangladesh, as they sat idle when two leaders from the newly formed student-led National Citizen Party (NCP) threatened them. “Those NCP leaders [...] They keep threatening the army,” she expressed her frustration.
+    </p>
+
+    <div class="soundclip-inline audio-trigger" data-src="./assets/audio/Hasina on liability of deaths.mp3">
+        <p class="soundclip-text-inline">
+          She asked: <br>
+          <span class="target-text">
+            “Has the army lost its strength? Can’t they arrest them and take them away? Then they would’ve gotten an answer.”
+          </span>
+        </p>
+        <audio preload="none"></audio>
+    </div>
+
+    <p class="story-text">
+      In March 2025, a suggestion emerged from an informal conversation between the military chief, General Waqar-uz-Zaman, and two leaders of the NCP sparked speculations that a potential new political front of Awami League, referred to as a ‘refined Awami League’, expected to be led by individuals with a ‘clean image’ who, after apologising for the party’s role in the 2024 crackdown, may join the next election.
+    </p>
+
+    <p class="story-text">
+      The possibility appeared to be frail as Sheikh Hasina continued to show no remorse whatsoever for the death of over seven hundred individuals during the crackdown she and her home minister presided over. Without showing a semblance of remorse for the atrocities committed under her watch, she claimed that she had found a new mission, in a leaked call made available on October 29th 2025, where, labelling her political opposition as ‘dirt’, she pledged that she would ‘cleanse the dirt’.
+    </p>
+
+    <div class="audio-card-red audio-trigger" data-src="./assets/audio/Hasina calls for revenge.mp3">
+        <div class="card-decoration"></div>
+        <div class="card-source">Leaked Call, Oct 2025</div>
+        <div class="card-inner">
+            <div class="card-quote-text target-text">
+                “I will cleanse this time. My goal is to clean Bangladesh of its dirt.”
+            </div>
+            <div class="card-player-row">
+                <div class="red-play-btn">
+                    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+                <div class="waveform-container"></div>
+            </div>
+        </div>
+        <audio preload="none"></audio>
+    </div>
+
+  </article>
+
+  <button id="global-mute-btn" class="global-mute-btn">
+      <span class="state-muted">
+          <svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"></path></svg>
+          UNMUTE
+      </span>
+      <span class="state-unmuted">
+          <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
+          MUTE
+      </span>
+  </button>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      // 1. GENERATE VISUALIZER BARS
-      document.querySelectorAll('.visualizer-container').forEach(container => {
-        for (let i = 0; i < 45; i++) { 
-          const bar = document.createElement('div');
-          bar.classList.add('wave-bar');
-          
-          let height = Math.random() * 100;
-          if (i < 5 || i > 40) height = height * 0.2;
-          else if (i < 15 || i > 30) height = height * 0.6;
-          
-          bar.style.height = `${Math.max(10, height)}%`; 
-          bar.style.animationDelay = `${Math.random() * 0.5}s`;
-          container.appendChild(bar);
+      const body = document.body;
+      const muteBtn = document.getElementById('global-mute-btn');
+      
+      // 1. MUTE TOGGLE
+      muteBtn.addEventListener('click', () => {
+          const isMuted = body.classList.toggle('is-muted');
+          document.querySelectorAll('audio').forEach(audio => {
+              audio.muted = isMuted;
+          });
+      });
+
+      // 2. GENERATE VISUALIZER BARS
+      document.querySelectorAll('.waveform-container').forEach(container => {
+        for (let i = 0; i < 35; i++) { 
+           const bar = document.createElement('div');
+           bar.classList.add('bar');
+           let h = 20 + Math.random() * 60; 
+           bar.style.height = `${h}%`;
+           bar.style.animationDelay = `-${Math.random()}s`;
+           container.appendChild(bar);
         }
       });
 
-      // 2. SCROLL OBSERVER
-      const observerOptions = {
-        root: null,
-        rootMargin: '-20% 0px -20% 0px', 
-        threshold: 0.6 
-      };
-
-      const scrollObserver = new IntersectionObserver((entries) => {
+      // 3. SCROLL OBSERVER
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const section = entry.target;
           const audio = section.querySelector('audio');
           
+          if (!audio.src && section.dataset.src) {
+              audio.src = section.dataset.src;
+          }
+          
+          // Apply initial mute state
+          audio.muted = body.classList.contains('is-muted');
+
           if (entry.isIntersecting) {
-            section.classList.add('active-section');
             document.querySelectorAll('audio').forEach(a => {
               if (a !== audio) { a.pause(); a.currentTime = 0; }
             });
-             audio.play().catch(() => {});
+            document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
+            
+            section.classList.add('playing');
+            audio.play().catch(() => {});
           } else {
-            section.classList.remove('active-section');
+            section.classList.remove('playing');
             if(!audio.paused) audio.pause();
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.6 });
 
-      // 3. AUDIO & WORD SYNC LOGIC
-      document.querySelectorAll('.audio-section').forEach(section => {
+      // 4. LOGIC BINDING
+      document.querySelectorAll('.audio-trigger').forEach(section => {
+        observer.observe(section);
         const audio = section.querySelector('audio');
-        const btn = section.querySelector('.play-button');
-        const visualizer = section.querySelector('.visualizer-container');
-        const textContainer = section.querySelector('.display-text');
-        
-        scrollObserver.observe(section);
-        
-        // --- PREPARE WORDS ---
-        // 1. Get text, clear container
-        const rawText = textContainer.innerText;
-        textContainer.innerHTML = ''; 
-        
-        // 2. Split by spaces to get words
-        const words = rawText.split(' ');
-        const wordSpans = [];
+        const targetText = section.querySelector('.target-text');
 
-        // 3. Wrap each word in a span
-        words.forEach(word => {
-            const span = document.createElement('span');
-            span.innerText = word + ' '; // Add space back for layout
-            span.classList.add('word-span');
-            textContainer.appendChild(span);
-            wordSpans.push(span);
+        // Click Handler
+        section.addEventListener('click', (e) => {
+             if(audio.paused) {
+                 document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
+                 document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
+                 audio.play();
+                 section.classList.add('playing');
+             } else {
+                 audio.pause();
+                 section.classList.remove('playing');
+             }
         });
 
-        const src = section.dataset.src;
-        if (src) audio.src = src;
-
-        // --- PLAYBACK HANDLERS ---
-        btn.addEventListener('click', () => {
-          if (audio.paused) {
-            document.querySelectorAll('audio').forEach(o => { 
-                if (o !== audio) { o.pause(); o.currentTime = 0; } 
-            });
-            audio.play();
-          } else {
-            audio.pause();
-          }
-        });
-
-        // --- ANIMATION UPDATE LOOP ---
+        // Karaoke Logic
         audio.addEventListener('timeupdate', () => {
-            if (!audio.duration) return;
-            
-            // Calculate percentage played
-            const percent = audio.currentTime / audio.duration;
-            
-            // Determine how many words should be visible
-            // Math.floor(percent * totalWords)
-            const wordsToShow = Math.floor(percent * wordSpans.length);
-            
-            // Toggle classes
-            wordSpans.forEach((span, index) => {
-                if (index <= wordsToShow) {
-                    span.classList.add('visible');
-                } else {
-                    span.classList.remove('visible');
-                }
-            });
+            if(audio.duration && targetText) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                targetText.style.setProperty('--pct', `${pct}%`);
+            }
         });
-
-        audio.addEventListener('play', () => {
-          btn.classList.add('is-playing');
-          visualizer.classList.add('active');
-        });
-
-        audio.addEventListener('pause', () => {
-          btn.classList.remove('is-playing');
-          visualizer.classList.remove('active');
-        });
-
+        
         audio.addEventListener('ended', () => {
-          btn.classList.remove('is-playing');
-          visualizer.classList.remove('active');
-          // Optional: Leave words visible or reset?
-          // Let's leave them visible (do nothing) or reset:
-          // wordSpans.forEach(s => s.classList.remove('visible'));
+             section.classList.remove('playing');
+             if(targetText) targetText.style.setProperty('--pct', `100%`);
         });
       });
     });
