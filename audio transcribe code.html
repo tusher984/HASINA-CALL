@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Audio Transcript</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       CSS STYLES
+       ========================================= */
+    :root {
+      --bg-color: #f9f9f9;
+      --text-idle: #999999;
+      --text-active: #111111;
+      --red-accent: #e13535;
+      --btn-bg: #222222;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      font-family: 'IBM Plex Mono', monospace;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .audio-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    /* HEADER WITH TOGGLE */
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      border-bottom: 2px solid #f0f0f0;
+      background: #fff;
+    }
+
+    .header-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: #333;
+      letter-spacing: 1px;
+    }
+
+    .lang-toggle {
+      background: #eee;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .lang-toggle:hover {
+      background: #e0e0e0;
+    }
+
+    .lang-indicator {
+      width: 8px;
+      height: 8px;
+      background-color: #ccc;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+    
+    .lang-toggle.active .lang-indicator {
+      background-color: var(--red-accent);
+    }
+
+    /* THE ROW */
+    .audio-row {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 30px;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .audio-row:last-child { border-bottom: none; }
+
+    /* TEXT STYLES */
+    .audio-text {
+      font-size: 1.1rem;
+      color: var(--text-idle);
+      line-height: 1.6;
+      flex: 1;
+      margin-right: 20px;
+      transition: color 0.3s ease;
+      font-weight: 400;
+    }
+    
+    /* Font switch for Bangla */
+    .audio-text.bn {
+      font-family: 'Noto Sans Bengali', sans-serif;
+      font-size: 1.15rem; /* Bangla often needs slightly larger font size */
+    }
+
+    /* CONTROLS */
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .timestamp {
+      background-color: #eee;
+      color: #666;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      min-width: 45px;
+      text-align: center;
+    }
+
+    .play-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--btn-bg);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .play-btn svg { width: 12px; height: 12px; fill: #fff; display: block; }
+    .icon-pause { display: none; }
+    .icon-play { display: block; margin-left: 2px; }
+
+    /* ACTIVE STATE */
+    .audio-row.active {
+      background-color: #fff;
+      transform: scale(1.02);
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border-radius: 4px;
+      border-bottom-color: transparent;
+    }
+
+    .audio-row.active .audio-text {
+      color: var(--text-active);
+      font-weight: 500;
+    }
+
+    .audio-row.active .play-btn {
+      transform: scale(1.1);
+      background-color: #000;
+    }
+
+    .audio-row.active .icon-play { display: none; }
+    .audio-row.active .icon-pause { display: block; margin-left: 0; }
+
+    /* RED PROGRESS LINE */
+    .progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--red-accent);
+      width: 0%;
+      transition: width 0.1s linear; 
+      box-shadow: 0 -1px 4px rgba(225, 53, 53, 0.4);
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 0; }
+      .audio-container { border-radius: 0; }
+      .player-header { padding: 15px 20px; }
+      .audio-row { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="audio-container">
+    <div class="player-header">
+      <div class="header-title">Audio Evidence</div>
+      <button class="lang-toggle" id="lang-switch">
+        <span class="lang-indicator"></span>
+        <span id="lang-text">Switch to Bangla</span>
+      </button>
+    </div>
+
+    <div id="playlist-container"></div>
+  </div>
+
+  <script>
+    /* =========================================
+       DATA CONFIGURATION
+       Paste your Bangla text in "text_bn"
+       ========================================= */
+    const audioData = [
+     {
+      "text_en": "How do the show victory sign after stealing? Sheikh Hasina claimed that the army is being tried for following orders.",
+      "text_bn": "চুরির পর তারা কীভাবে বিজয়ের চিহ্ন দেখায়? শেখ হাসিনা দাবি করেছেন যে আদেশ পালনের জন্য সেনাবাহিনীর বিচার করা হচ্ছে।", 
+      "MP3": "Hasina threatens army-prosecutor.mp3"
+     },
+     {
+      "text_en": "I'm creating a list of everyone who was beaten (or killed). I'm building a separate database.",
+      "text_bn": "যাদের মারা হয়েছে (বা হত্যা করা হয়েছে) আমি তাদের তালিকা তৈরি করছি। আমি আলাদা ডাটাবেস তৈরি করছি।",
+      "MP3": "Hasina calls for revenge.mp3"
+     },
+     {
+      "text_en": "Draft a list. I got the licence to kill 227. The punishment for one case and 225 cases are the same.",
+      "text_bn": "একটি তালিকা তৈরি করুন। আমি ২২৭ জনকে হত্যার লাইসেন্স পেয়েছি। একটি মামলার শাস্তি এবং ২২৫টি মামলার শাস্তি একই।",
+      "MP3": "Hasina got license to kill 227.mp3"
+     },
+     {
+      "text_en": "If you touch fire, your hand will burn. We will make them understand that.",
+      "text_bn": "আগুনে হাত দিলে হাত পুড়ে যাবে। আমরা তাদের সেটা বোঝাব।",
+      "MP3": "Hands will burn if they touch us-Hasina.mp3"
+     },
+     {
+      "text_en": "How dare they issue a warrant against these officers? Where do they muster the courage?",
+      "text_bn": "এই অফিসারদের বিরুদ্ধে পরোয়ানা জারি করার সাহস তারা পায় কোথায়? তারা এই সাহস কোত্থেকে পায়?",
+      "MP3": "How dare they issue warrant-Hasina.mp3"
+     },
+     {
+      "text_en": "Why do you forget that Bangladesh was liberated through guerrilla warfare? Adopt those tactics.",
+      "text_bn": "কেন ভুলে যান যে বাংলাদেশ গেরিলা যুদ্ধের মাধ্যমে স্বাধীন হয়েছে? সেই কৌশলগুলো অবলম্বন করুন।",
+      "MP3": "Take revenge against them-Hasina.mp3"
+     },
+     {
+      "text_en": "Putting it simply: a hand for a hand, an eye for an eye, this is what the Quran says.",
+      "text_bn": "সহজ কথায়: হাতের বদলে হাত, চোখের বদলে চোখ, কোরানে এটাই বলা আছে।",
+      "MP3": "Eye for an eye-Hasina.mp3"
+     }
+    ];
+
+    // =========================================
+    // PLAYER LOGIC
+    // =========================================
+    const container = document.getElementById('playlist-container');
+    const langSwitch = document.getElementById('lang-switch');
+    const langText = document.getElementById('lang-text');
+    
+    let currentLang = 'en'; // 'en' or 'bn'
+    let currentAudio = null;
+    let currentRow = null;
+
+    // 1. Render Function
+    function renderPlayer() {
+      container.innerHTML = ''; // Clear existing
+      
+      audioData.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'audio-row';
+        row.id = `row-${index}`;
+        
+        // Determine text based on current language
+        const textContent = currentLang === 'en' ? item.text_en : item.text_bn;
+        const textClass = currentLang === 'bn' ? 'audio-text bn' : 'audio-text';
+
+        row.innerHTML = `
+          <div class="${textClass}">${textContent}</div>
+          
+          <div class="audio-controls">
+            <div class="timestamp">00:00</div>
+            <button class="play-btn">
+              <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z"/></svg>
+            </button>
+          </div>
+
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <audio class="audio-src" src="assets/audio/${item.MP3}" preload="metadata"></audio>
+        `;
+
+        row.addEventListener('click', () => togglePlay(row));
+        container.appendChild(row);
+
+        // Metadata Load for Duration
+        const audioEl = row.querySelector('audio');
+        const timeEl = row.querySelector('.timestamp');
+        audioEl.addEventListener('loadedmetadata', () => {
+             const m = Math.floor(audioEl.duration / 60);
+             const s = Math.floor(audioEl.duration % 60);
+             timeEl.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+        });
+      });
+      
+      // If we re-rendered while something was playing, we need to reset state visually
+      // (Simplified: Rendering stops playback to ensure cleanliness in this version)
+      currentAudio = null;
+      currentRow = null;
+    }
+
+    // 2. Play/Pause Logic
+    function togglePlay(clickedRow) {
+      const audio = clickedRow.querySelector('audio');
+      const progressFill = clickedRow.querySelector('.progress-fill');
+
+      if (currentAudio === audio) {
+        if (audio.paused) {
+          audio.play();
+          clickedRow.classList.add('active');
+        } else {
+          audio.pause();
+        }
+        return;
+      }
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if (currentRow) {
+          currentRow.classList.remove('active');
+          currentRow.querySelector('.progress-fill').style.width = '0%';
+        }
+      }
+
+      currentAudio = audio;
+      currentRow = clickedRow;
+      clickedRow.classList.add('active');
+      audio.play();
+
+      audio.ontimeupdate = () => {
+        if (audio.duration) {
+          const percentage = (audio.currentTime / audio.duration) * 100;
+          progressFill.style.width = `${percentage}%`;
+        }
+      };
+
+      audio.onended = () => {
+        clickedRow.classList.remove('active');
+        progressFill.style.width = '0%';
+        currentAudio = null;
+        currentRow = null;
+      };
+    }
+
+    // 3. Language Toggle Logic
+    langSwitch.addEventListener('click', () => {
+      // Toggle State
+      if(currentLang === 'en') {
+        currentLang = 'bn';
+        langText.innerText = "Switch to English";
+        langSwitch.classList.add('active');
+      } else {
+        currentLang = 'en';
+        langText.innerText = "Switch to Bangla";
+        langSwitch.classList.remove('active');
+      }
+
+      // Update Text WITHOUT re-rendering entire DOM (keeps audio playing if any)
+      const rows = document.querySelectorAll('.audio-row');
+      rows.forEach((row, index) => {
+        const textDiv = row.querySelector('.audio-text');
+        const data = audioData[index];
+        
+        // Update content
+        textDiv.innerText = currentLang === 'en' ? data.text_en : data.text_bn;
+        
+        // Update font class
+        textDiv.className = currentLang === 'bn' ? 'audio-text bn' : 'audio-text';
+      });
+    });
+
+    // Initial Render
+    renderPlayer();
+
+  </script>
+</body>
+</html>
