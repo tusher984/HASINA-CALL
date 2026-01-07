@@ -8,566 +8,586 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Noto+Sans+Bengali:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Noto+Sans+Bengali:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* =========================================
-       1. VARIABLES & RESET
+       1. COLOR PALETTE (From Your Image)
        ========================================= */
     :root {
-      /* Colors */
-      --accent-red: #e13535;
-      --bg-base: #ffffff;
-      --bg-highlight: #f0f0f0;
+      /* Brand & Accents */
+      --netra-red: #DE3A3A;       /* Main Accent/Progress */
+      --netra-black: #222222;     /* Body Text/Play Button */
+      --netra-grey: #4E4D4D;      /* Subtitles */
       
-      /* Telegram Theme */
-      --tg-card-bg: #f9f9f9; 
-      --tg-call-blue: #cceeff;
-      --tg-sh-circle: #e6f7ff;
-      --tg-text-blue: #006699;
-      --tg-text-dark: #222;
-      --tg-border: #eee;
+      /* Telegram Specifics */
+      --tg-brand: #0078B7;        /* Telegram Blue */
+      --tg-bg-screen: #C1E9FF;    /* Call Screen BG */
+      --tg-bg-card: #F5F5F5;      /* Card Background */
       
-      /* Listeners Colors */
-      --l1-bg: #ffe0cc; --l1-text: #cc8855;
-      --l2-bg: #e0ccff; --l2-text: #9977cc;
-      --l3-bg: #ccffe0; --l3-text: #66cc99;
-      --over-bg: #cceeff; --over-text: #4488cc;
-      
-      /* Controls */
-      --btn-hangup: #d9534f;
-      --btn-mic: #0088cc;
-      --btn-grey: #f0f0f0;
+      /* Listener Avatars (From your list) */
+      --l1-bg: #FED2B5; --l1-text: #C88253; /* Peach */
+      --l2-bg: #D3C8FF; --l2-text: #8C7CCA; /* Lavender */
+      --lx-bg: #DFF3FE; --lx-text: #0173B9; /* Light Blue Overflow */
+
+      /* UI Controls */
+      --btn-stop: #DE3A3A;
+      --btn-grey: #F0F0F0;
+      --border-color: #E0E0E0;
+      --radius-sharp: 4px;  /* Editorial/Sharp look */
+      --radius-soft: 8px;
 
       /* Typography */
-      --font-headline: 'Montserrat', sans-serif;
-      --font-body: 'Merriweather', serif;
-      --font-tech: 'IBM Plex Mono', monospace;
-      --font-ui: 'Inter', sans-serif;
+      --font-serif: 'Merriweather', serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-bengali: 'Noto Sans Bengali', sans-serif;
     }
 
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: var(--font-body); line-height: 1.8; color: #111; background: var(--bg-base); }
-    a { color: inherit; text-decoration: none; }
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    
+    body { 
+      margin: 0; 
+      font-family: var(--font-serif); 
+      line-height: 1.9; 
+      color: var(--netra-black); 
+      background: #ffffff; 
+    }
+
+    a { color: inherit; text-decoration: none; transition: color 0.2s; }
     button { cursor: pointer; border: none; outline: none; background: none; padding: 0; }
+    img, svg { display: block; max-width: 100%; }
 
     /* =========================================
-       2. HEADER & HERO
+       2. HEADER
        ========================================= */
-    header { padding: 20px 40px; border-bottom: 1px solid var(--tg-border); background: #fff; position: relative; z-index: 10; }
-    .header-bar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-    .social-icons { display: flex; gap: 15px; list-style: none; padding: 0; margin: 0; }
-    .social-icons svg { width: 18px; height: 18px; fill: #333; transition: fill 0.2s; }
-    .social-icons a:hover svg { fill: var(--accent-red); }
-
-    .hero { margin: 40px auto 60px; max-width: 1200px; padding: 0 20px; }
-    .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .hero__img { width: 100%; height: auto; border-radius: 4px; display: block; }
-    .hero__title { font-family: var(--font-ui); font-weight: 800; font-size: 3.5rem; line-height: 1.1; color: var(--accent-red); margin: 0 0 20px 0; }
-    .hero__dek { font-style: italic; font-size: 1.25rem; color: #444; margin-bottom: 24px; }
-    .hero__rule { width: 40px; height: 4px; background: var(--accent-red); margin-bottom: 24px; }
-    .hero__byline { font-family: var(--font-ui); font-size: 0.9rem; }
-    .hero__author a { font-weight: 700; text-transform: uppercase; }
-    .hero__date { font-size: 0.85rem; color: #888; display: block; margin-top: 4px; }
+    header { 
+      padding: 16px 0; 
+      border-bottom: 1px solid var(--netra-black); /* Sharp divider */
+      background: #ffffff;
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .header-bar { 
+      display: flex; justify-content: space-between; align-items: center; 
+      max-width: 1100px; margin: 0 auto; padding: 0 20px; 
+    }
+    
+    .social-icons { display: flex; gap: 20px; list-style: none; padding: 0; margin: 0; }
+    .social-icons svg { width: 16px; height: 16px; fill: #333; transition: fill 0.2s; }
+    .social-icons a:hover svg { fill: var(--netra-red); }
 
     /* =========================================
-       3. ARTICLE GRID LAYOUT
+       3. HERO
+       ========================================= */
+    .hero { margin: 60px auto 80px; max-width: 1100px; padding: 0 20px; }
+    .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    
+    .hero__img { width: 100%; border-radius: var(--radius-sharp); border: 1px solid #eee; }
+
+    .hero__label {
+      font-family: var(--font-sans); font-weight: 700; font-size: 0.75rem; 
+      color: var(--netra-red); text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 12px; display: block;
+    }
+
+    .hero__title { 
+      font-family: var(--font-sans); 
+      font-weight: 800; font-size: 3.5rem; line-height: 1.1; 
+      color: var(--netra-black); margin: 0 0 24px 0; 
+      letter-spacing: -0.02em;
+    }
+    .hero__dek { 
+      font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.6;
+      color: #444; margin-bottom: 32px; font-style: italic;
+    }
+    .hero__rule { width: 100%; height: 2px; background: var(--netra-black); margin-bottom: 24px; opacity: 0.1; }
+    
+    .hero__byline { 
+      font-family: var(--font-sans); font-size: 0.8rem; color: var(--netra-grey); 
+      display: flex; gap: 16px; align-items: center; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .hero__author a { font-weight: 700; color: var(--netra-black); border-bottom: 2px solid rgba(222, 58, 58, 0.3); }
+
+    /* =========================================
+       4. ARTICLE BODY
        ========================================= */
     .article-container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      padding: 0 20px 100px 20px;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: 24px;
+      max-width: 1100px; margin: 0 auto; padding: 0 20px 120px;
+      display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px;
     }
-    .story-text { grid-column: 4 / 10; font-size: 1.15rem; margin-bottom: 1.5rem; color: #333; }
-    .telegram-card { grid-column: 1 / -1; width: 100%; margin: 4rem 0; }
+    .story-text { 
+      grid-column: 4 / 10; font-size: 1.15rem; margin-bottom: 2rem; 
+      color: #1a1a1a; font-weight: 400; text-align: left;
+    }
 
-    /* Dropcap */
+    /* Gridded Dropcap */
     .has-dropcap .dropcap {
-      float: left; font-weight: 700; font-size: 3.5rem; line-height: 1; color: var(--accent-red);
-      padding: 12px 16px; margin: 6px 16px 0 0;
-      background-color: rgba(225, 53, 53, 0.1); 
-      border: 1px solid rgba(225, 53, 53, 0.2);
-      background-image: linear-gradient(rgba(225, 53, 53, 0.3) 1px, transparent 1px), 
-                        linear-gradient(90deg, rgba(225, 53, 53, 0.3) 1px, transparent 1px);
-      background-size: 8px 8px;
+      float: left; font-family: var(--font-sans); font-weight: 800; 
+      font-size: 4.5rem; line-height: 0.8; color: var(--netra-red); 
+      padding: 10px 16px 4px 0; margin-right: 12px;
+      
+      /* Grid Pattern Background */
+      background-image: 
+        linear-gradient(rgba(222, 58, 58, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(222, 58, 58, 0.1) 1px, transparent 1px);
+      background-size: 4px 4px;
+      border: 1px solid rgba(222, 58, 58, 0.15);
+      border-radius: 4px;
     }
 
-    /* Redacted Effect */
-    .redacted-reveal { background: #000; color: #000; transition: all 1.5s ease; padding: 0 4px; border-radius: 2px; }
-    .redacted-reveal.revealed { background: rgba(225, 53, 53, 0.1); color: var(--accent-red); }
+    /* Redaction */
+    .redacted-reveal { 
+      background: #000; color: #000; padding: 0 4px; 
+      transition: all 1.2s ease; cursor: help; border-radius: 2px;
+    }
+    .redacted-reveal.revealed { background: rgba(222, 58, 58, 0.1); color: var(--netra-red); font-weight: 600; }
 
     /* =========================================
-       4. TELEGRAM CARD COMPONENT
+       5. TELEGRAM CARD (Full Wide Grid)
        ========================================= */
     .telegram-card {
-      background-color: var(--tg-card-bg);
-      border-radius: 16px;
-      padding: 40px;
-      font-family: var(--font-tech);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      border: 1px solid var(--tg-border);
-      cursor: pointer; /* Makes the whole card clickable */
-      transition: box-shadow 0.2s;
+      grid-column: 1 / -1; /* Full 12-column width */
+      background-color: var(--tg-bg-card); /* #F5F5F5 */
+      border-radius: var(--radius-soft);
+      border: 1px solid var(--border-color);
+      margin: 4rem 0;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .telegram-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+
+    .tg-inner { padding: 40px; } /* More padding for wide layout */
+
+    /* Header */
+    .tg-header { 
+      display: flex; justify-content: space-between; margin-bottom: 32px; 
+      align-items: center; font-family: var(--font-sans); 
+    }
+    .tg-brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 1rem; color: #333; }
+    .tg-dot { width: 8px; height: 8px; background: var(--tg-brand); border-radius: 50%; }
+    .tg-pill { background: #fff; border: 1px solid #ddd; color: #555; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; font-family: var(--font-mono); }
+
+    /* Wide Grid Layout */
+    .tg-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center; }
+    
+    /* Left: Visual */
+    .tg-visual { display: flex; flex-direction: column; gap: 16px; }
+    
+    .tg-screen { 
+      background: var(--tg-bg-screen); /* #C1E9FF */
+      border-radius: var(--radius-soft); aspect-ratio: 16/9; 
+      display: flex; align-items: center; justify-content: center; position: relative; 
+      overflow: hidden;
     }
     
-    .telegram-card:hover {
-        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-
-    .tg-header-new { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .tg-brand { display: flex; align-items: center; gap: 10px; font-weight: 400; color: #333; font-size: 1.1rem; }
-    .tg-dot { width: 12px; height: 12px; background: var(--btn-mic); border-radius: 50%; }
-    .tg-datetime { display: flex; gap: 10px; }
-    .tg-pill { background: #e0f0ff; color: var(--tg-text-blue); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
-
-    .tg-main-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
-    .tg-left-col { display: flex; flex-direction: column; gap: 20px; }
-    .tg-right-col { display: flex; flex-direction: column; justify-content: space-between; }
-
-    .tg-call-screen-new { 
-      background-color: var(--tg-call-blue); border-radius: 12px; aspect-ratio: 16/9; 
-      position: relative; display: flex; align-items: center; justify-content: center; 
-    }
-    .tg-avatar-large { 
-      width: 160px; height: 160px; background: var(--tg-sh-circle); border-radius: 50%; 
+    .tg-avatar { 
+      width: 120px; height: 120px; background: #fff; border-radius: 50%; 
       display: flex; align-items: center; justify-content: center; 
-      font-family: var(--font-headline); font-size: 4rem; font-weight: 700; color: var(--tg-text-blue); 
-      z-index: 2; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-family: var(--font-sans); font-size: 2.5rem; font-weight: 800; color: var(--tg-brand);
+      z-index: 2; transition: transform 0.4s ease;
+      box-shadow: 0 4px 20px rgba(0, 120, 183, 0.15);
     }
-    .tg-speaker-name { position: absolute; bottom: 20px; left: 24px; font-family: var(--font-headline); font-size: 1.1rem; color: #667788; font-weight: 600; }
-
-    .tg-menu-dots { position: absolute; bottom: 24px; right: 24px; display: flex; gap: 4px; align-items: flex-end; height: 16px; }
-    .tg-menu-dot { width: 4px; height: 4px; background: #5a9abf; border-radius: 2px; animation: audioWave 1.2s infinite ease-in-out; }
-    .tg-menu-dot:nth-child(1) { animation-delay: 0.0s; }
-    .tg-menu-dot:nth-child(2) { animation-delay: 0.2s; }
-    .tg-menu-dot:nth-child(3) { animation-delay: 0.4s; }
-    .tg-menu-dot:nth-child(4) { animation-delay: 0.2s; }
-    .tg-menu-dot:nth-child(5) { animation-delay: 0.0s; }
+    .tg-name { position: absolute; bottom: 20px; left: 24px; font-family: var(--font-sans); font-weight: 700; font-size: 1rem; color: #446688; }
     
-    @keyframes audioWave { 0%, 100% { height: 4px; opacity: 0.6; } 50% { height: 20px; opacity: 1; background: var(--tg-text-blue); } }
-    .telegram-card:not(.playing) .tg-menu-dot { animation: audioIdle 2s infinite ease-in-out; }
-    @keyframes audioIdle { 0%, 100% { height: 4px; opacity: 0.4; } 50% { height: 4px; opacity: 0.8; } }
+    /* Bars Animation */
+    .tg-bars { position: absolute; bottom: 20px; right: 24px; display: flex; gap: 4px; align-items: flex-end; height: 24px; }
+    .tg-bar { width: 5px; background: #88bbdd; border-radius: 2px; animation: eq 1s infinite ease-in-out; }
+    .tg-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+    .tg-bar:nth-child(2) { height: 60%; animation-delay: 0.1s; }
+    .tg-bar:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+    .tg-bar:nth-child(4) { height: 50%; animation-delay: 0.3s; }
+    @keyframes eq { 0%, 100% { transform: scaleY(1); opacity: 0.6; } 50% { transform: scaleY(1.5); opacity: 1; background: var(--tg-brand); } }
+    .telegram-card:not(.playing) .tg-bar { animation: none; height: 4px; opacity: 0.3; }
+    .telegram-card.playing .tg-avatar { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(255,255,255,0.4); }
 
-    .tg-listeners-row { display: flex; gap: 16px; height: 130px; }
-    .listener-card { flex: 1; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    .listener-card span { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1rem; margin-bottom: 12px; background: rgba(255,255,255,0.6); }
-    .listener-card p { margin: 0; font-size: 0.8rem; font-family: var(--font-headline); font-weight: 600; color: #555; }
-    .l1 { background: var(--l1-bg); color: var(--l1-text); }
-    .l2 { background: var(--l2-bg); color: var(--l2-text); }
-    .l3 { background: var(--l3-bg); color: var(--l3-text); }
-    .overflow { background: var(--over-bg); color: var(--over-text); font-size: 2.2rem; font-family: var(--font-headline); font-weight: 600; }
-
-    .tg-transcript-new { background: #fff; border-radius: 12px; padding: 0; flex-grow: 1; margin-bottom: 24px; }
-    .tg-label-new { display: block; color: #8899aa; margin-bottom: 16px; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
-    .tg-text { font-family: var(--font-tech); font-size: 1.1rem; line-height: 1.7; color: var(--tg-text-dark); font-weight: 400; }
-
-    /* Updated Controls with Images */
-    .tg-controls-new { display: flex; justify-content: center; gap: 32px; padding-bottom: 10px; }
-    .tg-btn-new { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .tg-btn-new:hover { transform: scale(1.08); }
-    .tg-btn-new img { width: 28px; height: 28px; display: block; }
+    /* Listeners (Using palette colors) */
+    .tg-listeners { display: flex; gap: 12px; }
+    .l-chip { 
+      padding: 8px 16px; border-radius: 4px; 
+      font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600;
+      display: flex; align-items: center; gap: 8px; border: 1px solid transparent;
+    }
+    .l-l1 { background: var(--l1-bg); color: var(--l1-text); }
+    .l-l2 { background: var(--l2-bg); color: var(--l2-text); }
+    .l-ov { background: var(--lx-bg); color: var(--lx-text); }
+    .l-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.6; }
     
-    .btn-cam-off { background: var(--btn-grey); }
-    .btn-mic-on { background: var(--btn-mic); box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3); }
-    .btn-hangup { background: var(--btn-hangup); box-shadow: 0 8px 20px rgba(217, 83, 79, 0.3); z-index: 5; } /* Higher Z index to ensure clickability separate from card */
+    /* Right: Transcript */
+    .tg-content { display: flex; flex-direction: column; justify-content: space-between; height: 100%; gap: 24px; }
+    .tg-transcript { 
+      font-family: var(--font-mono); font-size: 1.05rem; line-height: 1.8; color: var(--netra-black);
+      background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 24px; flex-grow: 1;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .tg-label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #aaa; margin-bottom: 12px; font-family: var(--font-sans); font-weight: 800; letter-spacing: 1px; }
 
-    /* Play/Pause Icon Toggling */
+    /* Controls */
+    .tg-controls { display: flex; gap: 20px; justify-content: flex-start; }
+    .tg-btn { 
+      width: 56px; height: 56px; border-radius: 4px; /* Square Editorial Look */
+      display: flex; align-items: center; justify-content: center; 
+      transition: all 0.2s; border: 1px solid transparent;
+    }
+    .tg-btn img { width: 24px; height: 24px; }
+    
+    .btn-aux { background: #fff; border-color: #ddd; }
+    .btn-aux:hover { background: #f9f9f9; border-color: #ccc; }
+    
+    .btn-main { background: var(--tg-brand); border-color: var(--tg-brand); } /* Blue #0078B7 */
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,120,183,0.3); }
+    
+    .btn-stop { background: #fff; border-color: #ddd; color: var(--netra-red); } 
+    .btn-stop:hover { border-color: var(--netra-red); background: #fff5f5; }
+
+    .icon-play, .icon-pause { width: 24px; height: 24px; }
     .icon-pause { display: none; }
     .telegram-card.playing .icon-play { display: none; }
     .telegram-card.playing .icon-pause { display: block; }
-    .telegram-card.playing .tg-avatar-large { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 136, 204, 0.3); }
 
     /* =========================================
-       5. INLINE PLAYER STYLES
+       6. INLINE PLAYER (Gridded BG)
        ========================================= */
-    .inline-trigger { cursor: pointer; display: inline; background: transparent; transition: all 0.2s ease; line-height: 2.1; }
-    .inline-icon { 
-        display: inline-flex; align-items: center; justify-content: center;
-        width: 24px; height: 24px; margin-right: 6px; border-radius: 4px; 
-        transform: translateY(5px);
-        background-color: rgba(225, 53, 53, 0.1); border: 1px solid rgba(225, 53, 53, 0.2);
-        background-image: linear-gradient(rgba(225, 53, 53, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(225, 53, 53, 0.3) 1px, transparent 1px);
-        background-size: 8px 8px; transition: all 0.2s;
+    .inline-player { 
+      cursor: pointer; display: inline-flex; align-items: baseline; 
+      border-bottom: 1px dotted #ccc; transition: all 0.2s; padding: 0 4px; margin: 0 2px;
     }
-    .inline-icon svg { width: 10px; height: 10px; fill: var(--accent-red); display: block; }
-    .inline-trigger:hover .inline-icon { background-color: rgba(225, 53, 53, 0.2); border-color: var(--accent-red); }
-    .inline-trigger.playing .inline-icon { background-color: var(--accent-red); border-color: var(--accent-red); background-image: none; }
-    .inline-trigger.playing .inline-icon svg { fill: #fff; }
-    /* Inline SVGs for small text player kept as SVG for scalability, only card uses images as requested */
-    .inline-trigger .icon-pause { display: none; }
-    .inline-trigger.playing .icon-play { display: none; }
-    .inline-trigger.playing .icon-pause { display: block; }
+    .inline-player:hover { border-bottom: 1px solid var(--netra-red); color: var(--netra-red); }
+    
+    .ip-icon { 
+      width: 20px; height: 20px; margin-right: 8px; display: inline-flex; align-items: center; justify-content: center;
+      transform: translateY(4px); border-radius: 4px;
+      
+      /* Gridded Background for Play Button */
+      background-color: rgba(222, 58, 58, 0.05);
+      background-image: 
+        linear-gradient(rgba(222, 58, 58, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(222, 58, 58, 0.1) 1px, transparent 1px);
+      background-size: 3px 3px;
+      border: 1px solid rgba(222, 58, 58, 0.2);
+    }
+    .ip-icon svg { width: 8px; height: 8px; fill: var(--netra-red); }
+    
+    .inline-player.playing .ip-icon { background: var(--netra-red); border-color: var(--netra-red); background-image: none; }
+    .inline-player.playing .ip-icon svg { fill: #fff; }
+    .inline-player .icon-pause { display: none; }
+    .inline-player.playing .icon-play { display: none; }
+    .inline-player.playing .icon-pause { display: block; }
 
-    .highlight-text { background-color: var(--bg-highlight); color: #222; padding: 4px 8px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; font-family: var(--font-tech); font-weight: 400; font-size: 0.95rem; transition: background-color 0.2s; }
-    .inline-trigger:hover .highlight-text { background-color: #e0e0e0; }
-
-    .karaoke-word { transition: color 0.1s ease; }
-    .playing .karaoke-word.active { color: #000; font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent-red); }
-    .telegram-card .karaoke-word.active { color: var(--accent-red); text-decoration: none; }
+    .karaoke-word { transition: color 0.1s linear; }
+    .playing .karaoke-word.active { background: rgba(222, 58, 58, 0.15); color: #000; font-weight: 700; border-bottom: 2px solid var(--netra-red); }
+    .telegram-card .karaoke-word.active { background: transparent; color: var(--netra-red); border-bottom: none; }
 
     /* =========================================
-       6. INTERACTIVE TRANSCRIPT PLAYER
+       7. PLAYLIST (Investigative Log)
        ========================================= */
-    .transcript-container {
-      max-width: 800px;
-      margin: 60px auto;
-      background-color: #f7f7f7;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-      font-family: 'IBM Plex Mono', monospace;
-      grid-column: 1 / -1; 
-      overflow: hidden;
+    .playlist-wrapper {
+      grid-column: 1 / -1; /* Full width playlist as requested */
+      background: #fff;
+      border-top: 4px solid var(--netra-red); 
+      border-bottom: 1px solid var(--border-color);
+      border-left: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      margin-top: 5rem;
+      font-family: var(--font-mono);
     }
 
-    .tc-header-row {
+    .pl-header {
+      padding: 24px 32px;
+      background: #fafafa;
+      border-bottom: 1px solid var(--border-color);
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0;
     }
-    .tc-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: #333; text-transform: uppercase; letter-spacing: 1px; }
-
-    /* Toggle Switch */
-    .lang-toggle-btn {
-      background: #eee; color: #333; border: none; padding: 8px 16px; border-radius: 20px;
-      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600; 
-      cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease;
+    .pl-title { 
+      font-family: var(--font-sans); font-weight: 800; 
+      text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; 
+      color: var(--netra-black); 
     }
-    .lang-toggle-btn:hover { background: #e0e0e0; }
-    .lang-toggle-btn.active { background: #333; color: #fff; }
-    .lang-dot { width: 8px; height: 8px; background: #999; border-radius: 50%; display: inline-block; transition: background 0.2s; }
-    .lang-toggle-btn.active .lang-dot { background: var(--accent-red); }
 
-    /* The List Rows */
-    .t-row {
+    .lang-toggle {
+      background: #fff; border: 1px solid #ddd; padding: 8px 16px; border-radius: 4px;
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; color: #333;
+      display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s;
+    }
+    .lang-toggle:hover { border-color: #999; }
+    .lang-toggle.active { background: var(--netra-black); color: #fff; border-color: var(--netra-black); }
+    .toggle-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; }
+    .lang-toggle.active .toggle-dot { background: var(--netra-red); }
+
+    .pl-row {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 24px 20px; border-bottom: 1px solid #eee; background: #f7f7f7; cursor: pointer;
-      position: relative; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      padding: 20px 32px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      background: #fff;
+      position: relative;
+      transition: background 0.1s;
     }
-    .t-row:last-child { border-bottom: none; }
+    .pl-row:last-child { border-bottom: none; }
+    .pl-row:hover { background: #fafafa; }
 
-    .t-row .t-text { font-size: 1.1rem; color: #999; font-weight: 400; transition: color 0.3s; flex: 1; margin-right: 20px; line-height: 1.6; }
-    .t-row .t-text.bn { font-family: 'Noto Sans Bengali', sans-serif; font-size: 1.15rem; }
+    .pl-text { 
+      font-size: 1rem; color: #555; transition: color 0.2s; 
+      flex: 1; margin-right: 40px; font-weight: 400; line-height: 1.6;
+    }
+    .pl-text.bn { font-family: var(--font-bengali); font-size: 1.1rem; }
 
-    .t-meta { display: flex; align-items: center; gap: 12px; }
-    .t-time { background: #e0e0e0; color: #777; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; }
-    .t-play-btn { width: 36px; height: 36px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: transform 0.2s; }
-    .t-play-btn svg { width: 12px; height: 12px; fill: #fff; display: block; }
+    .pl-meta { display: flex; align-items: center; gap: 20px; }
+    .pl-time { font-size: 0.75rem; color: #999; font-weight: 500; font-family: var(--font-sans); min-width: 40px; text-align: right; }
+    
+    .pl-btn { 
+      width: 36px; height: 36px; border-radius: 50%; background: #eee; 
+      display: flex; align-items: center; justify-content: center; 
+      transition: all 0.2s;
+    }
+    .pl-btn svg { width: 12px; height: 12px; fill: #555; }
+    .pl-btn .icon-pause { display: none; }
 
-    .t-row:hover { background-color: #fff; }
+    .pl-row.active { background: #fff; }
+    .pl-row.active .pl-text { color: var(--netra-black); font-weight: 600; }
+    .pl-row.active .pl-btn { background: var(--netra-red); transform: scale(1.1); }
+    .pl-row.active .pl-btn svg { fill: #fff; }
+    .pl-row.active .pl-btn .icon-play { display: none; }
+    .pl-row.active .pl-btn .icon-pause { display: block; }
 
-    .t-row.active { background-color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: scale(1.02); z-index: 10; border-radius: 8px; border-bottom-color: transparent; }
-    .t-row.active .t-text { color: #111; font-weight: 500; }
-    .t-row.active .t-play-btn { background: var(--accent-red); transform: scale(1.1); }
-    .t-row.active .icon-play { display: none; }
-    .t-row.active .icon-pause { display: block; margin-left: 0; }
-
-    .t-progress-track { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: transparent; pointer-events: none; }
-    .t-progress-fill { height: 100%; background-color: var(--accent-red); width: 0%; transition: width 0.1s linear; }
+    .progress-bar { 
+      position: absolute; bottom: -1px; left: 0; height: 3px; width: 100%; 
+      background: transparent; pointer-events: none; z-index: 5;
+    }
+    .progress-fill { 
+      height: 100%; width: 0%; background: var(--netra-red); 
+      transition: width 0.1s linear; 
+    }
 
     /* =========================================
-       7. FOOTER & RESPONSIVE
+       8. FOOTER
        ========================================= */
-    .footer-section { background: #f9f9f9; padding: 60px 20px; border-top: 1px solid #eee; margin-top: 60px; }
-    #footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
-    .lists { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .list ul { list-style: none; padding: 0; font-family: var(--font-ui); font-size: 0.9rem; }
-    .list li { margin-bottom: 8px; }
+    footer { 
+      background: #fcfcfc; padding: 80px 20px; 
+      border-top: 1px solid var(--border-color); margin-top: 100px; 
+    }
+    .footer-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
+    
+    .footer-logo img { opacity: 1; margin-bottom: 16px; }
+    .footer-tagline { font-family: var(--font-serif); font-size: 0.9rem; color: #777; font-style: italic; }
 
-    @media (max-width: 1024px) { 
-        .hero__inner { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; } 
-        .article-container { display: block; padding-bottom: 60px; }
-        .story-text { grid-column: auto; }
-        .telegram-card { grid-column: auto; margin: 3rem 0; }
-        .transcript-container { margin: 3rem 0; }
+    .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .f-col h4 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--netra-black); margin-bottom: 20px; letter-spacing: 0.5px; }
+    .f-col ul { list-style: none; padding: 0; margin: 0; }
+    .f-col li { margin-bottom: 10px; }
+    .f-col a { font-family: var(--font-sans); font-size: 0.85rem; color: #555; }
+    .f-col a:hover { color: var(--netra-red); text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero__inner { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; }
+      .article-container { display: block; padding: 0 20px 80px; }
+      .story-text, .telegram-card, .playlist-wrapper { grid-column: auto; width: 100%; max-width: 750px; margin-left: auto; margin-right: auto; }
     }
     @media (max-width: 768px) {
-      .lists, #footer-inner { grid-template-columns: 1fr; }
-      .telegram-card { padding: 24px; }
-      .tg-main-grid { grid-template-columns: 1fr; gap: 24px; }
-      .tg-call-screen-new { aspect-ratio: auto; height: 220px; }
-      .tg-avatar-large { width: 120px; height: 120px; font-size: 3rem; }
-      .t-row { padding: 15px; flex-wrap: wrap; }
-      .t-meta { margin-top: 10px; width: 100%; justify-content: flex-end; }
+      .tg-grid { grid-template-columns: 1fr; gap: 24px; }
+      .tg-screen { aspect-ratio: 16/9; }
+      .pl-row { padding: 16px; flex-wrap: wrap; gap: 12px; }
+      .pl-meta { width: 100%; justify-content: flex-end; }
+      .footer-content, .footer-links { grid-template-columns: 1fr; gap: 40px; }
     }
   </style>
-
 </head>
 
 <body>
+
   <header>
     <div class="header-bar">
-      <div class="netra-logo">
-        <a href="#" target="_blank"><img class="nav-logo" alt="Netra News Logo" src="/assets/icons/netraintractvlogo.svg" width="140" height="20" onerror="this.style.display='none';this.parentNode.innerHTML='NETRA <b>REPORT</b>'"></a>
-      </div>
+      <a href="#" class="logo">
+        <img src="assets/icons/netraintractvlogo.svg" alt="Netra News" width="140">
+      </a>
       <ul class="social-icons">
-        <li class="facebook-share"><a href="#"><svg viewBox="0 0 14 26" fill="none"><path d="M13.2237 13.9747H8.82474V25.75H4.13073V13.9747H0V9.87083H4.18437V4.88177C4.18437 2.41406 6.00833 0 9.20026 0H13.5456V4.72083H10.6487C9.25391 4.72083 8.77109 4.88177 8.77109 6.06198V9.84401H13.7333L13.2237 13.9747Z" fill="currentColor"></path></svg></a></li>
-        <li class="twitter-share"><a href="#"><svg viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.99079 12.1721L0 1H7.12135L12.6713 7.9051L18.6005 1.03109H22.5226L14.5676 10.2645L24 22H16.8999L10.8905 14.5326L4.47476 21.9793H0.531444L8.99079 12.1721ZM17.9348 19.93L4.36657 3.06999H6.08565L19.6368 19.93H17.9348Z" fill="currentColor"></path></svg></a></li>
+        <li><a href="#"><svg viewBox="0 0 14 26"><path d="M13.2237 13.9747H8.82474V25.75H4.13073V13.9747H0V9.87083H4.18437V4.88177C4.18437 2.41406 6.00833 0 9.20026 0H13.5456V4.72083H10.6487C9.25391 4.72083 8.77109 4.88177 8.77109 6.06198V9.84401H13.7333L13.2237 13.9747Z"/></svg></a></li>
+        <li><a href="#"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.99079 12.1721L0 1H7.12135L12.6713 7.9051L18.6005 1.03109H22.5226L14.5676 10.2645L24 22H16.8999L10.8905 14.5326L4.47476 21.9793H0.531444L8.99079 12.1721ZM17.9348 19.93L4.36657 3.06999H6.08565L19.6368 19.93H17.9348Z"/></svg></a></li>
       </ul>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero__inner">
-      <figure class="hero__art"><img class="hero__img" src="assets/photos/hasina-bg.gif" alt="Illustration" onerror="this.style.backgroundColor='#eee'" /></figure>
-      <div class="hero__text">
-        <h1 class="hero__title">An eye<br>for an eye</h1>
-        <p class="hero__dek">To the world, Sheikh Hasina speaks of peace<br>and healing. From her loyalists, she asks for<br>violent revenge.</p>
-        <div class="hero__rule"></div>
-        <div class="hero__byline"><address class="hero__author"><a href="#">Aaqib Md Shatil</a></address><time class="hero__date" datetime="2026-06-13">June 13, 2026</time></div>
-      </div>
-    </div>
-  </section>
-
-  <article class="article-container">
-    <p class="story-text has-dropcap"><span class="dropcap">F</span>ollowing her fall in a mass uprising in 2024, Sheikh Hasina continues to call for revenge as her supporters claim they have fallen victim to violence in Bangladesh.</p>
-
-    <p class="story-text">Sheikh Hasina, who has recently been <span class="redacted-reveal">sentenced to death</span> for her command responsibilities over the crimes against humanity committed during the 2024 Bangladesh uprising, has been urging her supporters to seek revenge, <span class="redacted-reveal">burn down the houses</span> of her political opponents and instigating the military to use the tanks like they used in 1975, according to the phone conversations with her followers that are making rounds on social media after being leaked.</p>
-
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina got license to kill 227.mp3">
-      <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">28/10/24</span><span class="tg-pill">21:03</span></div></div>
-      <div class="tg-main-grid">
-        <div class="tg-left-col">
-          <div class="tg-call-screen-new">
-            <div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div>
-            <div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div>
-          </div>
-          <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>Listener 1</p></div><div class="listener-card l2"><span>L2</span><p>Listener 2</p></div><div class="listener-card overflow">+180</div></div>
-        </div>
-        <div class="tg-right-col">
-          <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">The punishment for one [murder] case and the punishment for 225 [murder] cases are the same. All right, I will take that. But before that, I will count 225 [deaths]. Keep that in mind.</div></div>
-          <div class="tg-controls-new">
-            <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-            <button class="tg-btn-new btn-mic-on play-control">
-              <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-              <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-            </button>
-            <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
+  <main>
+    <section class="hero">
+      <div class="hero__inner">
+        <figure class="hero__art">
+          <img class="hero__img" src="assets/photos/hasina-bg.gif" alt="Illustration of Sheikh Hasina">
+        </figure>
+        <div class="hero__text">
+          <span class="hero__label">Investigation</span>
+          <h1 class="hero__title">An eye<br>for an eye</h1>
+          <div class="hero__rule"></div>
+          <p class="hero__dek">To the world, Sheikh Hasina speaks of peace and healing. From her loyalists, she asks for violent revenge.</p>
+          <div class="hero__byline">
+            <span class="hero__author"><a href="#">Aaqib Md Shatil</a></span>
+            <span class="hero__date">June 13, 2026</span>
           </div>
         </div>
       </div>
-      <audio preload="none"></audio>
-    </div>
+    </section>
 
-    <p class="story-text">Sheikh Hasina and her party, the Awami League, ruled Bangladesh from January 2009 until August 5, 2024. Critics of her administration allege that Bangladesh devolved into a “personalised autocracy,” during which over two and a half thousand people were killed in staged crossfires, and several hundred, predominantly opposition party members, went missing.</p>
+    <article class="article-container">
+      <p class="story-text has-dropcap">
+        <span class="dropcap">F</span>ollowing her fall in a mass uprising in 2024, Sheikh Hasina continues to call for revenge as her supporters claim they have fallen victim to violence in Bangladesh.
+      </p>
 
-    <p class="story-text">Sheikh Hasina vowed revenge against the plaintiffs. In a conversation with Jahangir Alam, a leader from her party in the Gobindganj area of northern Bangladesh, which was leaked just two months after her downfall in October 2024, she told Alam that she had ordered to prepare a list of the 227 individuals who filed the cases against her to murder them. She stated, <span class="redacted-reveal">“I got the license to kill at least 227.”</span></p>
+      <p class="story-text">
+        Sheikh Hasina, who has recently been <span class="redacted-reveal">sentenced to death</span> for her command responsibilities over the crimes against humanity committed during the 2024 Bangladesh uprising, has been urging her supporters to seek revenge, <span class="redacted-reveal">burn down the houses</span> of her political opponents and instigating the military to use the tanks like they used in 1975, according to the phone conversations with her followers that are making rounds on social media after being leaked.
+      </p>
 
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina got license to kill 227.mp3">
-        <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">28/10/24</span><span class="tg-pill">21:05</span></div></div>
-        <div class="tg-main-grid">
-          <div class="tg-left-col">
-            <div class="tg-call-screen-new"><div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div><div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div></div>
-            <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>L1</p></div><div class="listener-card l2"><span>L2</span><p>L2</p></div><div class="listener-card overflow">+220</div></div>
+      <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina got license to kill 227.mp3">
+        <div class="tg-inner">
+          <div class="tg-header">
+            <div class="tg-brand"><div class="tg-dot"></div>Telegram</div>
+            <div class="tg-datetime"><span class="tg-pill">28/10/24</span><span class="tg-pill">21:03</span></div>
           </div>
-          <div class="tg-right-col">
-            <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">Draft a list. I got the licence to kill 227. The punishment for one and the punishment for two hundred and a quarter are the same. All right, I will take that.</div></div>
-            <div class="tg-controls-new">
-              <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-              <button class="tg-btn-new btn-mic-on play-control">
-                <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-                <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-              </button>
-              <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
+          <div class="tg-grid">
+            <div class="tg-visual">
+              <div class="tg-screen">
+                <div class="tg-avatar">SH</div>
+                <div class="tg-name">Sheikh Hasina</div>
+                <div class="tg-bars"><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div></div>
+              </div>
+              <div class="tg-listeners">
+                <div class="l-chip l-l1"><div class="l-dot"></div>L1</div>
+                <div class="l-chip l-l2"><div class="l-dot"></div>L2</div>
+                <div class="l-chip l-ov">+180</div>
+              </div>
+            </div>
+            <div class="tg-content">
+              <div class="tg-transcript">
+                <span class="tg-label">Transcript</span>
+                <div class="tg-text target-text">The punishment for one [murder] case and the punishment for 225 [murder] cases are the same. All right, I will take that. But before that, I will count 225 [deaths]. Keep that in mind.</div>
+              </div>
+              <div class="tg-controls">
+                <button class="tg-btn btn-aux"><img src="assets/icons/camera.svg" alt="Cam"></button>
+                <button class="tg-btn btn-main play-control">
+                  <img class="icon-play" src="assets/icons/play.svg" alt="Play">
+                  <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
+                </button>
+                <button class="tg-btn btn-stop stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
+              </div>
             </div>
           </div>
         </div>
         <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">Following the fall of the regime, hundreds of Awami League supporters, many of whom were allegedly involved in suppressing dissenters for years, were subjected to revenge attacks by their rivals. The leader of the Awami League instructed her followers to retaliate proportionately.</p>
-
-    <p class="story-text">In at least three recordings, posted on Facebook and YouTube, Sheikh Hasina was found instructing her party men to make a list and create a database of the ones who attacked her followers and filed cases against her so that she can exact vengeance accordingly. “I'm creating a list of everyone who was beaten (or killed),” she said in a call obtained on October 29th 2025.</p>
-
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina calls for revenge.mp3">
-        <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">29/10/25</span><span class="tg-pill">14:15</span></div></div>
-        <div class="tg-main-grid">
-          <div class="tg-left-col">
-            <div class="tg-call-screen-new"><div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div><div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div></div>
-            <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>L1</p></div><div class="listener-card l2"><span>L2</span><p>L2</p></div><div class="listener-card overflow">+45</div></div>
-          </div>
-          <div class="tg-right-col">
-            <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">I'm creating a list of everyone who was beaten (or killed). I'm building a separate database. I will exact vengeance. Will I tolerate the attacks on my activists? Never.</div></div>
-            <div class="tg-controls-new">
-              <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-              <button class="tg-btn-new btn-mic-on play-control">
-                <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-                <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-              </button>
-              <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
-            </div>
-          </div>
-        </div>
-        <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      The suggestion to use fire for committing violence appeared frequently in her private conversations. In response to the stories of local Awami League leaders’ houses being attacked that emerged, she ordered to ‘take action against those who have harmed’ them.
-      <span class="inline-trigger audio-trigger" data-src="assets/audio/Hands will burn if they touch us-Hasina.mp3">
-        <span class="inline-icon">
-            <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z" /></svg>
-            <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z" /></svg>
-        </span>
-        <span class="highlight-text target-text">“If you touch fire, your hand will burn [...] What else should I say?”</span>
-        <audio preload="none"></audio>
-      </span> she threatened.
-    </p>
-
-    <p class="story-text">Calling the interim government led by Muhammad Yunus, which took over the country after she fled, illegal, in another leaked call from September 2025, she urged her supporters to avenge without waiting for the right time.</p>
-
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Take revenge against them-Hasina.mp3">
-        <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">23/09/25</span><span class="tg-pill">11:00</span></div></div>
-        <div class="tg-main-grid">
-          <div class="tg-left-col">
-            <div class="tg-call-screen-new"><div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div><div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div></div>
-            <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>L1</p></div><div class="listener-card l2"><span>L2</span><p>L2</p></div><div class="listener-card overflow">+92</div></div>
-          </div>
-          <div class="tg-right-col">
-            <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">Why do you forget that Bangladesh was liberated through guerrilla warfare? Adopt those tactics. Those who have done these against you, take action against them, wherever you find them.</div></div>
-            <div class="tg-controls-new">
-              <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-              <button class="tg-btn-new btn-mic-on play-control">
-                <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-                <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-              </button>
-              <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
-            </div>
-          </div>
-        </div>
-        <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">Being aware that her supporters, while committing violence, may get rounded up by the locals or the police, the deposed prime minister urged her followers to use <span class="redacted-reveal">guerrilla warfare tactics</span> reminiscent of Bangladesh’s liberation war.</p>
-
-    <p class="story-text">A former minister in her cabinet was also seen promoting armed struggle similar to the 1971 Liberation War. Mohibul Hasan Chowdhury claimed that their party men would launch a war using the tactics used in 1971. <span class="redacted-reveal">“If we’re left with no other option, we will have to prepare for a second liberation war.”</span></p>
-
-    <p class="story-text">On at least two occasions, Sheikh Hasina justified the violence of her party’s supporters by referring to the Islamic concept of Qisas, a form of retributive justice, from the holy Quran.</p>
-
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Eye for an eye-Hasina.mp3">
-        <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">25/11/25</span><span class="tg-pill">18:45</span></div></div>
-        <div class="tg-main-grid">
-          <div class="tg-left-col">
-            <div class="tg-call-screen-new"><div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div><div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div></div>
-            <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>L1</p></div><div class="listener-card l2"><span>L2</span><p>L2</p></div><div class="listener-card overflow">+12</div></div>
-          </div>
-          <div class="tg-right-col">
-            <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">Putting it simply. a hand for a hand, an eye for an eye, this is what the Quran says. The one who burns your house, [why] will he have his house [intact]?</div></div>
-            <div class="tg-controls-new">
-              <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-              <button class="tg-btn-new btn-mic-on play-control">
-                <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-                <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-              </button>
-              <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
-            </div>
-          </div>
-        </div>
-        <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      Although on one hand, Sheikh Hasina criticised the interim government for ‘seizing’ power illegally, she herself instigated the armed forces in at least two addresses to her followers.
-    </p>
-
-    <p class="story-text">
-      After the International Crimes Tribunal charged dozens of military officials for their involvement in enforced disappearances, Sheikh Hasina was also found instigating the Bangladesh armed forces to rebel and <span class="redacted-reveal">use their tanks</span>. Reminding the military officials that the tanks were once used to kill her family members, she expressed her frustration: 
-      <span class="inline-trigger audio-trigger" data-src="assets/audio/How dare they issue warrant-Hasina.mp3">
-        <span class="inline-icon">
-            <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z" /></svg>
-            <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z" /></svg>
-        </span>
-        <span class="highlight-text target-text">“They (the tanks) were used to kill us. But they can’t use them now.”</span>
-        <audio preload="none"></audio>
-      </span>
-    </p>
-
-    <p class="story-text">
-      She questioned whether the armed forces have any capability to take action against those who protect the sovereignty of Bangladesh, as they sat idle when two leaders from the newly formed student-led National Citizen Party (NCP) threatened them.
-      <span class="inline-trigger audio-trigger" data-src="assets/audio/Hasina on liability of deaths.mp3">
-        <span class="inline-icon">
-            <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z" /></svg>
-            <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z" /></svg>
-        </span>
-        <span class="highlight-text target-text">“Has the army lost its strength? Can’t they arrest them and take them away? Then they would’ve gotten an answer,”</span>
-        <audio preload="none"></audio>
-      </span> she asked the audience.
-    </p>
-
-    <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina calls for revenge.mp3">
-        <div class="tg-header-new"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">29/10/25</span><span class="tg-pill">14:18</span></div></div>
-        <div class="tg-main-grid">
-          <div class="tg-left-col">
-            <div class="tg-call-screen-new"><div class="tg-avatar-large">SH</div><div class="tg-speaker-name">Sheikh Hasina</div><div class="tg-menu-dots"><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div><div class="tg-menu-dot"></div></div></div>
-            <div class="tg-listeners-row"><div class="listener-card l1"><span>L1</span><p>L1</p></div><div class="listener-card l2"><span>L2</span><p>L2</p></div><div class="listener-card overflow">+45</div></div>
-          </div>
-          <div class="tg-right-col">
-            <div class="tg-transcript-new"><span class="tg-label-new">Transcript</span><div class="tg-text target-text">I will cleanse (them) this time. My goal is to clean the dirt of Bangladesh.</div></div>
-            <div class="tg-controls-new">
-              <button class="tg-btn-new btn-cam-off"><img src="assets/icons/camera.svg" alt="Camera Off"></button>
-              <button class="tg-btn-new btn-mic-on play-control">
-                <img class="icon-play" src="assets/icons/play.svg" alt="Play">
-                <img class="icon-pause" src="assets/icons/pause.svg" alt="Pause">
-              </button>
-              <button class="tg-btn-new btn-hangup stop-control"><img src="assets/icons/hangup.svg" alt="Stop"></button>
-            </div>
-          </div>
-        </div>
-        <audio preload="none"></audio>
-    </div>
-
-    <p class="story-text">
-      The possibility appeared to be frail as Sheikh Hasina continued to show no remorse whatsoever for the death of over seven hundred individuals during the crackdown she and her home minister presided over. Without showing a semblance of remorse for the atrocities committed under her watch, she claimed that she had found a new mission, in a leaked call made available on October 29th 2025, where, labelling her political opposition as ‘dirt’, she pledged that she would <span class="redacted-reveal">‘cleanse the dirt’</span>.
-    </p>
-
-    <div class="transcript-container">
-      <div class="tc-header-row">
-        <div class="tc-title">Audio Evidence Log</div>
-        <button class="lang-toggle-btn" id="lang-switch">
-          <span class="lang-dot"></span> <span id="lang-label">Switch to Bangla</span>
-        </button>
       </div>
 
-      <div id="playlist-container"></div>
-    </div>
+      <p class="story-text">
+        Sheikh Hasina and her party, the Awami League, ruled Bangladesh from January 2009 until August 5, 2024. Critics of her administration allege that Bangladesh devolved into a “personalised autocracy,” during which over two and a half thousand people were killed in staged crossfires, and several hundred, predominantly opposition party members, went missing.
+      </p>
 
-  </article>
+      <p class="story-text">
+        Sheikh Hasina vowed revenge against the plaintiffs. In a conversation with Jahangir Alam, a leader from her party in the Gobindganj area of northern Bangladesh, which was leaked just two months after her downfall in October 2024, she told Alam that she had ordered to prepare a list of the 227 individuals who filed the cases against her to murder them. She stated, <span class="redacted-reveal">“I got the license to kill at least 227.”</span>
+      </p>
 
-  <footer class="footer-section">
-    <div id="footer-inner">
-      <div class="logo">
-        <img src="./assets/icons/netralogo.svg" alt="Netra News Logo" width="250" height="25" onerror="this.style.display='none';this.parentNode.innerHTML='<h2>NETRA NEWS</h2>'">
-        <p>Reportage, debate, analysis</p>
+      <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina got license to kill 227.mp3">
+        <div class="tg-inner">
+          <div class="tg-header"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">28/10/24</span><span class="tg-pill">21:05</span></div></div>
+          <div class="tg-grid">
+            <div class="tg-visual">
+              <div class="tg-screen">
+                <div class="tg-avatar">SH</div><div class="tg-name">Sheikh Hasina</div>
+                <div class="tg-bars"><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div></div>
+              </div>
+              <div class="tg-listeners"><div class="l-chip l-l1"><div class="l-dot"></div>L1</div><div class="l-chip l-l2"><div class="l-dot"></div>L2</div><div class="l-chip l-ov">+220</div></div>
+            </div>
+            <div class="tg-content">
+              <div class="tg-transcript">
+                <span class="tg-label">Transcript</span>
+                <div class="tg-text target-text">Draft a list. I got the licence to kill 227. The punishment for one and the punishment for two hundred and a quarter are the same. All right, I will take that.</div>
+              </div>
+              <div class="tg-controls">
+                <button class="tg-btn btn-aux"><img src="assets/icons/camera.svg"></button>
+                <button class="tg-btn btn-main play-control"><img class="icon-play" src="assets/icons/play.svg"><img class="icon-pause" src="assets/icons/pause.svg"></button>
+                <button class="tg-btn btn-stop stop-control"><img src="assets/icons/hangup.svg"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <audio preload="none"></audio>
       </div>
-      <div class="lists">
-        <div class="list">
-          <h3>About</h3>
-          <ul>
-            <li><a href="https://netra.news/2019/journalism-on-behalf-of-the-people/" target="_blank">Editorial Mission</a></li>
-            <li><a href="https://netra.news/about/" target="_blank">About</a></li>
-            <li><a href="https://netra.news/privacy/" target="_blank">Privacy Policy</a></li>
-            <li><a href="https://netra.news/contact/" target="_blank">Contact</a></li>
-          </ul>
+
+      <p class="story-text">Following the fall of the regime, hundreds of Awami League supporters, many of whom were allegedly involved in suppressing dissenters for years, were subjected to revenge attacks by their rivals.</p>
+
+      <p class="story-text">In at least three recordings, posted on Facebook and YouTube, Sheikh Hasina was found instructing her party men to make a list and create a database of the ones who attacked her followers and filed cases against her so that she can exact vengeance accordingly.</p>
+
+      <div class="telegram-card audio-trigger" data-src="assets/audio/Hasina calls for revenge.mp3">
+        <div class="tg-inner">
+          <div class="tg-header"><div class="tg-brand"><div class="tg-dot"></div>Telegram</div><div class="tg-datetime"><span class="tg-pill">29/10/25</span><span class="tg-pill">14:15</span></div></div>
+          <div class="tg-grid">
+            <div class="tg-visual">
+              <div class="tg-screen">
+                <div class="tg-avatar">SH</div><div class="tg-name">Sheikh Hasina</div>
+                <div class="tg-bars"><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div><div class="tg-bar"></div></div>
+              </div>
+              <div class="tg-listeners"><div class="l-chip l-l1"><div class="l-dot"></div>L1</div><div class="l-chip l-l2"><div class="l-dot"></div>L2</div><div class="l-chip l-ov">+45</div></div>
+            </div>
+            <div class="tg-content">
+              <div class="tg-transcript">
+                <span class="tg-label">Transcript</span>
+                <div class="tg-text target-text">I'm creating a list of everyone who was beaten (or killed). I'm building a separate database. I will exact vengeance. Will I tolerate the attacks on my activists? Never.</div>
+              </div>
+              <div class="tg-controls">
+                <button class="tg-btn btn-aux"><img src="assets/icons/camera.svg"></button>
+                <button class="tg-btn btn-main play-control"><img class="icon-play" src="assets/icons/play.svg"><img class="icon-pause" src="assets/icons/pause.svg"></button>
+                <button class="tg-btn btn-stop stop-control"><img src="assets/icons/hangup.svg"></button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="list">
-          <h3>Coverage</h3>
-          <ul>
-            <li><a href="https://netra.news/tags/netra-report/" target="_blank">Investigations</a></li>
-            <li><a href="https://netra.news/tags/column/" target="_blank">Column</a></li>
-            <li><a href="https://netra.news/tags/analysis/" target="_blank">Explainer</a></li>
-            <li><a href="https://medium.com/@NetraNews" target="_blank">Blog</a></li>
-          </ul>
+        <audio preload="none"></audio>
+      </div>
+
+      <p class="story-text">
+        The suggestion to use fire for committing violence appeared frequently in her private conversations. In response to the stories of local Awami League leaders’ houses being attacked that emerged, she ordered to ‘take action against those who have harmed’ them.
+        <span class="inline-player audio-trigger" data-src="assets/audio/Hands will burn if they touch us-Hasina.mp3">
+          <span class="ip-icon">
+            <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z"/></svg>
+          </span>
+          <span class="highlight-text target-text">“If you touch fire, your hand will burn [...] What else should I say?”</span>
+          <audio preload="none"></audio>
+        </span> she threatened.
+      </p>
+
+      <div class="playlist-wrapper">
+        <div class="pl-header">
+          <div class="pl-title">Audio Evidence Log</div>
+          <button class="lang-toggle" id="lang-switch">
+            <span class="toggle-dot"></span>
+            <span id="lang-label">Switch to Bangla</span>
+          </button>
         </div>
-        <div class="list">
-          <h3>Social</h3>
-          <ul>
-            <li><a href="https://www.facebook.com/newsnetra" target="_blank">Facebook</a></li>
-            <li><a href="https://twitter.com/netranews" target="_blank">X</a></li>
-            <li><a href="https://www.youtube.com/netranews" target="_blank">YouTube</a></li>
-            <li><a href="https://www.instagram.com/netra.news/" target="_blank">Instagram</a></li>
-          </ul>
+        <div id="playlist-container"></div>
+        <audio id="pl-master-audio"></audio>
+      </div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="assets/icons/netralogo.svg" alt="Netra News" width="150">
+        <div class="footer-tagline">Reportage, debate, analysis</div>
+      </div>
+      <div class="footer-links">
+        <div class="f-col">
+          <h4>About</h4>
+          <ul><li><a href="#">Mission Statement</a></li><li><a href="#">Our Team</a></li><li><a href="#">Contact</a></li></ul>
+        </div>
+        <div class="f-col">
+          <h4>Coverage</h4>
+          <ul><li><a href="#">Investigations</a></li><li><a href="#">Opinion & Analysis</a></li><li><a href="#">Netra Report</a></li></ul>
+        </div>
+        <div class="f-col">
+          <h4>Connect</h4>
+          <ul><li><a href="#">Facebook</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">YouTube</a></li></ul>
         </div>
       </div>
     </div>
@@ -576,76 +596,100 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // --- 1. EXISTING KARAOKE & REDACTION LOGIC (For Telegram Cards) ---
+      /* =========================================
+         1. UNIVERSAL AUDIO LOGIC
+         ========================================= */
+      
+      // Setup word spans for karaoke
       function setupKaraoke(targetEl) {
         if (targetEl.dataset.setup) return targetEl.querySelectorAll('.karaoke-word');
-        const words = targetEl.innerText.split(' ');
+        const text = targetEl.innerText;
         targetEl.innerHTML = '';
+        const words = text.split(' ');
         const spans = [];
         words.forEach(word => {
-          const span = document.createElement('span');
-          span.innerText = word;
-          span.classList.add('karaoke-word');
-          targetEl.appendChild(span);
-          targetEl.appendChild(document.createTextNode(' '));
-          spans.push(span);
+          const s = document.createElement('span');
+          s.innerText = word + ' ';
+          s.className = 'karaoke-word';
+          targetEl.appendChild(s);
+          spans.push(s);
         });
         targetEl.dataset.setup = 'true';
         return spans;
       }
 
-      document.querySelectorAll('.audio-trigger').forEach(section => {
-        if(section.classList.contains('telegram-card') || section.classList.contains('inline-trigger')){
-            const targetText = section.querySelector('.target-text');
-            const audio = section.querySelector('audio');
-            if (!targetText || !audio) return;
-            if(section.dataset.src && !audio.src) audio.src = section.dataset.src;
-            const wordSpans = setupKaraoke(targetText);
+      // Init all trigger points
+      const cards = document.querySelectorAll('.audio-trigger');
+      
+      cards.forEach(card => {
+        const audio = card.querySelector('audio');
+        const textEl = card.querySelector('.target-text');
+        
+        if(card.dataset.src && !audio.src) audio.src = card.dataset.src;
+        
+        let wordSpans = [];
+        if(textEl) wordSpans = setupKaraoke(textEl);
 
-            section.addEventListener('click', (e) => {
-              // Stop button check must happen first
-              if (e.target.closest('.stop-control')) { 
-                  audio.pause(); 
-                  audio.currentTime = 0; 
-                  section.classList.remove('playing'); 
-                  wordSpans.forEach(s=>s.classList.remove('active')); 
-                  return;
-              }
+        card.addEventListener('click', (e) => {
+          // Stop button clicked?
+          if(e.target.closest('.stop-control')) {
+            audio.pause();
+            audio.currentTime = 0;
+            card.classList.remove('playing');
+            wordSpans.forEach(s => s.classList.remove('active'));
+            return;
+          }
 
-              // Play Logic: Click anywhere EXCEPT stop button (checked above)
-              if (audio.paused) {
-                // Pause all other audios (including the playlist player)
-                document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
-                document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
-                document.querySelectorAll('.t-row.active').forEach(r => r.classList.remove('active')); // Reset playlist rows
-                
-                audio.play();
-                section.classList.add('playing');
-              } else {
-                audio.pause();
-                section.classList.remove('playing');
-              }
-            });
+          // Otherwise toggle
+          if(audio.paused) {
+            // Stop ALL other audios (cards + playlist)
+            document.querySelectorAll('audio').forEach(a => { if(a !== audio) a.pause(); });
+            document.querySelectorAll('.playing').forEach(p => p.classList.remove('playing'));
+            document.querySelectorAll('.pl-row.active').forEach(r => r.classList.remove('active'));
 
-            audio.addEventListener('timeupdate', () => {
-              if (!audio.duration) return;
-              const percent = audio.currentTime / audio.duration;
-              const idx = Math.floor(percent * wordSpans.length);
-              wordSpans.forEach((s, i) => i <= idx ? s.classList.add('active') : s.classList.remove('active'));
-            });
-            audio.addEventListener('ended', () => { section.classList.remove('playing'); wordSpans.forEach(s=>s.classList.remove('active')); });
-        }
+            audio.play();
+            card.classList.add('playing');
+          } else {
+            audio.pause();
+            card.classList.remove('playing');
+          }
+        });
+
+        // Sync Text
+        audio.addEventListener('timeupdate', () => {
+          if(!audio.duration) return;
+          const pct = audio.currentTime / audio.duration;
+          const idx = Math.floor(pct * wordSpans.length);
+          wordSpans.forEach((s, i) => {
+            if(i <= idx) s.classList.add('active');
+            else s.classList.remove('active');
+          });
+        });
+
+        // Reset
+        audio.addEventListener('ended', () => {
+          card.classList.remove('playing');
+          wordSpans.forEach(s => s.classList.remove('active'));
+        });
       });
 
-      const redactionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('revealed'), 200); redactionObserver.unobserve(entry.target); } });
-      }, { threshold: 1.0, rootMargin: "0px 0px -50px 0px" });
-      document.querySelectorAll('.redacted-reveal').forEach(el => redactionObserver.observe(el));
+      /* =========================================
+         2. INTERSECTION OBSERVER (Redactions)
+         ========================================= */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('revealed'), 400);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 1.0 });
+      document.querySelectorAll('.redacted-reveal').forEach(el => observer.observe(el));
 
-
-      // --- 2. NEW INTERACTIVE PLAYLIST PLAYER LOGIC ---
-      
-      const audioData = [
+      /* =========================================
+         3. PLAYLIST PLAYER LOGIC
+         ========================================= */
+      const playlistData = [
        {
         "text_en": "How do the show victory sign after stealing? Sheikh Hasina claimed that the army is being tried for following orders.",
         "text_bn": "চুরির পর তারা কীভাবে বিজয়ের চিহ্ন দেখায়? শেখ হাসিনা দাবি করেছেন যে আদেশ পালনের জন্য সেনাবাহিনীর বিচার করা হচ্ছে।", 
@@ -683,130 +727,114 @@
        }
       ];
 
-      const container = document.getElementById('playlist-container');
+      const plContainer = document.getElementById('playlist-container');
       const langBtn = document.getElementById('lang-switch');
       const langLabel = document.getElementById('lang-label');
-      let currentLang = 'en'; 
-      let currentAudio = null;
-      let currentRow = null;
+      let curLang = 'en';
+      let activeRow = null;
+      let activeAudio = null;
 
-      // Render Player Rows
-      function renderPlayer() {
-        container.innerHTML = ''; 
-        
-        audioData.forEach((item, index) => {
+      function renderPlaylist() {
+        plContainer.innerHTML = '';
+        playlistData.forEach((item, i) => {
           const row = document.createElement('div');
-          row.className = 't-row';
-          row.id = `row-${index}`;
+          row.className = 'pl-row';
+          row.dataset.idx = i;
           
-          // Determine text based on current language
-          const textContent = currentLang === 'en' ? item.text_en : item.text_bn;
-          const textClass = currentLang === 'bn' ? 't-text bn' : 't-text';
+          const txt = curLang === 'en' ? item.text_en : item.text_bn;
+          const cls = curLang === 'bn' ? 'pl-text bn' : 'pl-text';
 
           row.innerHTML = `
-            <div class="${textClass}">${textContent}</div>
-            
-            <div class="t-meta">
-              <div class="t-time">00:00</div>
-              <button class="t-play-btn">
+            <div class="${cls}">${txt}</div>
+            <div class="pl-meta">
+              <span class="pl-time">00:00</span>
+              <button class="pl-btn">
                 <svg class="icon-play" viewBox="0 0 12 14"><path d="M0 0L12 7L0 14V0Z"/></svg>
                 <svg class="icon-pause" viewBox="0 0 12 14"><path d="M0 0H4V14H0V0ZM8 0H12V14H8V0Z"/></svg>
               </button>
             </div>
-
-            <div class="t-progress-track"><div class="t-progress-fill"></div></div>
-            <audio class="audio-src" src="assets/audio/${item.MP3}" preload="metadata"></audio>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <audio src="assets/audio/${item.MP3}" preload="metadata"></audio>
           `;
 
-          row.addEventListener('click', () => togglePlay(row));
-          container.appendChild(row);
-
-          // Metadata Load for Duration
-          const audioEl = row.querySelector('audio');
-          const timeEl = row.querySelector('.t-time');
-          audioEl.addEventListener('loadedmetadata', () => {
-               const m = Math.floor(audioEl.duration / 60);
-               const s = Math.floor(audioEl.duration % 60);
-               timeEl.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+          // Duration load
+          const aud = row.querySelector('audio');
+          const tm = row.querySelector('.pl-time');
+          aud.addEventListener('loadedmetadata', () => {
+            const m = Math.floor(aud.duration / 60);
+            const s = Math.floor(aud.duration % 60);
+            tm.innerText = `${m}:${s<10?'0'+s:s}`;
           });
+
+          row.addEventListener('click', () => handlePlaylistClick(row, aud));
+          plContainer.appendChild(row);
         });
       }
 
-      // Play Logic
-      function togglePlay(clickedRow) {
-        const audio = clickedRow.querySelector('audio');
-        const progressFill = clickedRow.querySelector('.t-progress-fill');
-
-        // Stop other article audios
-        document.querySelectorAll('.audio-trigger audio').forEach(a => a.pause());
-        document.querySelectorAll('.audio-trigger').forEach(s => s.classList.remove('playing'));
-
-        if (currentAudio === audio) {
-          if (audio.paused) {
+      function handlePlaylistClick(row, audio) {
+        if(activeRow === row) {
+          if(audio.paused) {
             audio.play();
-            clickedRow.classList.add('active');
+            row.classList.add('active');
           } else {
             audio.pause();
           }
           return;
         }
 
-        if (currentAudio) {
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-          if (currentRow) {
-            currentRow.classList.remove('active');
-            currentRow.querySelector('.t-progress-fill').style.width = '0%';
-          }
+        // Reset All
+        document.querySelectorAll('audio').forEach(a => a.pause());
+        document.querySelectorAll('.playing').forEach(p => p.classList.remove('playing'));
+        
+        if(activeRow) {
+          activeRow.classList.remove('active');
+          activeRow.querySelector('.progress-fill').style.width = '0%';
         }
 
-        currentAudio = audio;
-        currentRow = clickedRow;
-        clickedRow.classList.add('active');
+        // New Active
+        activeRow = row;
+        activeAudio = audio;
+        row.classList.add('active');
         audio.play();
 
+        // Progress
         audio.ontimeupdate = () => {
-          if (audio.duration) {
-            const percentage = (audio.currentTime / audio.duration) * 100;
-            progressFill.style.width = `${percentage}%`;
+          if(audio.duration) {
+            const pct = (audio.currentTime / audio.duration) * 100;
+            row.querySelector('.progress-fill').style.width = pct + '%';
           }
         };
 
+        // Collapse
         audio.onended = () => {
-          clickedRow.classList.remove('active');
-          progressFill.style.width = '0%';
-          currentAudio = null;
-          currentRow = null;
+          row.classList.remove('active');
+          row.querySelector('.progress-fill').style.width = '0%';
+          activeAudio = null;
+          activeRow = null;
         };
       }
 
-      // Toggle Logic
       langBtn.addEventListener('click', () => {
-        if(currentLang === 'en') {
-          currentLang = 'bn';
+        if(curLang === 'en') {
+          curLang = 'bn';
           langLabel.innerText = "Switch to English";
           langBtn.classList.add('active');
         } else {
-          currentLang = 'en';
+          curLang = 'en';
           langLabel.innerText = "Switch to Bangla";
           langBtn.classList.remove('active');
         }
 
-        // Update Text WITHOUT re-rendering (keeps playing audio intact)
-        const rows = document.querySelectorAll('.t-row');
-        rows.forEach((row, index) => {
-          const textDiv = row.querySelector('.t-text'); // Was .audio-text, now .t-text
-          const data = audioData[index];
-          
-          textDiv.innerText = currentLang === 'en' ? data.text_en : data.text_bn;
-          textDiv.className = currentLang === 'bn' ? 't-text bn' : 't-text';
+        const rows = document.querySelectorAll('.pl-row');
+        rows.forEach((r, i) => {
+          const tDiv = r.querySelector('.pl-text');
+          const dat = playlistData[i];
+          tDiv.innerText = curLang === 'en' ? dat.text_en : dat.text_bn;
+          tDiv.className = curLang === 'bn' ? 'pl-text bn' : 'pl-text';
         });
       });
 
-      // Init
-      if(container) {
-        renderPlayer();
-      }
+      renderPlaylist();
 
     });
   </script>
